@@ -1,0 +1,19 @@
+paths:
+    tests: tests
+    output: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+actor_suffix: Tester
+coverage:
+    enabled: true
+    include:
+        - src/*
+    exclude:
+        - src/Controller/*
+        - src/Application.php
+        - src/null
+        - src/*/null
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed

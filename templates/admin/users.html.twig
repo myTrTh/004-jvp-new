@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: пользователи {% endblock %}
+{% block header %} Админка: пользователи {% endblock %}
+{% block body %}
+
+	{% for user in users %}
+		<a href='{{ path('admin_user', {'id': user.id }) }}'>{{ user.username }}</a><br>
+	{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Редактировать контент {% endblock %}
+{% block header %} Редактировать контент {% endblock %}
+{% block body %}
+
+	<a href="{{ path('content_list') }}">Назад к контенту</a>
+	<br><br>
+	{% if error %}
+		<div class="message-error">{{ error }}</div><br>
+	{% endif %}
+
+	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'id': content.id }) }}'>
+		<label>Заголовок<br><input type='text' name='title' value='{{ content.title }}'></label>
+		<label>Контент<br><textarea type='text' name='article'>{{ content.article }}</textarea></label>
+		<input type="file" name="userfile"><br>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type='submit' name='submit_content_edit' value='Редактировать новость'>
+	</form>
+	{% if content.image %}
+		<br>
+		<form method="post" action="{{ path('content_edit', {'id': content.id }) }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
+			<input type="submit" name="submit_delete_image" value="x">
+		</form>
+		<div class="content-image" >
+			<img src="../../public/images/content/content/{{ content.image }}">
+		</div>			
+	{% endif %}	
+
+{% endblock %}

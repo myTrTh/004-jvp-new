@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Регистрация {% endblock %}
+{% block header %} Регистрация {% endblock %}
+{% block body %}
+
+	{% if app.user %}
+		Вы зарегистрированы как {{ app.user.username }}
+	{% else %}
+
+		{% if error %}
+			<div class="message-error">{{ error }}</div>
+		{% endif %}
+
+		<form method='post' action='{{ path('auth_registration') }}'>
+			<label>Логин<br> <input type='text' name='username' value='{{ lastUsername }}'></label>
+			<label>Email <br><input type='email' name='email' value='{{ lastEmail }}'></label>
+			<label>Пароль <br><input type='password' name='password'></label>
+			<label>Повторите пароль <br><input type='password' name='repeat_password'></label>
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>		
+			<input type='submit' name='submit_registration' value='Регистрация'>
+		</form>
+
+	{% endif %}
+
+{% endblock %}

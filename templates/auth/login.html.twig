@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Вход {% endblock %}
+{% block header %} Вход {% endblock %}
+{% block body %}
+
+	{% if app.user %}
+		Вы вошли как {{ app.user.username }}
+	{% else %}
+
+		{% if error %}
+			<div class="message-error">{{ error }}</div>
+		{% endif %}
+
+		<form method='post' action='{{ path('auth_login') }}'>
+			<label>Логин <br><input type='text' name='username' value='{{ lastUsername }}'></label>
+			<label>Пароль <br><input type='password' name='password'></label>
+			<label>
+				<div class='checkbox-line'>
+					<input type='checkbox' class='checkbox-text' name='remember_me'> Запомнить меня</label>
+				</div>
+			</label>
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='submit' name='submit_login' value='Вход'>
+		</form>
+
+		<br><hr>
+		ЕСЛИ ВЫ НЕ ЗАРЕГИСТРИРОВАНЫ, ПРОЙДИТЕ ПРОЦЕДУРУ <a href="{{ path('auth_registration') }}">РЕГИСТРАЦИИ</a>
+		<br><br>
+		<a href="{{ path('auth_reset_password') }}">ЗАБЫЛИ ПАРОЛЬ?</a>
+
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,1 @@
+$(document).ready(function(){$(".nav-toggle").on("click",function(){$("nav > ul > li").not(".logo").slideToggle("fast")}),$(window).resize(function(){750<$(window).width()&&$("nav > ul > li").removeAttr("style")})});

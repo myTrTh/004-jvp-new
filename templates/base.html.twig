@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'> 	
+	<title>{% block title %}SODOMANIA{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="/../public/css/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<header><img src="/../public/images/interface/head.jpg"></header>
+		<nav>
+			<ul>
+				<li class="logo">
+					<img src="/../public/images/interface/logo.png">
+					<div class="nav-toggle">
+						<i class="fa fa-bars color-white" aria-hidden="true"></i>
+					</div>
+				</li>
+				<li><a href="{{ path('content_list') }}">КОНТЕНТ</a></li>
+				<li><a href="{{ path('guestbook') }}">ГОСТЕВАЯ</a></li>
+				<li><a href="#">ДРУГОЕ</a></li>
+				<li><a href="#">ДРУГОЕ</a></li>
+				<li><a href="#">ДРУГОЕ</a></li>
+				<li><a href="#">ДРУГОЕ</a></li>
+				<li><a href="#">ДРУГОЕ</a></li>
+				<li><a href="#">ДРУГОЕ</a></li>
+				{% if app.user %}
+					<li><a href="{{ path('user_profile') }}"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+					<li><a href="{{ path('auth_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+				{% else %}
+					<li><a href="{{ path('auth_login') }}">ВХОД</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+		<section>
+			<article>
+				<h1>{% block header %}{% endblock %}</h1>
+				{% block body %}{% endblock %}
+			</article>
+			<aside>
+				<div class="block">sidebar 1</div>
+				<div class="block">sidebar 2</div>
+			</aside>
+		</section>
+		<footer>{{ 'now'|date('Y') }} myBASE</footer>
+	</div>
+	<script type="text/javascript" src="../public/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../public/js/libs.js"></script>
+</body>
+</html>

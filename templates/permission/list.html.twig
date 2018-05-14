@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Разрешения {% endblock %}
+{% block header %} Список разрешений {% endblock %}
+{% block body %}
+
+	<a href="{{ path('permission_add') }}">Добавить разрешение</a>
+<br><br>
+	{% for permission in permissions %}
+		<b>{{ permission.permission }}</b>
+			<a href='{{ path('permission_edit', {'id': permission.id}) }}'>
+				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			</a>
+			<a href='{{ path('permission_delete', {'id': permission.id}) }}'>
+				<i class="fa fa-trash-o" aria-hidden="true"></i>
+			</a>
+		<br>		
+		{{ permission.description }}
+
+		<br><br>
+	{% endfor %}
+
+{% endblock %}

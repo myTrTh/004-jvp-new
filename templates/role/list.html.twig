@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Роли {% endblock %}
+{% block header %} Список ролей {% endblock %}
+{% block body %}
+
+	<a href="{{ path('role_add') }}">Добавить роль</a>
+	<br><br>
+	{% for role in roles %}
+		{{ role.role }}
+			<a href='{{ path('role_edit', {'id': role.id}) }}'>
+				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+			</a>
+			<a href='{{ path('role_delete', {'id': role.id}) }}'>
+				<i class="fa fa-trash-o" aria-hidden="true"></i>
+			</a>
+			<a href='{{ path('role_permission', {'id': role.id}) }}'>
+				<i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+			</a>
+		<br>
+	{% endfor %}
+
+{% endblock %}

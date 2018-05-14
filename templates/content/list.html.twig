@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Контент {% endblock %}
+{% block header %} Контент {% endblock %}
+{% block body %}
+
+	{% if isPermission('content-control-all') or isPermission('content-control-own') %}
+		<a href="{{ path('content_add') }}">
+			<i class="fa fa-plus-square" aria-hidden="true"></i> Добавить контент
+		</a>
+		<br><br>
+	{% endif %}
+
+	{% for content in contents %}
+		<div class="content">
+			<h3>{{ content.title }}</h3>
+			{% if content.image %}
+				<div class="content-image">
+					<img src="../../public/images/content/content/{{ content.image }}">
+				</div>
+			{% endif %}
+			<div class="content-article">
+				{{ content.article|nl2br }}
+			</div>
+			<div class="content-info">
+				{% if isPermission('content-control-all') or (isPermission('content-control-own') and content.user_id == app.user.id) %}
+				<span class='content-control'>
+					<a href='{{ path('content_edit', {'id': content.id}) }}'>
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					</a>
+					<a href='{{ path('content_delete', {'id': content.id}) }}'>
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+					</a>
+				</span>
+				{% endif %}
+				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
+			</div>
+		</div>
+	{% endfor %}
+
+	<br><br>
+	{# page navigation #}
+	{% set page_name = 'content_list' %}
+	{% include 'pagenavigation.html.twig' %}
+
+{% endblock %}

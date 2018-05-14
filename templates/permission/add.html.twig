@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Добавить разрешения {% endblock %}
+{% block header %} Добавить разрешения {% endblock %}
+{% block body %}
+
+	<a href="{{ path('permission_list') }}">Назад к разрешениям</a>
+	<br><br>
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+
+	<form method='post' action='{{ path('permission_add') }}'>
+		<label>Разрешение<br><input type='text' name='permission' value='{{ lastРermission }}'></label>
+		<label>Описание<br><input type='text' name='description' value='{{ lastВescription }}'></label>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type='submit' name='submit_permission_add' value='Добавить разрешение'>
+	</form>
+
+{% endblock %}

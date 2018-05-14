@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Профиль {% endblock %}
+{% block header %} Профиль {% endblock %}
+{% block body %}
+
+		{% if app.user.image %}
+			<form method="post" action="{{ path('user_profile') }}">
+				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
+				<input type="submit" name="submit_delete_image" value="х">				
+			</form>
+			<img class="user-image" src="../../public/images/users/{{ app.user.image }}">
+		{% else %}
+			<i class="profile-image fa fa-user" aria-hidden="true"></i><br>
+		{% endif %}
+
+		{% if error %}
+			<div class="message-error">{{ error }}</div>
+		{% endif %}
+
+		<form method='post' enctype='multipart/form-data' action="{{ path('user_profile') }}">
+			<input type="file" name="userfile">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type="submit" name="submit_upload_image" value="Загрузить">
+		</form><br>
+		Логин: {{ app.user.username }}<br>
+		Email: {{ app.user.email }}<br>
+		Регистрация: {{ app.user.created_at|date('d.m.Y') }}<br>
+		<br><hr>
+		<a href='{{ path('user_change_password') }}'>Изменить пароль</a>
+
+{% endblock %}

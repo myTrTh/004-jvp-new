@@ -1,0 +1,11 @@
+# files
+/config/db_connection.php
+/config/email_connection.php
+null
+*/null
+*/*/null
+
+# folders
+/vendor/*
+/var/*
+/node_modules/

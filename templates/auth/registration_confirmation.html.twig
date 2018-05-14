@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Подтверждение регистрации {% endblock %}
+{% block header %} Подтверждение регистрации {% endblock %}
+{% block body %} 
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+
+{% endblock %}

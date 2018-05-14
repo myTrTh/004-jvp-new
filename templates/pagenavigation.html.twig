@@ -1,0 +1,42 @@
+{% set pages = (count/limit)|round(0, 'ceil') %}
+
+{# prev and next pages #}
+{% set prevpage = page - 1 %}
+{% set nextpage = page + 1 %}
+
+{% if page > 3 %}
+	{% set start = page - 2 %}
+{% endif %}
+
+{% set finish = start + 4 %}
+{% if finish > pages %}
+	{% set finish = pages %}
+{% endif %}
+
+{% if (finish - start) < 4 %}
+	{% set start = finish - 4 %}
+{% endif %}
+
+{% if start < 1 %}
+	{% set start = 1 %}
+{% endif %}
+
+<div class='pagenavigation'>
+	{% if pages > 1 %}
+		{% if page > 3 and finish > 5 %}
+			<span><a href="{{ path(page_name, {'page': 1}) }}"><<</a></span>
+			<span><a href="{{ path(page_name, {'page': prevpage}) }}"><</a></span>
+		{% endif %}	
+		{% for i in start..finish %}
+			{% if i == page %}
+				<span class='active'>{{ i }}</span>
+			{% else %}
+				<span><a href="{{ path(page_name, {'page': i}) }}">{{ i }}</a></span>
+			{% endif %}
+		{% endfor %}
+		{% if pages > finish %}
+			<span><a href="{{ path(page_name, {'page': nextpage}) }}">></a></span>
+			<span><a href="{{ path(page_name, {'page': pages}) }}">>></a></span>
+		{% endif %}
+	{% endif %}
+</div>

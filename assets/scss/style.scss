@@ -1,0 +1,333 @@
+// import
+@import '_flatpickr.min.css';
+@import '_font-awesome.scss';
+
+// fonts
+@font-face {
+	font-family: Open Sans Condensed Light;
+	src: url('../../public/fonts/OpenSansCondensed-Light.ttf')
+}
+
+$font_header: Open Sans Condensed Light;
+
+// mixins
+$site_width: 1200px;
+
+$site_width_collapse1: 750px;
+$site_width_collapse1_max: 751px;
+
+$nav_height: 50px;
+$nav_padding: 10px;
+
+$color_black: #000;
+$color_black2: #222;
+$color_black3: #333;
+$color_black3: #444;
+$color_black5: #555;
+$color_white: #fff;
+$color_grey: #999;
+$color_grey1: #F5F5F5;
+$color_grey2: #ccc;
+$color_red3: #CC3333;
+$color_green3: #228B22;
+
+// elements
+html, body, ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: $font_header;	
+	text-transform: uppercase;
+	margin: 0 0 .5em 0;
+	padding: 0;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.4em; }
+h5 { font-size: 1.2em; }
+h6 { font-size: 1em; }
+
+// main
+html, body {
+	font-size: 1em;
+	height: 100%;
+	color: $color_black3;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+	Helvetica Neue, sans-serif;
+}
+
+.wrapper {
+	margin: 0 auto;
+	min-height: 100%;
+	display: flex;
+	max-width: $site_width;
+	flex-direction: column;
+	background: #cbc;
+}
+
+header {
+	img {
+		width: 100%;
+		display: block;
+	}
+}
+
+// links
+a {
+	text-decoration: none;
+	color: $color_black3;
+	font-weight: 600;
+	transition: color .2s ease;
+}
+
+a:hover {
+	color: $color_black5;
+}
+
+// navigation
+
+nav {
+	min-height: $nav_height;
+	background: $color_black2;
+	font-family: $font_header;	
+	border: solid 1px #101010;
+	ul {
+		list-style-type: none;
+		display: flex;
+		flex-wrap: wrap;
+		min-height: $nav_height;
+		justify-content: flex-start;
+		font-weight: bold;
+		align-items: center;
+		li {
+			height: $nav_height;
+			display: flex;
+			cursor: pointer;
+			align-items: center;
+			a {
+				color: $color_grey;
+				padding: 0 $nav_padding;
+				text-decoration: none;
+				height: $nav_height;
+				width: 100%;
+				transition: all .2s ease-in-out;
+				display: flex;
+				align-items: center;
+			}
+			a:hover {
+				color: $color_white;
+				background: $color_black3;
+			}
+			img {
+				width: 50px;
+				position: relative;
+			}
+			@media screen and (max-width: $site_width_collapse1) {
+				width: 100%;
+				display: none;
+			}
+			.nav-toggle {
+				display: none;
+				@media screen and (max-width: $site_width_collapse1) {
+					display: block;
+				}
+			}
+		}
+		li:first-child {
+			padding: 0 $nav_padding 0 0;
+		}
+		li:nth-child(10) {
+			margin-left: auto;
+		}
+		.logo {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+}
+
+// content
+section {
+	flex: 1;
+	display: flex;
+	flex-wrap: wrap;
+	article {
+		flex: 4 1 350px;
+		background: $color_grey1;
+		padding: 5px;
+	}
+	aside {
+		flex: 1 1 250px;
+		background: #eeb;
+		display: flex;
+		height: auto;
+		flex-wrap: wrap;
+		align-content: flex-start;
+		.block {
+			flex: 1 1 250px;
+		}
+	}
+}
+
+footer {
+	height: 50px;
+	background: $color_black3;
+	display: flex;
+	font-family: $font_header;
+	font-weight: 600;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+}
+
+// form, input
+label {
+	display: block;
+	margin-bottom: .7em;
+}
+
+.input-wide {
+	width: 100%;
+	max-width: 100% !important;
+}
+
+// .textarea-wide {
+// 	width: 100%;
+// 	max-width: 100% !important;
+// 	border-radius: 4px;
+// 	border: solid 1px $color_grey2;
+// 	padding: 3px 5px;
+// 	margin-right: 5px;	
+// 	box-sizing: border-box;
+// 	height: 200px;	
+// }
+
+input, textarea {
+	height: 2em;
+	border-radius: 4px;
+	border: solid 1px $color_grey2;
+	padding: 0 5px;
+	margin-right: 5px;
+	max-width: 400px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+textarea {
+	width: 100%;
+	max-width: 100%;
+	height: 10em;
+	padding: 3px 5px;
+}
+
+input:focus, textarea:focus {
+	box-shadow:  0 0 5px $color_grey2;
+}
+
+input[type='submit'] {
+	padding: 5px 10px;
+	height: auto;
+	width: auto;
+	min-width: 70px;
+	background: $color_white;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-family: $font_header;
+}
+
+input[type='file'] {
+	border: none;
+	margin-bottom: 1em;
+}
+
+input[type='checkbox'] {
+	width: auto;
+}
+
+input[type='submit']:hover {
+	box-shadow:  0 0 5px $color_grey2;	
+}
+
+.checkbox-line {
+	display: flex;
+	align-items: center;
+	font-size: 0.9em;
+}
+
+.checkbox-text {
+	margin-left: 5px;
+}
+
+// profile
+.profile-image {
+	font-size: 6em;
+}
+
+.user-image {
+	max-width: 200px;
+}
+
+// info message
+.message-error {
+	font-size: .9em;
+	color: $color_red3;
+	margin: 1em 0;
+}
+
+.message-success {
+	font-size: .9em;
+	color: $color_green3;
+	margin: 1em 0;
+}
+
+// news 
+.content {
+	background-color: #DCDCDC;
+	border-radius: 0 5px;
+	padding: 1px 3px 3px 5px;
+	margin-bottom: 5px;
+}
+
+.content-image {
+	float: left;
+	margin: 0 5px 2px 0;
+	img {
+		max-width: 250px;
+		max-height: 250px;
+	}
+}
+
+.content-article {
+	line-height: 1.4;
+}
+
+.content-info {
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+	font-weight: 700;
+	font-size: .9em;
+	font-style: italic;
+	padding-right: 5px;
+	box-sizing: border-box;
+}
+
+.content-control {
+	float: left;
+}
+
+// pagenavigation
+.pagenavigation {
+	span {
+		padding: 3px;
+		font-size: 0.9em;
+		a {
+			font-size: inherit;
+			font-weight: 700;
+		}
+	}
+}

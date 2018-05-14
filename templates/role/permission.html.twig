@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Разрешения роли {% endblock %}
+{% block header %} Разрешения роли {% endblock %}
+{% block body %}
+
+	<a href='{{ path('role_list') }}'>Назад к ролям</a>
+	<br><br>
+	{% if role %}
+		<b>Роль: {{ role.role }}</b><br>
+
+		{% if error %}
+			<div class="message-error">{{ error }}</div>
+		{% endif %}
+		<br>
+		Разрешения:<br>
+		<form method='post' action='{{ path('role_permission', {'id': role.id }) }}'>
+			{% for permission in permissions %}
+					<div class='checkbox-line'>
+					{% if permission.id in role.permissions.keyBy('id')|keys %}
+						<input type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>{{ permission.permission }}<br>
+					{% else %}
+						<input type='checkbox' name='permissions[]' value='{{ permission.id }}'>{{ permission.permission }}<br>
+					{% endif %}
+					</div>
+			{% endfor %}
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='submit' name='submit_set_role_permissions' value='Установить'>
+		</form>
+
+	{% else %}
+		Роль не найдена
+	{% endif %}
+
+{% endblock %}
