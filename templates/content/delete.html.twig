@@ -4,8 +4,8 @@
 {% block header %} Удалить контент {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list') }}">Назад к контенту</a>
-	<br>
+	<a href="{{ path('content_list', {'type': type, 'page': getPageNumber()}) }}">Назад к контенту</a>
+	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div>
 	{% endif %}
@@ -14,17 +14,17 @@
 			<h3>{{ content.title }}</h3>
 			{% if content.image %}
 				<div class="content-image">
-					<img src="../../public/images/content/content/{{ content.image }}">
+					<img src="{{ app.path }}/images/content/{{ type }}/{{ content.image }}">
 				</div>
 			{% endif %}
 			<div class="content-article">
-				{{ content.article|nl2br }}
+				{{ textMode(content.article)|raw|nl2br }}
 			</div>
 			<div class="content-info">
 				- <a href="#">{{ content.author.username }}</a>, {{ content.created_at|date('d.m.Y') }}
 			</div>
 		</div>
-	<form method='post' action='{{ path('content_delete', {'id': content.id }) }}'>
+	<form method='post' action='{{ path('content_delete', {'type': type, 'id': content.id }) }}'>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 		<input type='submit' name='submit_content_delete' value='Удалить контент'>
 	</form>

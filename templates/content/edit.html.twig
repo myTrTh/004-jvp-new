@@ -4,28 +4,30 @@
 {% block header %} Редактировать контент {% endblock %}
 {% block body %}
 
-	<a href="{{ path('content_list') }}">Назад к контенту</a>
+	<a href="{{ path('content_list', {'type': type, 'page': getPageNumber()}) }}">Назад к контент</a>
 	<br><br>
 	{% if error %}
 		<div class="message-error">{{ error }}</div><br>
 	{% endif %}
 
-	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'id': content.id }) }}'>
+	<form method='post' enctype='multipart/form-data' action='{{ path('content_edit', {'type': type, 'id': content.id }) }}'>
 		<label>Заголовок<br><input type='text' name='title' value='{{ content.title }}'></label>
-		<label>Контент<br><textarea type='text' name='article'>{{ content.article }}</textarea></label>
+		<label>Контент<br>
+		{% include 'bbcode.html.twig' %}
+			<textarea type='text' name='article'>{{ content.article }}</textarea></label>
 		<input type="file" name="userfile"><br>
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
-		<input type='submit' name='submit_content_edit' value='Редактировать новость'>
+		<input type='submit' name='submit_content_edit' value='Редактировать контент'>
 	</form>
 	{% if content.image %}
 		<br>
-		<form method="post" action="{{ path('content_edit', {'id': content.id }) }}">
-			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
-			<input type="submit" name="submit_delete_image" value="x">
+		<form method="post" action="{{ path('content_edit', {'type': type, 'id': content.id }) }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input class='l-short' type="submit" name="submit_delete_image" value="x">
 		</form>
-		<div class="content-image" >
-			<img src="../../public/images/content/content/{{ content.image }}">
-		</div>			
+				<div class="content-image">
+					<img src="{{ app.path }}/images/content/{{ type }}/{{ content.image }}">
+				</div>		
 	{% endif %}	
 
 {% endblock %}

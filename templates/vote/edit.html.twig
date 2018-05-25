@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Редактировать опрос {% endblock %}
+{% block header %} Редактировать опрос {% endblock %}
+{% block body %}
+
+	<a href="{{ path('vote_list', {'page': getPageNumber()}) }}">Назад к опросам</a>
+	<br><br>
+	{% if error %}
+		<div class="message-error">{{ error }}</div><br>
+	{% endif %}
+
+		<div class="content">
+			<h3>{{ vote.title }}</h3>
+			{% for option in vote.options %}
+				{{ option.title }}<br>
+			{% endfor %}
+		</div>
+	{% if vote.status == 1 %}
+		<form method='post' action='{{ path('vote_edit', {'id': vote.id }) }}'>
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='submit' name='submit_vote_edit' value='Завершить опрос'>
+		</form>
+	{% elseif vote.status == 0 %}
+		<b>Опрос завершен</b>
+	{% endif %}
+
+{% endblock %}

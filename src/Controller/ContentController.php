@@ -5,19 +5,23 @@ namespace App\Controller;
 use App\Core\Controller;
 use App\Model\Content;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ContentController extends Controller
 {
-	public function list($page)
+	public function list($type, $page)
 	{
+		$this->pageKeeper($page);
+
 		$this->container['db'];
 
 		$limit = 10;
 		$offset = ($page - 1) * $limit;
-		$contents = Content::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
-		$count = Content::orderBy('id', 'desc')->count();
+		$contents = $this->getContentData($type, $offset, $limit);
+		$count = Content::where('type', $type)->orderBy('id', 'desc')->count();
 
-		return $this->render('content/list.html.twig', [
+		return $this->render($type.'/list.html.twig', [
+			'type' => $type,
 			'contents' => $contents,
 			'page' => $page,
 			'limit' => $limit,
@@ -25,7 +29,7 @@ class ContentController extends Controller
 		]);
 	}
 
-	public function add()
+	public function add($type)
 	{
 		if (!$this->container['userManager']->isPermission('content-control-all') && !$this->container['userManager']->isPermission('content-control-own'))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
@@ -41,20 +45,21 @@ class ContentController extends Controller
 
 		if ($request->get('submit_content_add')) {
 
-			$error = $this->container['contentManager']->add($request);
+			$error = $this->container['contentManager']->add($type, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_list');
+				return $this->redirectToRoute('content_list', ['type' => $type]);
 		}
 
-		return $this->render('content/add.html.twig', [
+		return $this->render($type.'/add.html.twig', [
+			'type' => $type,
 			'error' => $error,
 			'lastTitle' => $lastTitle,
 			'lastArticle' => $lastArticle
 		]);
 	}
 
-	public function edit($id)
+	public function edit($type, $id)
 	{
 		$this->container['db'];
 
@@ -74,27 +79,28 @@ class ContentController extends Controller
 
 		if ($request->get('submit_content_edit')) {
 
-			$error = $this->container['contentManager']->edit($id, $request);
+			$error = $this->container['contentManager']->edit($type, $id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_edit', ['id' => $id]);
+				return $this->redirectToRoute('content_edit', ['type' => $type, 'id' => $id]);
 		}
 
 		if ($request->get('submit_delete_image')) {
 
-			$error = $this->container['contentManager']->deleteImage($id, $request);
+			$error = $this->container['contentManager']->deleteImage($type, $id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_edit', ['id' => $id]);
+				return $this->redirectToRoute('content_edit', ['type' => $type, 'id' => $id]);
 		}				
 
-		return $this->render('content/edit.html.twig', [
+		return $this->render($type.'/edit.html.twig', [
+			'type' => $type,
 			'error' => $error,
 			'content' => $content
 		]);
 	}
 
-	public function delete($id)
+	public function delete($type, $id)
 	{
 		$this->container['db'];
 
@@ -113,15 +119,23 @@ class ContentController extends Controller
 
 		if ($request->get('submit_content_delete')) {
 
-			$error = $this->container['contentManager']->delete($id, $request);
+			$error = $this->container['contentManager']->delete($type, $id, $request);
 
 			if ($error === null)
-				return $this->redirectToRoute('content_list');
+				return $this->redirectToRoute('content_list', ['type' => $type, 'id' => $id]);
 		}
 
-		return $this->render('content/delete.html.twig', [
+		return $this->render($type.'/delete.html.twig', [
+			'type' => $type,
 			'error' => $error,
 			'content' => $content
 		]);
-	}	
+	}
+
+	private function getContentData(string $type, int $offset, int $limit)
+	{
+		$this->container['db'];
+
+		return Content::where('type', $type)->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+	}
 }

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Controller
 {
@@ -40,5 +41,20 @@ class Controller
 		$url = $generator->generate($route, $parameters);
 
 		return $this->redirectUrl($url, $status);
-    }	
+    }
+
+ 	public function pageKeeper($page)
+ 	{
+ 		$session = new Session();
+		$session->set('page', $page);
+ 	}
+
+ 	public function getPageNumber(): int
+ 	{
+ 		$session = new Session(); 		
+ 		if ($session->get('page'))
+ 			return $session->get('page');
+ 		else
+ 			return 1;
+ 	}    
 }

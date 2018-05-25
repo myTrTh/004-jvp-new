@@ -7,7 +7,7 @@ return [
 		'password-min' 				=> 4
 	],
 	'auth'      => [
-		'registration_confirmation' => false,
+		'registration_confirmation' => true,
 		'token_confirmation_time'	=> 84600,
 		'lifetime'				    => 2592000,
 		'lifetime_long'				=> 15000000,
@@ -26,5 +26,7 @@ return [
 		2 => 'ROLE_MODERATOR',
 		3 => 'ROLE_ADMIN',
 		4 => 'ROLE_SUPER_ADMIN'
-	]
+	],
+	'assets'                        => '../../public',
+	'filepath'                      => __DIR__.'/../public/'
 ];

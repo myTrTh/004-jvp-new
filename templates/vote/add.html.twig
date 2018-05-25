@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Добавить опрос {% endblock %}
+{% block header %} Добавить опрос {% endblock %}
+{% block body %}
+
+	<a href="{{ path('vote_list', {'page': getPageNumber()}) }}">Назад к опросам</a>
+	<br>
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}<br>
+	<form method='post' enctype='multipart/form-data' action='{{ path('vote_add') }}'>
+		<label>Заголовок<br><input type='text' name='title' value='{{ lastTitle }}'></label>
+		<label>Количество возможных ответов<br><input type='text' class='length-extra-short' name='type' value='{{ lastType }}'><span class='label-helper'>0 - неограничено</span></label>
+		<label>Варианты ответа<br>
+		<div class="vote-options">
+			{% if lastVoteOptions and lastVoteOptions|length == 1 %}
+				{% for option in lastVoteOptions %}
+					<input type="text" name="vote_options[]" value="{{ option }}"><br>
+				{% endfor %}
+				<input type="text" name="vote_options[]"><br>
+			{% elseif lastVoteOptions and lastVoteOptions|length > 1 %}
+				{% for option in lastVoteOptions %}
+					<input type="text" name="vote_options[]" value="{{ option }}"><br>
+				{% endfor %}
+			{% else %}
+				<input type="text" name="vote_options[]"><br>
+				<input type="text" name="vote_options[]"><br>
+			{% endif %}
+		</div>
+		<div class="rule-buttons">
+			<div class="button" id="add_option">+ ответ</div>
+			<div class="button" id="remove_option">- ответ</div>
+		</div>
+		<br>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type='submit' name='submit_vote_add' value='Добавить опрос'>
+	</form>
+
+{% endblock %}

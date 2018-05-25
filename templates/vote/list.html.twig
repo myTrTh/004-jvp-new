@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Опросы {% endblock %}
+{% block header %} Опросы {% endblock %}
+{% block body %}
+
+	{% if isPermission('content-control-all') or isPermission('content-control-own') %}
+		<a href="{{ path('vote_add') }}">
+			<i class="fa fa-plus-square" aria-hidden="true"></i> Добавить опрос
+		</a>
+		<br><br>
+	{% endif %}
+
+	<div class="content">
+	{% for vote in votes %}
+			<div class="vote-title">
+				{% if vote.status == 1 %}
+					<i class="fa fa-circle bg-green" aria-hidden="true"></i>
+				{% elseif vote.status == 0 %}
+					<i class="fa fa-circle" aria-hidden="true"></i>
+				{% endif %}
+				<a href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a>
+				{% if isPermission('content-control-all') or (isPermission('content-control-own') and vote.user_id == app.user.id) %}
+					<span class='control-panel-ed'>
+					<a href='{{ path('vote_edit', {'id': vote.id}) }}'>
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					</a>
+					<a href='{{ path('vote_delete', {'id': vote.id}) }}'>
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+					</a>
+					</span>
+				{% endif %}				
+			</div>
+	{% endfor %}
+	</div>
+
+	{# page navigation #}
+	{% set page_name = 'vote_list' %}
+	{% include 'pagenavigation.html.twig' %}
+
+{% endblock %}

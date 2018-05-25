@@ -6,7 +6,7 @@ use Symfony\Component\Routing\RouteCollection;
 $routes = new RouteCollection();
 
 // app routes
-$routes->add('app_index', new Route('/', array('_controller' => 'App\Controller\ContentController::list', 'page' => 1), array('page' => '[0-9]+')));
+$routes->add('app_index', new Route('/', array('_controller' => 'App\Controller\ContentController::list', 'type' => 'content', 'page' => 1), array('type' => 'content', 'page' => '[0-9]+')));
 
 // error routes
 $routes->add('error', new Route('/error/{errno}', array('_controller' => 'App\Controller\ErrorController::error'), array('errno' => '403|404|500')));
@@ -45,12 +45,21 @@ $routes->add('admin_users', new Route('/admin', array('_controller' => 'App\Cont
 $routes->add('admin_user', new Route('/admin/user/{id}', array('_controller' => 'App\Controller\Admin\AdminController::user'), array('id' => '[0-9]+')));
 
 // content routes
-$routes->add('content_list', new Route('/content/{page}', array('_controller' => 'App\Controller\ContentController::list', 'page' => 1), array('page' => '[0-9]+')));
-$routes->add('content_add', new Route('/content/add', array('_controller' => 'App\Controller\ContentController::add')));
-$routes->add('content_edit', new Route('/content/edit/{id}', array('_controller' => 'App\Controller\ContentController::edit'), array('id' => '[0-9]+')));
-$routes->add('content_delete', new Route('/content/delete/{id}', array('_controller' => 'App\Controller\ContentController::delete'), array('id' => '[0-9]+')));
+$routes->add('content_list', new Route('/{type}/{page}', array('_controller' => 'App\Controller\ContentController::list', 'type' => 'content', 'page' => 1), array('type' => 'content', 'page' => '[0-9]+')));
+$routes->add('content_add', new Route('/{type}/add', array('_controller' => 'App\Controller\ContentController::add', 'type' => 'content'), array('type' => 'content')));
+$routes->add('content_edit', new Route('/{type}/edit/{id}', array('_controller' => 'App\Controller\ContentController::edit', 'type' => 'content'), array('type' => 'content', 'id' => '[0-9]+')));
+$routes->add('content_delete', new Route('/{type}/delete/{id}', array('_controller' => 'App\Controller\ContentController::delete', 'type' => 'content'), array('type' => 'content', 'id' => '[0-9]+')));
 
 // guestbook routes
 $routes->add('guestbook', new Route('/guestbook/{page}', array('_controller' => 'App\Controller\GuestbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));
+
+// votes routes
+$routes->add('vote_list', new Route('/votes/{page}', array('_controller' => 'App\Controller\VoteController::list', 'page' => 1), array('page' => '[0-9]+')));
+$routes->add('vote_show', new Route('/vote/{id}/{access}', array('_controller' => 'App\Controller\VoteController::show', 'id' => 1, 'access' => 'close'), array('id' => '[0-9]+', 'access' => 'open|close')));
+$routes->add('vote_add', new Route('/vote/add', array('_controller' => 'App\Controller\VoteController::add')));
+$routes->add('vote_edit', new Route('/vote/edit/{id}', array('_controller' => 'App\Controller\VoteController::edit'), array('id' => '[0-9]+')));
+$routes->add('vote_delete', new Route('/vote/delete/{id}', array('_controller' => 'App\Controller\VoteController::delete'), array('id' => '[0-9]+')));
+$routes->add('ajax_vote_show', new Route('ajax/vote/show', array('_controller' => 'App\Controller\VoteController::ajax_show')));
+$routes->add('ajax_vote_send', new Route('ajax/vote/send', array('_controller' => 'App\Controller\VoteController::ajax_send')));
 
 return $routes;
