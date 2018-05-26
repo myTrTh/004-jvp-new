@@ -8,14 +8,14 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://myframework/
+            url: http://base/
             query:
                 env: 'test'            
         - \Helper\Acceptance
         - Db:
-            dsn: 'mysql:host=localhost;dbname=testmyframework'
+            dsn: 'mysql:host=localhost;dbname=testbase'
             user: 'root'
             password: '123'
             dump: 'tests/_data/dump.sql'
-            populate: true
-            cleanup: true
+            populate: false
+            cleanup: false

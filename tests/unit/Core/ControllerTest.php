@@ -5,6 +5,7 @@ use App\Core\Controller;
 use App\Core\ServiceProvider;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ControllerTest extends \Codeception\Test\Unit
 {
@@ -39,5 +40,15 @@ class ControllerTest extends \Codeception\Test\Unit
     public function testControllerRedirectToRoute()
     {
         $this->assertInstanceOf(RedirectResponse::class, $this->controller->redirectToRoute('app_index'));
+    }
+
+    public function testPageKeeper()
+    {
+        $default = 1;
+        $this->assertEquals($default, $this->controller->getPageNumber());
+
+        $page = 4;
+        $this->controller->pageKeeper($page);
+        $this->assertEquals($page, $this->controller->getPageNumber());
     }
 }

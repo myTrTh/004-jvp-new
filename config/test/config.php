@@ -20,5 +20,13 @@ return [
 		'gc_maxlifetime' 			=> 15000000,
 		'gc_probability' 			=> 1,
 		'gc_divisor' 				=> 10
-	]
+	],
+	'role_hierarchy'					=> [
+		1 => 'ROLE_USER',
+		2 => 'ROLE_MODERATOR',
+		3 => 'ROLE_ADMIN',
+		4 => 'ROLE_SUPER_ADMIN'
+	],
+	'assets'                        => '../../public',
+	'filepath'                      => __DIR__.'/../public/'
 ];

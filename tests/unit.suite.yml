@@ -8,7 +8,7 @@ modules:
         - Asserts
         - \Helper\Unit
         - Db:
-            dsn: 'mysql:host=localhost;dbname=testmyframework'
+            dsn: 'mysql:host=localhost;dbname=testbase'
             user: 'root'
             password: '123'
             dump: 'tests/_data/dump.sql'

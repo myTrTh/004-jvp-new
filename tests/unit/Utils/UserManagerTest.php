@@ -114,16 +114,59 @@ class UserManagerTest extends \Codeception\Test\Unit
 
         $this->session->set('user_id', 1);
         $this->assertArrayHasKey('ROLE_ADMIN', $this->container['userManager']->getRoles());
-
-        // $this->session->set('user_id', 16);
-        // $this->assertArrayHasKey('ROLE_ADMIN', $this->container['userManager']->getRoles());        
     }
+
+    public function testGetUserRoles()
+    {
+        $user_id = 1;
+        $this->assertArrayHasKey('ROLE_ADMIN', $this->container['userManager']->getUserRoles($user_id));
+
+        $user_id = 999;
+        $this->assertArrayHasKey('NO_ROLE', $this->container['userManager']->getUserRoles($user_id));        
+    }    
 
     public function testIsAccess()
     {
-        $this->assertFalse($this->container['userManager']->isAccess('ROLE_NO_ACCESS'));
-
         $this->session->set('user_id', 1);
+
+        $this->assertFalse($this->container['userManager']->isAccess('ROLE_NO_ACCESS'));
         $this->assertTrue($this->container['userManager']->isAccess('ROLE_ADMIN'));
+    }
+
+    public function testIsUserAccess()
+    {
+        $user_id = 1;
+
+        $this->assertFalse($this->container['userManager']->isUserAccess($user_id, 'ROLE_NO_ACCESS'));
+        $this->assertTrue($this->container['userManager']->isUserAccess($user_id, 'ROLE_ADMIN'));
+    }
+
+    public function testIsPermission()
+    {
+        $this->session->set('user_id', 1);
+
+        $this->assertFalse($this->container['userManager']->isPermission('guestbook-edit'));
+        $this->assertTrue($this->container['userManager']->isPermission('guestbook-write'));
+    }
+
+    public function testIsUserPermission()
+    {
+        $user_id = 1;
+
+        $this->assertFalse($this->container['userManager']->isUserPermission($user_id, 'guestbook-edit'));
+        $this->assertTrue($this->container['userManager']->isUserPermission($user_id, 'guestbook-write'));
+    }
+
+    public function testHierarchyAccess()
+    {
+        $user_1_id = 1;
+        $user_2_id = 2;
+       
+        $this->session->set('user_id', $user_1_id);
+
+        $this->assertTrue($this->container['userManager']->hierarchyAccess($user_2_id));
+        
+        $this->session->set('user_id', $user_2_id);
+        $this->assertFalse($this->container['userManager']->hierarchyAccess($user_1_id));        
     }
 }
