@@ -5,7 +5,8 @@
 // fonts
 @font-face {
 	font-family: Open Sans Condensed Light;
-	src: url('../../public/fonts/OpenSansCondensed-Light.ttf')
+	src: url('../../public/fonts/OpenSansCondensed-Light.ttf');
+	// src: url('/fonts/OpenSansCondensed-Light.ttf');
 }
 
 $font_header: Open Sans Condensed Light;
@@ -461,7 +462,7 @@ input[type='submit']:hover, .button:hover {
 	font-size: 2em;
 }
 
-.hidden-date {
+.hidden {
 	display: none;
 }
 
