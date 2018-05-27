@@ -17,12 +17,12 @@ class AdminManager extends Manager
 		// prepare data
 		$roles = $request->get('roles');
 		if (count($roles) == 0)
-			return 'У пользователя должна быть минимум одна роль';
+			return 'У пользователя должна быть как минимум одна роль.';
 
 		$user = User::where('id', $id)->first();
 
 		if (!is_object($user) && !($user instanceof User))
-			return 'Пользователь не найден';
+			return 'Пользователь не найден.';
 
 		$r = $user->roles->each(function ($role) use (&$roles, $user) {
 			$id = $role['id'];
@@ -62,7 +62,7 @@ class AdminManager extends Manager
 		$user = User::where('id', $id)->first();
 
 		if (!is_object($user) && !($user instanceof User))
-			return 'Пользователь не найден';
+			return 'Пользователь не найден.';
 
 		$user->permissions()->sync($permissions);
 
