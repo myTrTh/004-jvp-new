@@ -1,15 +1,15 @@
-// NAVIGATION
-
-$(document).ready(function() {
-	$('.nav-toggle').on('click', function() {
-		$('nav > ul > li').not('.logo').slideToggle('fast');
+// menu show 
+$(function(){
+	$('nav li a').on('mouseenter', function(){
+		$('ul.down-menu', this).stop(true, false).css('display', 'flex');
 	});
+});
 
-	$(window).resize(function() {
-		if ( $(window).width() > 750) {
-			$('nav > ul > li').removeAttr('style');
-		}
-	});	
+// menu hide //
+$(function(){
+	$('nav li ul').on('mouseleave', function(){
+		$('ul', this).stop(true, false).slideUp(300);
+	});
 });
 
 // bb code

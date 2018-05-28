@@ -17,13 +17,13 @@ $site_width: 1200px;
 $site_width_collapse1: 750px;
 $site_width_collapse1_max: 751px;
 
-$nav_height: 50px;
+$nav_height: 30px;
 $nav_padding: 10px;
 
 $color_black: #000;
 $color_black2: #222;
 $color_black3: #333;
-$color_black3: #444;
+$color_black4: #444;
 $color_black5: #555;
 $color_black7: #777;
 $color_white: #fff;
@@ -41,6 +41,14 @@ $color_link_active: #0078a0;
 html, body, ul, li {
 	margin: 0;
 	padding: 0;
+}
+
+ul, li {
+	list-style-type: none;
+}
+
+body {
+	background-color: #F7F7F9;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -71,8 +79,8 @@ html, body {
 	min-height: 100%;
 	display: flex;
 	max-width: $site_width;
+	background-color: $color_white;
 	flex-direction: column;
-	background: #cbc;
 }
 
 header {
@@ -95,99 +103,138 @@ a:hover {
 }
 
 // navigation
-
 nav {
-	min-height: $nav_height;
-	background: $color_black2;
-	font-family: $font_header;	
+	height: $nav_height;
+	background-color: $color_black3;
+	font-family: $font_header;
 	border: solid 1px #101010;
 	ul {
-		list-style-type: none;
 		display: flex;
-		flex-wrap: wrap;
-		min-height: $nav_height;
-		justify-content: flex-start;
-		font-weight: bold;
+		justify-content: space-around;
 		align-items: center;
+		height: inherit;
+		z-index: 999;
 		li {
-			height: $nav_height;
-			display: flex;
-			cursor: pointer;
+			flex-basis: 100%;
+			height: inherit;	
 			align-items: center;
-			a {
-				color: $color_grey;
-				padding: 0 $nav_padding;
-				text-decoration: none;
-				height: $nav_height;
-				width: 100%;
-				transition: all .2s ease-in-out;
-				display: flex;
-				align-items: center;
-			}
-			a:hover {
-				color: $color_white;
-				background: $color_black3;
-			}
-			img {
-				width: 50px;
-				position: relative;
-			}
-			@media screen and (max-width: $site_width_collapse1) {
-				width: 100%;
+			ul.down-menu {
 				display: none;
-			}
-			.nav-toggle {
-				display: none;
-				@media screen and (max-width: $site_width_collapse1) {
-					display: block;
+				flex-basis: 100%;
+				flex-wrap: wrap;
+				z-index: 999;
+				li {
+					z-index: 999;
+				}
+				a {
+					background-color: $color_black3;
+					font-size: 1em;	
+					z-index: 999;
 				}
 			}
 		}
-		li:first-child {
-			padding: 0 $nav_padding 0 0;
-		}
-		li:nth-child(10) {
-			margin-left: auto;
-		}
-		.logo {
+		a {
+			color: $color_grey;
+			height: inherit;
+			transition: all .2s ease-in-out;			
+			width: 100%;
+			font-size: 1.2em;
 			display: flex;
-			justify-content: space-between;
+			align-items: center;
+			justify-content: center;
+		}
+		a:hover {
+			color: $color_white;
+			background: $color_black4;
+		}
+		.logo:hover {
+			color: none !important;
+			background: none !important;
 		}
 	}
 }
+
+// nav {
+// 	min-height: $nav_height;
+// 	background: $color_black3;
+// 	font-family: $font_header;	
+// 	border: solid 1px #101010;
+// 	ul {
+// 		list-style-type: none;
+// 		display: flex;
+// 		flex-wrap: wrap;
+// 		min-height: $nav_height;
+// 		justify-content: space-around;
+// 		font-weight: bold;
+// 		align-items: center;
+// 		li {
+// 			height: $nav_height;
+// 			display: flex;
+// 			cursor: pointer;
+// 			align-items: center;
+// 			ul {
+// 				display: none;
+// 			}
+// 			a {
+// 				color: $color_grey;
+// 				padding: 0 $nav_padding;
+// 				text-decoration: none;
+// 				font-size: 1.2em;
+// 				height: $nav_height;
+// 				width: 100%;
+// 				transition: all .2s ease-in-out;
+// 				display: flex;
+// 				align-items: center;
+// 			}
+// 			a:hover {
+// 				color: $color_white;
+// 				background: $color_black3;
+// 			}
+// 			img {
+// 				width: 60px;
+// 				position: relative;
+// 			}
+// 			@media screen and (max-width: $site_width_collapse1) {
+// 				width: 100%;
+// 				display: none;
+// 			}
+// 			.nav-toggle {
+// 				display: none;
+// 				@media screen and (max-width: $site_width_collapse1) {
+// 					display: block;
+// 				}
+// 			}
+// 		}
+// 		li:hover {
+// 			background-color: $color_black4;
+// 		}
+// 		li:first-child {
+// 			padding: 0 $nav_padding 0 0;
+// 		}
+// 		.logo {
+// 			display: flex;
+// 			justify-content: space-between;
+// 		}
+// 	}
+// }
 
 // content
 section {
 	flex: 1;
 	display: flex;
 	flex-wrap: wrap;
-	article {
-		flex: 4 1 350px;
-		background: $color_grey1;
-		padding: 5px;
-	}
-	aside {
-		flex: 1 1 250px;
-		background: #eeb;
-		display: flex;
-		height: auto;
-		flex-wrap: wrap;
-		align-content: flex-start;
-		.block {
-			flex: 1 1 250px;
-		}
-	}
 }
 
 footer {
-	height: 50px;
+	height: $nav_height;
 	background: $color_black3;
 	display: flex;
 	font-family: $font_header;
-	font-weight: 600;
+	font-weight: 100;
+	font-size: .9em;
 	justify-content: center;
 	align-items: center;
-	color: #fff;
+	color: $color_grey;
 }
 
 // form, input

@@ -18,12 +18,12 @@ $role_user->save();
 
 // ROLE MODERATOR
 $role_admin = Role::where('role', 'ROLE_MODERATOR')->first();
-$role_admin->permissions()->sync([2, 3, 4, 5]);
+$role_admin->permissions()->sync([2, 3, 4, 5, 10, 11]);
 $role_admin->save();
 
 // ROLE ADMIN
 $role_super_admin = Role::where('role', 'ROLE_ADMIN')->first();
-$role_super_admin->permissions()->sync([6]);
+$role_super_admin->permissions()->sync([6, 10, 11]);
 $role_super_admin->save();
 
 // ROLE SUPER ADMIN

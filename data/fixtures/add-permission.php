@@ -51,3 +51,12 @@ $permission8->save();
 $permission9 = new Permission();
 $permission9->permission = 'role-control-admin';
 $permission9->save();
+
+// TOURNAMENT PERMISSIONS
+$permission10 = new Permission();
+$permission10->permission = 'tournament-control';
+$permission10->save();
+
+$permission11 = new Permission();
+$permission11->permission = 'tour-control';
+$permission11->save();

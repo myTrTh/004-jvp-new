@@ -17,6 +17,7 @@ Capsule::schema()->create('users', function($table){
 	$table->string('password');
 	$table->string('image')->nullable();
 	$table->boolean('is_active');	
+	$table->text('options')->nullable();
 	$table->string('confirmation_token')->nullable();
 	$table->dateTime('confirmation_datetime')->nullable();	
 	$table->softDeletes();	
