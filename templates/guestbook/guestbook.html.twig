@@ -21,6 +21,7 @@
 		<div class="guestbook" id="post{{ message.id }}">
 			<div class="guestbook-head">
 				<div class="guestbook-head-user">{{ message.author.username }}</div>
+
 				<div class="guestbook-image">
 				{% if message.author.image %}
 					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
@@ -28,8 +29,11 @@
 						<i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br>
 				{% endif %}
 				</div>
-				<div class="guestbook-post-count">Сообщений: {{ message_count[message.author.id] }}</div>
-			</div>
+				<div class="guestbook-post-count">Постов: {{ message_count[message.author.id] }}</div>
+				<div class="guestbook-head-star">
+					<i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+				</div>	
+			</div>		
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">
 					<span class="guestbook-content-date">{{ beautiful_date(message.created_at) }}</span>

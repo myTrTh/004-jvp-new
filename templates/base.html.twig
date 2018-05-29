@@ -28,12 +28,12 @@
 						<li><a href="">СТАТИСТИКА</a></li>
 					</ul>
 				</li>
-				<li><a href="#">ГЕСТА</a></li>
+				<li><a href="{{ path('guestbook') }}">ГЕСТА</a></li>
 				{% if app.user %}
 					<li><a href="#">INFO</a>
 						<ul class='down-menu'>
-							<li><a href="">ПРОФИЛЬ</a></li>
-							<li><a href="">ВЫЙТИ</a></li>
+							<li><a href="{{ path('user_profile') }}">ПРОФИЛЬ</a></li>
+							<li><a href="{{ path('auth_logout') }}">ВЫЙТИ</a></li>
 						</ul>
 					</li>
 				{% else %}

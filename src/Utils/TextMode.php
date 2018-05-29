@@ -21,12 +21,12 @@ class TextMode
 		$message = preg_replace($patternB, "<span class='bbunderline'>$1</span>", $message);
 		$patternB = "/\[s\](.*?)\[\/s\]/si";
 		$message = preg_replace($patternB, "<del>$1</del>", $message);
-		// $patternB = "/\[left\](.*?)\[\/left\]/si";
-		// $message = preg_replace($patternB, "<span class='left'>$1</span>", $message);
-		// $patternB = "/\[right\](.*?)\[\/right\]/si";
-		// $message = preg_replace($patternB, "<span class='right'>$1</span>", $message);
-		// $patternB = "/\[center\](.*?)\[\/center\]/si";
-		// $message = preg_replace($patternB, "<span class='center'>$1</span>", $message);
+		$patternB = "/\[left\](.*?)\[\/left\]/si";
+		$message = preg_replace($patternB, "<span class='left'>$1</span>", $message);
+		$patternB = "/\[right\](.*?)\[\/right\]/si";
+		$message = preg_replace($patternB, "<span class='right'>$1</span>", $message);
+		$patternB = "/\[center\](.*?)\[\/center\]/si";
+		$message = preg_replace($patternB, "<span class='center'>$1</span>", $message);
 		// $patternB = "/post(?:\:|\/)([0-9]+)/si";
 		// $message = preg_replace($patternB, "<a href='/post/$1'>post/$1</a>", $message);		
 

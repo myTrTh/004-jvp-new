@@ -14,8 +14,7 @@ $font_header: Open Sans Condensed Light;
 // mixins
 $site_width: 1200px;
 
-$site_width_collapse1: 750px;
-$site_width_collapse1_max: 751px;
+$site_width_collapse: 400px;
 
 $nav_height: 30px;
 $nav_padding: 10px;
@@ -28,6 +27,7 @@ $color_black5: #555;
 $color_black7: #777;
 $color_white: #fff;
 $color_grey: #999;
+$color_grey_light: #898989;
 $color_grey1: #F5F5F5;
 $color_grey2: #ccc;
 $color_grey3: #6f707b;
@@ -133,7 +133,7 @@ nav {
 			}
 		}
 		.logo {
-			@media screen and (max-width: 399px) {
+			@media screen and (max-width: $site_width_collapse) {
 				display: none;
 			}
 		}
@@ -166,6 +166,10 @@ section {
 	padding: 10px;
 }
 
+article {
+	width: 100%;
+}
+
 footer {
 	height: $nav_height;
 	background: $color_black3;
@@ -190,6 +194,12 @@ label {
 
 .label-helper {
 	color: $color_grey3;
+}
+
+input.l-middle {
+	max-width: 400px;
+	width: 100%;
+	box-sizing: border-box;	
 }
 
 input, textarea, option, .button {
@@ -342,55 +352,55 @@ input[type='submit']:hover, .button:hover {
 	border-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	.guestbook-head {
-		flex: 0 0 160px;
+		flex: 0 1 160px;
 		font-family: $font_header;		
-		font-size: 1.1em;
+		font-size: 1.2em;
 		text-align: center;
-		padding: 5px;
+		padding: 10px 5px 5px;
 		box-sizing: border-box;
-		@media only all and (max-width: 440px) {
+		@media only all and (max-width: $site_width_collapse) {
 			display: flex;
 			flex: 0 0 100%;
 			text-align: left;
-			// background-color: $color_grey1;
-			background-color: #e2e2e2;
+			flex-wrap: wrap;
+			// background-color: #e2e2e2;
+			background-color: #d8d8d8;
 		}
-		@media only all and (min-width: 609px) and (max-width: 709px) {
-			display: flex;
-			flex: 0 0 100%;
-			text-align: left;
-			background-color: $color_grey1;
-		}		
 		.guestbook-image img {
 			border-radius: 3px;
 			max-width: 155px;
 			max-height: 200px;
-			@media only all and (max-width: 440px) {
+			@media only all and (max-width: $site_width_collapse) {
 				max-width: 50px;
 				max-height: 50px;
 				order: 1;
 			}
-			@media only all and (min-width: 609px) and (max-width: 709px) {
-				max-width: 50px;
-				max-height: 50px;
-				order: 1;				
-			}
 		}
 		.guestbook-head-user {
-			@media only all and (max-width: 440px) {
+			@media only all and (max-width: $site_width_collapse) {
 				padding-left: 10px;
 				order: 2;
 			}
-			@media only all and (min-width: 609px) and (max-width: 709px) {
-				padding-left: 10px;
-				order: 2;
+
+		}
+		.guestbook-post-count {
+			font-size: .77em;
+			@media only all and (max-width: $site_width_collapse) {
+				display: none
 			}
 		}
+		.guestbook-head-star {
+			font-size: .8em;
+			color: #CAA91A;
+			@media only all and (max-width: $site_width_collapse) {
+				display: none
+			}	
+		}		
 	}
 	.guestbook-content {
-		flex: 1 1 250px;
+		flex: 1 1 230px;
 		padding: 5px;
 		overflow: hidden;
 		word-wrap: break-word;
@@ -403,22 +413,22 @@ input[type='submit']:hover, .button:hover {
 			.guestbook-content-quote {
 				float: right;
 				cursor: pointer;
+				color: $color_grey_light;
+				font-size: .9em;
+			}
+			.guestbook-content-date {
+				color: $color_grey_light;
+				font-size: .9em;
 			}
 		}
 		.guestbook-content-post {
-			font-size: .9em;
+			font-size: 1em;
 		}
 	}
 }
 
-.guestbook-post-count {
-	font-size: .7em;
-	@media only all and (max-width: 440px) {
-		display: none
-	}
-	@media only all and (min-width: 609px) and (max-width: 709px) {	
-		display: none;
-	}
+.quote:hover {
+	color: $color_grey;
 }
 
 .quote-author {
@@ -437,10 +447,9 @@ input[type='submit']:hover, .button:hover {
 	display: inline-block;
 	border-radius: 0 7px 7px 0;
 	border: solid 1px #dcdcdc;
-	margin-bottom: 5px;
+	margin-bottom: -10px;
 	font-size: .8rem;
 	width: 100%;
-	// color: $color_grey;
 	word-wrap: break-word;
 	word-break: break-all; /* для Opera и FireFox */
 	word-break: break-word; /* для Chrome */	
@@ -531,4 +540,43 @@ input[type='submit']:hover, .button:hover {
 // colors background
 .bg-green {
 	color: $color_green3;
+}
+
+// bb tags
+.bbpanel i {
+	text-align: center;
+	min-width: 18px;
+	border: 1px solid $color_grey_light;
+	color: $color_grey_light;
+	padding: 2px;
+	border-radius: 2px;
+	cursor: pointer;
+	margin-bottom: 2px;
+}
+
+.smilepanel {
+	display: none;
+	cursor: pointer;
+}
+
+.headsmile {
+	cursor: pointer;
+}
+
+.left {
+	text-align: left;
+	display: inline-block;
+	width: 100%;
+}
+
+.right {
+	display: inline-block;
+	text-align: right;
+	width: 100%;
+}
+
+.center {
+	display: inline-block;
+	text-align: center;
+	width: 100%;
 }
