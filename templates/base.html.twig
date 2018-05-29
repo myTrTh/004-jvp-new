@@ -10,7 +10,7 @@
 	<div class="wrapper">
 		<nav>
 			<ul>
-				<li><a class='logo' href="{{ path('app_index') }}">
+				<li class='logo'><a class='logo' href="{{ path('app_index') }}">
 					<img src="{{ app.path }}/images/interface/king.png">
 				</a></li>
 				<li><a href="{{ path('guestbook') }}">ТУРНИРЫ</a>
@@ -20,19 +20,33 @@
 						<li><a href="">ПРАВИЛА</a></li>
 					</ul>
 				</li>
-				<li><a href="{{ path('vote_list') }}">МЫ</a></li>
+				<li><a href="{{ path('vote_list') }}">МЫ</a>
+					<ul class='down-menu'>
+						<li><a href="">КОМАНДЫ</a></li>
+						<li><a href="">РЕЙТИНГ</a></li>
+						<li><a href="">ОПРОСЫ</a></li>
+						<li><a href="">СТАТИСТИКА</a></li>
+					</ul>
+				</li>
 				<li><a href="#">ГЕСТА</a></li>
-				{# {% if app.user %} #}
-				<li><a href="#">INFO</a></li>					
-				{# {% else %} #}
-					{# <li><a href="{{ path('auth_login') }}">ВХОД</a></li> #}
-				{# {% endif %} #}
+				{% if app.user %}
+					<li><a href="#">INFO</a>
+						<ul class='down-menu'>
+							<li><a href="">ПРОФИЛЬ</a></li>
+							<li><a href="">ВЫЙТИ</a></li>
+						</ul>
+					</li>
+				{% else %}
+					<li><a href="{{ path('auth_login') }}">ВХОД</a></li>
+				{% endif %}
 			</ul>
 		</nav>
 		<header><img src="{{ app.path }}/images/interface/head.jpg"></header>
 		<section>
-			<h1>{% block header %}{% endblock %}</h1>
-			{% block body %}{% endblock %}
+			<article>
+				<h1>{% block header %}{% endblock %}</h1>
+				{% block body %}{% endblock %}
+			</article>				
 		</section>
 		<footer>© JUVEPRO 2015 - {{ 'now'|date('Y') }} </footer>
 	</div>
