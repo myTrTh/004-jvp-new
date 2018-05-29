@@ -52,6 +52,7 @@ $routes->add('admin_user', new Route('/admin/user/{id}', array('_controller' => 
 
 // guestbook routes
 $routes->add('guestbook', new Route('/guestbook/{page}', array('_controller' => 'App\Controller\GuestbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));
+$routes->add('ajax_guestbook_rate', new Route('ajax/guestbook/rate', array('_controller' => 'App\Controller\GuestbookController::ajax_rate')));
 
 // votes routes
 $routes->add('vote_list', new Route('/votes/{page}', array('_controller' => 'App\Controller\VoteController::list', 'page' => 1), array('page' => '[0-9]+')));

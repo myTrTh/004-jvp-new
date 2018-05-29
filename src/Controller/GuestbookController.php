@@ -6,6 +6,7 @@ use App\Core\Controller;
 use App\Model\Guestbook;
 use App\Model\User;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class GuestbookController extends Controller
 {
@@ -17,17 +18,6 @@ class GuestbookController extends Controller
 		$offset = ($page - 1) * $limit;
 		$guestbook = Guestbook::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
 		$count = Guestbook::orderBy('id', 'desc')->count();
-
-		// message count
-		$user_messages = [];
-		foreach ($guestbook as $message)
-			$user_messages[$message->author->id] = $message->author->id;
-
-		$message_count = [];
-		foreach ($user_messages as $user_id) {
-			$user = User::where('id', $user_id)->first();
-			$message_count[$user_id] = $user->messages()->count();
-		}
 
 		$request = Request::createFromGlobals();
 		$lastGuestbook = trim($request->get('message'));
@@ -46,12 +36,64 @@ class GuestbookController extends Controller
 
 		return $this->render('guestbook/guestbook.html.twig', [
 			'guestbook' => $guestbook,
-			'message_count' => $message_count,
 			'page' => $page,
 			'limit' => $limit,
 			'count' => $count,
 			'error' => $error,
 			'lastGuestbook' => $lastGuestbook
 		]);
+	}
+
+	public function ajax_rate()
+	{
+		$this->container['db'];
+
+		// // if no user
+		$author = $this->container['userManager']->getUser();
+		if (!is_object($author) && !($author instanceof User)) {
+			$response = [
+				'error' => 1,
+				'error-message' => 'Вы не зарегистрированы.'
+			];
+			return new Response(json_encode($response));
+		}
+
+		if ($this->container['userManager']->isPermission('rate-action') === false)
+			return 'Вам запрещенно оценивать сообщения';
+
+		$request = Request::createFromGlobals();
+		$id = $request->get('id');
+		$sign = $request->get('sign');
+
+		if ($sign !== 'd' or $sign !== 'u') {
+			$response = [
+				'error' => 1,
+				'error-message' => 'Ошибка при голосовании.'
+			];
+			return new Response(json_encode($response));
+		}
+
+		if ($sign === 'u')
+			$s = 1;
+		else if ($sign === 'd')
+			$s = -1;
+
+		$message = Guestbook::where('id', $id)->first();
+		if (!is_object($message) && !($message instanceof Guestbook)) {
+			$response = [
+				'error' => 1,
+				'error-message' => 'Ошибка при голосовании.'
+			];
+			return new Response(json_encode($response));
+		}
+
+		$rate = new Rate();
+		$rate->message_id = $message->id;
+		$rate->author_id = $author->id;
+		$rate->user_id = $message->user_id;
+		$rate->sign = $s;
+		$rate->save();
+
+		return new Response(json_encode(1));
 	}
 }

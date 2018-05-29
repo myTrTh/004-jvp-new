@@ -56,7 +56,7 @@ class TextMode
 		// }
 		// 	// $message = preg_replace($patternB, "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span><div class='spoiler-body'>$1</div></div>", $message);
 	
-		$pattern_quote = "/(\[quote)(?:\ ?author=([a-zA-Z0-9а-яёА-ЯЁ\_\@]+))?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \-\.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
+		$pattern_quote = "/(\[quote)(?:\ ?author=([a-zA-Z0-9а-яёА-ЯЁ\_\@\ ]+))?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \-\.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
 		$how_quote = substr_count($message, "[quote");
 		for($i=0;$i<$how_quote;$i++) {
 			$message = preg_replace_callback($pattern_quote, function($matches) {
@@ -142,17 +142,19 @@ class TextMode
 			return "<a class='link-out' target='_blank' href='http://{$link}'>{$modelink}</a>";
 		}, $message);
 
-		// // smiles
-		// $patternS = "/(\:[a-z]+)/u";
-		// $message = preg_replace_callback($patternS, function($matches) {
-		// 	$smile = substr($matches[1], 1);
-		// 	$path = 'public/images/smiles/'.$smile.'.gif';
-		// 	$img_smile = "<img class='smile' src='/{$path}'>";
-		// 	if(file_exists($path))
-		// 		return $img_smile;
-		// 	else
-		// 		return $matches[1];
-		// }, $message);
+		// smiles
+		$patternS = "/(\:[a-z]+)/u";
+		$message = preg_replace_callback($patternS, function($matches) {
+			$smile = substr($matches[1], 1);
+			$assets = $this->container['assets'];
+			$path = '../public/images/smiles/'.$smile.'.gif';
+			$img_smile = "<img class='smile' src='{$path}'>";
+			if(file_exists($path)) {
+				return $img_smile;
+			} else {
+				return $matches[1];
+			}
+		}, $message);
 
 		return $message;
 	}

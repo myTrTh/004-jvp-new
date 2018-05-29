@@ -14,7 +14,8 @@ $font_header: Open Sans Condensed Light;
 // mixins
 $site_width: 1200px;
 
-$site_width_collapse: 400px;
+$site_middle_collapse: 500px;
+$site_width_collapse: 430px;
 
 $nav_height: 30px;
 $nav_padding: 10px;
@@ -354,12 +355,15 @@ input[type='submit']:hover, .button:hover {
 	flex-wrap: wrap;
 	margin-bottom: 20px;
 	.guestbook-head {
-		flex: 0 1 160px;
+		flex: 0 1 170px;
 		font-family: $font_header;		
 		font-size: 1.2em;
 		text-align: center;
-		padding: 10px 5px 5px;
+		padding: 10px 3px 3px;
 		box-sizing: border-box;
+		@media only all and (max-width: $site_middle_collapse) {		
+			flex-basis: 150px;
+		}
 		@media only all and (max-width: $site_width_collapse) {
 			display: flex;
 			flex: 0 0 100%;
@@ -372,18 +376,26 @@ input[type='submit']:hover, .button:hover {
 			border-radius: 3px;
 			max-width: 155px;
 			max-height: 200px;
+			@media only all and (max-width: $site_middle_collapse) {
+				max-width: 140px;
+				max-height: 180px;
+			}			
 			@media only all and (max-width: $site_width_collapse) {
 				max-width: 50px;
 				max-height: 50px;
 				order: 1;
 			}
 		}
-		.guestbook-head-user {
+		.guestbook-head-user, .guestbook-head-user-normal {
+			margin-bottom: 5px;
+			font-weight: 600;
 			@media only all and (max-width: $site_width_collapse) {
 				padding-left: 10px;
 				order: 2;
 			}
-
+		}
+		.guestbook-head-user-normal {
+			font-size: .88em;
 		}
 		.guestbook-post-count {
 			font-size: .77em;
@@ -414,15 +426,31 @@ input[type='submit']:hover, .button:hover {
 				float: right;
 				cursor: pointer;
 				color: $color_grey_light;
-				font-size: .9em;
+				font-size: .95em;
 			}
 			.guestbook-content-date {
 				color: $color_grey_light;
-				font-size: .9em;
+				font-size: .95em;
 			}
 		}
 		.guestbook-content-post {
 			font-size: 1em;
+		}
+	}
+	.guestbook-rate-panel {
+		color: $color_grey;
+		font-weight: 600;
+		font-size: .9em;
+		width: 100%;
+		display: flex;
+		flex-direction: row-reverse;
+		div {
+			width: 4em;
+			text-align: right;
+			padding-right: 5px;
+		}
+		.tumbler {
+			cursor: pointer;
 		}
 	}
 }
@@ -561,6 +589,10 @@ input[type='submit']:hover, .button:hover {
 
 .headsmile {
 	cursor: pointer;
+}
+
+.smile {
+	vertical-align: middle;
 }
 
 .left {

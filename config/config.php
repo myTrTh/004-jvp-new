@@ -3,7 +3,7 @@
 return [
 	'auth_rule' => [
 		'username-min' 				=> 3,
-		'username-max' 				=> 18,
+		'username-max' 				=> 22,
 		'password-min' 				=> 4
 	],
 	'auth'      => [
