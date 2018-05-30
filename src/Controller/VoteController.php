@@ -51,6 +51,10 @@ class VoteController extends Controller
 			}
 		}
 
+		if (!$this->container['userManager']->isPermission('vote-use')) {
+			$vote_access = "open";
+		}
+
 		// sort results if open
 		$sort_options = [];
 		if ($vote_access == 'open') {
@@ -185,7 +189,7 @@ class VoteController extends Controller
 
 	public function add()
 	{
-		if (!$this->container['userManager']->isPermission('content-control-all') && !$this->container['userManager']->isPermission('content-control-own'))
+		if (!$this->container['userManager']->isPermission('vote-control-all') && !$this->container['userManager']->isPermission('vote-control-own'))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
 		$this->container['db'];
@@ -231,7 +235,7 @@ class VoteController extends Controller
 		if (!is_object($vote) && !($vote instanceof VoteHead))
 			return $this->render('error/page404.html.twig', array('errno' => 404));
 
-		if (!$this->container['userManager']->isPermission('content-control-all') && (($this->container['userManager']->isPermission('content-control-own') && $vote->user_id == $this->container['userManager']->getUser()['id']) == false))
+		if (!$this->container['userManager']->isPermission('vote-control-all') && (($this->container['userManager']->isPermission('vote-control-own') && $vote->user_id == $this->container['userManager']->getUser()['id']) == false))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
 		// default values after submit
@@ -266,7 +270,7 @@ class VoteController extends Controller
 		if (!is_object($vote) && !($vote instanceof VoteHead))
 			$error = 'Такого опроса не существует';
 
-		if (!$this->container['userManager']->isPermission('content-control-all') && (($this->container['userManager']->isPermission('content-control-own') && $vote->user_id == $this->container['userManager']->getUser()['id']) == false))
+		if (!$this->container['userManager']->isPermission('vote-control-all') && (($this->container['userManager']->isPermission('vote-control-own') && $vote->user_id == $this->container['userManager']->getUser()['id']) == false))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
 		$request = Request::createFromGlobals();

@@ -13,6 +13,9 @@ return [
 		'lifetime_long'				=> 15000000,
 		'login'						=> 'username.email'
 	],
+	'guestbook' => [
+		'quote-level'               => 1
+	],
 	'session' 		=> [
 		'save_path' 			    => __DIR__.'/../var/sessions/',
 		'cookie_lifetime' 			=> 0,
@@ -27,6 +30,6 @@ return [
 		3 => 'ROLE_ADMIN',
 		4 => 'ROLE_SUPER_ADMIN'
 	],
-	'assets'                        => '../../public',
+	'assets'                        => '/../../public',
 	'filepath'                      => __DIR__.'/../public/'
 ];

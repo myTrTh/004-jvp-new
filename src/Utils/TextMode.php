@@ -58,8 +58,9 @@ class TextMode
 	
 		$pattern_quote = "/(\[quote)(?:\ ?author=([a-zA-Z0-9а-яёА-ЯЁ\_\@\ ]+))?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \-\.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
 		$how_quote = substr_count($message, "[quote");
-		for($i=0;$i<$how_quote;$i++) {
-			$message = preg_replace_callback($pattern_quote, function($matches) {
+
+		for($j=0;$j<$how_quote;$j++) {
+			$message = preg_replace_callback($pattern_quote, function($matches) use ($j) {
 				# 1 open quote 2 author 3 date 4 post id 5 message 6 close quote
 
 				$start_quote = $matches[1];
@@ -94,19 +95,17 @@ class TextMode
 
 					$result = "<div class='quote-author'>".$post."</div>
 							   <div class='bookquote'>".$content_quote."</div>";
-
 				}
 
-
 				return $result;
+
 			}, $message);
 		}
 
 		// links //
-		$pattern = "/(\[(?:url=|img]))?(https?\:\/\/)?([\.a-zA-Z0-9\-]+\.[a-zA-Z]{2,6}(?:\/(?:[^\s\]\[\'\"\<\>]+)?)?)(?:\])?(?:(.*)(\[\/(?:url|img)\]))?/ui";
+		$pattern = "/(\[(?:url=|img]))?(https?\:\/\/)?([a-zA-Z0-9\-]+\.[a-zA-Z]{2,6}(?:\/(?:[^\s\]\[\'\"\<\>]+)?)?)(?:\])?(?:(.*)(\[\/(?:url|img)\]))?/ui";
 		
 		$message = preg_replace_callback($pattern, function($matches) {
-
 			$linkfullpath = $matches[2].$matches[3];
 			$http = $matches[2];
 			$link = $matches[3];

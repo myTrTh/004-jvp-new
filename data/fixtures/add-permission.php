@@ -16,6 +16,10 @@ $permission1 = new Permission();
 $permission1->permission = 'guestbook-write';
 $permission1->save();
 
+$permission12 = new Permission();
+$permission12->permission = 'vote-use';
+$permission12->save();
+
 // MODERATOR PERMISSIONS
 $permission2 = new Permission();
 $permission2->permission = 'content-control-all';
@@ -32,6 +36,14 @@ $permission4->save();
 $permission5 = new Permission();
 $permission5->permission = 'role-control-user';
 $permission5->save();
+
+$permission13 = new Permission();
+$permission13->permission = 'vote-control-own';
+$permission13->save();
+
+$permission14 = new Permission();
+$permission14->permission = 'vote-control-all';
+$permission14->save();
 
 // ADMIN PERMISSIONS
 

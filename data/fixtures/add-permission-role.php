@@ -13,12 +13,12 @@ $container->get()['db'];
 
 // ROLE USER
 $role_user = Role::where('role', 'ROLE_USER')->first();
-$role_user->permissions()->sync([1]);
+$role_user->permissions()->sync([1, 12, 13]);
 $role_user->save();
 
 // ROLE MODERATOR
 $role_admin = Role::where('role', 'ROLE_MODERATOR')->first();
-$role_admin->permissions()->sync([2, 3, 4, 5, 10, 11]);
+$role_admin->permissions()->sync([2, 3, 4, 5, 10, 11, 14]);
 $role_admin->save();
 
 // ROLE ADMIN
