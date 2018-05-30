@@ -72,8 +72,29 @@
 					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
 				{% endif %}					
 				</div>
-				<div id="r{{ message.id }}" class="guestbook-head-rate">
-					{{ message.author.rates.sum('sign') }}
+				<div class="guestbook-head-rate">
+					{% if message.author.rates.sum('sign') > 0 %}
+					<div class='r{{ message.author.id }}'>
+						<div class='rate-high'>
+							<i class="fa fa-plus-circle" aria-hidden="true"></i>
+							{{ message.author.rates.sum('sign') }}
+						</div>
+					</div>
+					{% elseif message.author.rates.sum('sign') == 0 %}
+					<div class='r{{ message.author.id }}'>
+						<div class='rate-middle'>
+							<i class="fa fa-circle" aria-hidden="true"></i>							
+							{{ message.author.rates.sum('sign') }}
+						</div>
+					</div>
+					{% elseif message.author.rates.sum('sign') < 0 %}
+					<div class='r{{ message.author.id }}'>
+						<div class='rate-low'>
+							<i class="fa fa-minus-circle" aria-hidden="true"></i>
+							{{ message.author.rates.sum('sign')|abs }}
+						</div>
+					</div>
+					{% endif %}
 				</div>
 			</div>		
 			<div class="guestbook-content">
@@ -97,11 +118,22 @@
 					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
 				{% endif %}
 				</div>
-				<div id='l{{ message.id }}' class='rate-level'>{{ message.rates.sum('sign') }}</div>
+				<div id='l{{ message.id }}' class='rate-level'>
+				{% if message.rates.sum('sign') > 0 %}
+					<span class='rate-high'>+{{ message.rates.sum('sign') }}</span>
+				{% elseif message.rates.sum('sign') == 0 %}
+					<span class='rate-middle'>{{ message.rates.sum('sign') }}</span>
+				{% elseif message.rates.sum('sign') < 0 %}
+					<span class='rate-low'>{{ message.rates.sum('sign') }}</span>
+				{% endif %}
+				</div>
 				<div id='u{{ message.id }}' class='tumbler rate-up'>
 				{% if app.user.id != message.author.id and rate_access == 1 %}
 					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
 				{% endif %}
+				</div>
+				<div class="rate-panel-users">
+					{{ message.author.rates.user_id }}
 				</div>
 			</div>
 		</div>

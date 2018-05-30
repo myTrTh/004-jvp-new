@@ -132,26 +132,22 @@ $(function(){
 				if (data.error == 1) {
 					alert(data.error_message);
 				} else {
-					$('#l' + id).html(data.message_rates);
-					$('#r' + id).html(data.message_user);
+					if (data.message_rates > 0) {
+						$('#l' + id).html("<span class='rate-high'>+" + data.message_rates + "</span>");
+					} else if (data.message_rates == 0) {
+						$('#l' + id).html("<span class='rate-middle'>" + data.message_rates + "</span>");
+					} else if (data.message_rates < 0) {
+						$('#l' + id).html("<span class='rate-low'>" + data.message_rates + "</span>");
+					}
+
+					if (data.message_user > 0) {
+						$('.r' + data.user).html("<div class='rate-high'><i class='fa fa-plus-circle' aria-hidden='true'></i> " + data.message_user + "</div>");
+					} else if (data.message_user == 0) {
+						$('.r' + data.user).html("<div class='rate-middle'><i class='fa fa-circle' aria-hidden='true'></i> " + data.message_user + "</div>");
+					} else if (data.message_user < 0) {
+						$('.r' + data.user).html("<div class='rate-low'><i class='fa fa-minus-circle' aria-hidden='true'></i> " + Math.abs(data.message_user) + "</div>");
+					}
 				}
-
-	// 			if(data.sum == 0)
-	// 				$('#r' + id).html("<span class='gray'>" + data.sum + "</span>");
-	// 			else if(data.sum > 0)
-	// 				$('#r' + id).html("<span class='green'>+" + data.sum + "</span>");
-	// 			else if(data.sum < 0)
-	// 				$('#r' + id).html("<span class='red'>" + data.sum + "</span>");
-
-	// 			if(data.author_sum == 0)
-	// 				$('.us' + data.author_id).html("<span class='gray'>" + data.author_sum + "</span>");
-	// 			else if(data.author_sum > 0)
-	// 				$('.us' + data.author_id).html("<span class='green'>+" + data.author_sum + "</span>");
-	// 			else if(data.author_sum < 0)
-	// 				$('.us' + data.author_id).html("<span class='red'>" + data.author_sum + "</span>");									
-					
-	// 			$('#ru' + id).html(data.plus);
-	// 			$('#rd' + id).html(data.minus);
 			}
 		})
 	})

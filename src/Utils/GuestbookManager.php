@@ -92,6 +92,7 @@ class GuestbookManager extends Manager
 		return array (
 			'error' => 0,
 			'message_rates' => $message_rates,
+			'user' => $message->user_id,
 			'message_user' => $message_user
 		);
 	}

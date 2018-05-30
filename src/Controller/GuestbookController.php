@@ -25,7 +25,8 @@ class GuestbookController extends Controller
 
 		if ($request->get('submit_guestbook')) {
 			// if no auth - redirect to login page
-			if (!$this->container['userManager']->isAccess('ROLE_USER'))
+
+		if (!$this->container['userManager']->isPermission('guestbook-write'))
 				return $this->render('auth/login.html.twig');
 
 			$error = $this->container['guestbookManager']->add($request);
