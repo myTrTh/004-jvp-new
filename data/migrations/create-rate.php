@@ -13,8 +13,8 @@ $container->get()['db'];
 Capsule::schema()->create('rates', function($table){
 	$table->increments('id');
 	$table->string('message_id');
-	$table->string('author');
-	$table->string('user');
+	$table->string('author_id');
+	$table->string('user_id');
 	$table->text('sign');
 	$table->softDeletes();
 	$table->timestamps();

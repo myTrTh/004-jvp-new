@@ -46,54 +46,9 @@ class GuestbookController extends Controller
 
 	public function ajax_rate()
 	{
-		$this->container['db'];
-
-		// // if no user
-		$author = $this->container['userManager']->getUser();
-		if (!is_object($author) && !($author instanceof User)) {
-			$response = [
-				'error' => 1,
-				'error-message' => 'Вы не зарегистрированы.'
-			];
-			return new Response(json_encode($response));
-		}
-
-		if ($this->container['userManager']->isPermission('rate-action') === false)
-			return 'Вам запрещенно оценивать сообщения';
-
 		$request = Request::createFromGlobals();
-		$id = $request->get('id');
-		$sign = $request->get('sign');
+		$result = $this->container['guestbookManager']->rate($request);
 
-		if ($sign !== 'd' or $sign !== 'u') {
-			$response = [
-				'error' => 1,
-				'error-message' => 'Ошибка при голосовании.'
-			];
-			return new Response(json_encode($response));
-		}
-
-		if ($sign === 'u')
-			$s = 1;
-		else if ($sign === 'd')
-			$s = -1;
-
-		$message = Guestbook::where('id', $id)->first();
-		if (!is_object($message) && !($message instanceof Guestbook)) {
-			$response = [
-				'error' => 1,
-				'error-message' => 'Ошибка при голосовании.'
-			];
-			return new Response(json_encode($response));
-		}
-
-		$rate = new Rate();
-		$rate->message_id = $message->id;
-		$rate->author_id = $author->id;
-		$rate->user_id = $message->user_id;
-		$rate->sign = $s;
-		$rate->save();
-
-		return new Response(json_encode(1));
+		return new Response(json_encode($result));
 	}
 }

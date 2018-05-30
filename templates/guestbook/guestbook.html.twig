@@ -17,8 +17,14 @@
 		<div class="message-error">{{ error }}</div>
 	{% endif %}<br>
 
+	{# page navigation #}
+	{% set page_name = 'guestbook' %}
+	{% include 'pagenavigation.html.twig' %}
+	<br>
+
 	{% for message in guestbook %}
 
+		{# stars for the count messages #}
 		{% if message.author.messages|length < 50 %}
 			{% set stars = 0 %}
 		{% elseif message.author.messages|length >= 50 and message.author.messages|length < 100 %}
@@ -34,6 +40,17 @@
 		{% elseif message.author.messages|length >= 2500 %}
 			{% set stars = 6 %}
 		{% endif %}
+
+	{# order for set up and down #}
+		{% set date_order = "now"|date_modify("-3 days")|date("d.m.Y H:i:s") %}
+
+		{% if date(date_order) > date(message.created_at) %}
+			{% set rate_access = 0 %}
+		{% else %}
+			{% if isPermission('rate-action') %}
+				{% set rate_access = 1 %}
+			{% endif %}
+		{% endif %} 		
 
 		<div class="guestbook" id="post{{ message.id }}">
 			<div class="guestbook-head">
@@ -54,7 +71,10 @@
 				{% if stars > 0 %}
 					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
 				{% endif %}					
-				</div>	
+				</div>
+				<div id="r{{ message.id }}" class="guestbook-head-rate">
+					{{ message.author.rates.sum('sign') }}
+				</div>
 			</div>		
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">
@@ -72,16 +92,23 @@
 				<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>
 			</div>
 			<div class="guestbook-rate-panel">
-				<div id='u{{ message.id }}' class='tumbler rate-down'><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></div>
-				<div id='l{{ message.id }}' class='rate-level'>0</div>
-				<div id='d{{ message.id }}' class='tumbler rate-up'><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></div>
+				<div id='d{{ message.id }}' class='tumbler rate-down'>
+				{% if app.user.id != message.author.id and rate_access == 1 %}
+					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+				{% endif %}
+				</div>
+				<div id='l{{ message.id }}' class='rate-level'>{{ message.rates.sum('sign') }}</div>
+				<div id='u{{ message.id }}' class='tumbler rate-up'>
+				{% if app.user.id != message.author.id and rate_access == 1 %}
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				{% endif %}
+				</div>
 			</div>
 		</div>
 	{% endfor %}
 
 	<br><br>
 	{# page navigation #}
-	{% set page_name = 'guestbook' %}
 	{% include 'pagenavigation.html.twig' %}
 
 {% endblock %}

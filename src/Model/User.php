@@ -28,4 +28,9 @@ class User extends Eloquent
 	{
 		return $this->hasMany('App\Model\Guestbook', 'user_id', 'id');
 	}
+
+	public function rates()
+	{
+		return $this->hasMany('App\Model\Rate', 'user_id', 'id');
+	}
 }

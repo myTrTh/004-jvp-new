@@ -20,6 +20,10 @@ $permission12 = new Permission();
 $permission12->permission = 'vote-use';
 $permission12->save();
 
+$permission15 = new Permission();
+$permission15->permission = 'rate-action';
+$permission15->save();
+
 // MODERATOR PERMISSIONS
 $permission2 = new Permission();
 $permission2->permission = 'content-control-all';

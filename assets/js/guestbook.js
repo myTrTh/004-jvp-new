@@ -118,8 +118,8 @@ $(function(){
 		var sign = row.substr(0, 1);
 		var id = row.substr(1);
 
-	// 	$('#u' + id).html('');
-	// 	$('#d' + id).html('');
+		$('#u' + id).html('');
+		$('#d' + id).html('');
 
 		var senddata = 'id='+escape(id)+'&sign='+escape(sign);
 		$.ajaxSetup({cache: false}); 
@@ -129,7 +129,13 @@ $(function(){
 			type: "POST",
 			dataType: "json",
 			success: function(data){
-				console.log(data);
+				if (data.error == 1) {
+					alert(data.error_message);
+				} else {
+					$('#l' + id).html(data.message_rates);
+					$('#r' + id).html(data.message_user);
+				}
+
 	// 			if(data.sum == 0)
 	// 				$('#r' + id).html("<span class='gray'>" + data.sum + "</span>");
 	// 			else if(data.sum > 0)

@@ -18,5 +18,10 @@ class Guestbook extends Eloquent
 	public function author()
 	{
 		return $this->belongsTo('App\Model\User', 'user_id', 'id');
+	}
+
+	public function rates()
+	{
+		return $this->hasMany('App\Model\Rate', 'message_id', 'id');
 	}	
 }
