@@ -6,7 +6,6 @@ $(function(){
 		var id = row.substr(1);
 
 		var token = $('#token').attr('data-token');
-		var token = 'sdfsd';
 		$('#u' + id).html('');
 		$('#d' + id).html('');
 

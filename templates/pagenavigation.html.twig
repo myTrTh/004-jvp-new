@@ -8,7 +8,7 @@
 	{% set start = page - 2 %}
 {% endif %}
 
-{% set finish = start + 4 %}
+{% set finish = start + 5 %}
 {% if finish > pages %}
 	{% set finish = pages %}
 {% endif %}
@@ -26,6 +26,9 @@
 		{% if page > 3 and finish > 5 %}
 			<span><a href="{{ path(page_name, {'page': 1}) }}"><<</a></span>
 			<span><a href="{{ path(page_name, {'page': prevpage}) }}"><</a></span>
+		{% else %}
+			<span class='background-none'></span>
+			<span class='background-none'></span>
 		{% endif %}	
 		{% for i in start..finish %}
 			{% if i == page %}
@@ -37,6 +40,9 @@
 		{% if pages > finish %}
 			<span><a href="{{ path(page_name, {'page': nextpage}) }}">></a></span>
 			<span><a href="{{ path(page_name, {'page': pages}) }}">>></a></span>
+		{% else %}
+			<span class='background-none'></span>
+			<span class='background-none'></span>
 		{% endif %}
 	{% endif %}
 </div>

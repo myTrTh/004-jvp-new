@@ -369,11 +369,19 @@ input[type='submit']:hover, .button:hover {
 	span {
 		padding: 3px;
 		font-size: 0.9em;
+		min-width: 25px;
+		display: inline-block;
+		background: #dbdbdb;		
+		border-radius: 3px;
+		text-align: center;
 		a {
 			font-size: inherit;
 			font-weight: 700;
 		}
 	}
+	.background-none {
+		background: none;
+	}	
 }
 
 // guestbook

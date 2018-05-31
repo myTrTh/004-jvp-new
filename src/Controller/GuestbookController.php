@@ -14,7 +14,7 @@ class GuestbookController extends Controller
 	{
 		$this->container['db'];
 
-		$limit = 10;
+		$limit = 20;
 		$offset = ($page - 1) * $limit;
 		$guestbook = Guestbook::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
 		$count = Guestbook::orderBy('id', 'desc')->count();
