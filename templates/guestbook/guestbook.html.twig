@@ -50,7 +50,20 @@
 			{% if isPermission('rate-action') %}
 				{% set rate_access = 1 %}
 			{% endif %}
-		{% endif %} 		
+		{% endif %}
+
+		{% set plus = '' %}
+		{% set minus = '' %}
+		{% for rate in message.rates %}
+			{% if app.user.id in rate.user_id %}
+				{% set rate_access = 0 %}
+			{% endif %}
+			{% if rate.sign == 1 %}
+				{% set plus = plus ~ rate.user.username ~ ', ' %}
+			{% elseif rate.sign == -1 %}
+				{% set minus = minus ~ rate.user.username ~ ', ' %}
+			{% endif %}
+		{% endfor %}		
 
 		<div class="guestbook" id="post{{ message.id }}">
 			<div class="guestbook-head">
@@ -138,15 +151,6 @@
 						Голосов нет
 					{% endif %}
 					</div>
-					{% set plus = '' %}
-					{% set minus = '' %}
-					{% for rate in message.rates %}
-						{% if rate.sign == 1 %}
-							{% set plus = plus ~ rate.user.username ~ ', ' %}
-						{% elseif rate.sign == -1 %}
-							{% set minus = minus ~ rate.user.username ~ ', ' %}
-						{% endif %}
-					{% endfor %}
 					<div class="rate-panel-up rate-users-up-{{ message.id }}">
 						{{ truncate(plus, 0, -2) }}
 					</div>

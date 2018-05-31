@@ -54,9 +54,6 @@ class GuestbookManager extends Manager
 			);
 		}
 
-		// запрет оценивать свои сообщения
-		// запрет оценивать сообщения повторно
-
 		// prepare data
 		$id = $request->get('id');
 		$sign = $request->get('sign');
@@ -79,6 +76,22 @@ class GuestbookManager extends Manager
 			return array (
 				'error' => 1,
 				'error_message' => 'Возникла ошибка при голосовании.'
+			);
+		}
+
+		// запрет оценивать сообщения повторно
+		if ($user->id == $message->user_id) {
+			return array (
+				'error' => 1,
+				'error_message' => 'Нельзя оценивать свои сообщения.'
+			);
+		}
+
+		$order = Rate::where('message_id', $message->id)->where('user_id', $user->id)->first();
+		if ($order) {
+			return array (
+				'error' => 1,
+				'error_message' => 'Запрещено повторно голосовать за сообщение.'
 			);
 		}
 
