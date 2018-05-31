@@ -15,6 +15,7 @@ Capsule::schema()->create('vote_user', function($table){
 	$table->integer('vote_head_id');
 	$table->integer('vote_option_id');
 	$table->integer('user_id');
+	$table->integer('anon');
 	$table->softDeletes();
 	$table->timestamps();
 });

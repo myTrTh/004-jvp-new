@@ -81,6 +81,7 @@ class VoteManager extends Manager
 			return "Вы уже голосовали";
 
 		$option = $request->get('vote_options');
+		$anon = (int) $request->get('anon');
 
 		if (count($option) == 0) {
 			return "Выберите вариант ответа";
@@ -93,6 +94,7 @@ class VoteManager extends Manager
 			$vote_user->vote_head_id = $vote->id;			
 			$vote_user->vote_option_id = $option;
 			$vote_user->user_id = $user->id;
+			$vote_user->anon = $anon;
 			$vote_user->save();
 		} else {
 
