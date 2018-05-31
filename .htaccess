@@ -1,5 +1,6 @@
 DirectoryIndex public/index.php
 AddDefaultCharset UTF-8
+php_value date.timezone "UTC"
 php_flag display_errors on
 
 <IfModule mod_rewrite.c>

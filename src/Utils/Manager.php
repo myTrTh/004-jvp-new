@@ -5,6 +5,7 @@ namespace App\Utils;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Model\User;
 use App\Model\Role;
+use App\Model\Guestbook;
 use App\Model\Permission;
 
 class Manager
@@ -150,5 +151,19 @@ class Manager
 			return 'Такое разрешение уже есть.';
 
 		return;
-	}	
+	}
+
+	public function duplicate($message)
+	{
+		$this->container['db'];
+
+		$user = $this->container['userManager']->getUser();
+
+		$post = Guestbook::latest()->first();
+
+		if (is_object($post) && $post->message == $message && $post->user_id == $user->id)
+			return 'Вы уже отправляли этого сообщение.';
+
+		return;
+	}
 }

@@ -21,6 +21,9 @@ class GuestbookManager extends Manager
 		if ($error = $this->ifEmptyStringValidate($message))
 			return $error;
 
+		if ($error = $this->duplicate($message))
+			return $error;
+
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceOf User))
 			return 'Вы не авторизированы.';
