@@ -22,6 +22,7 @@
 	{% include 'pagenavigation.html.twig' %}
 	<br>
 
+	<span id='token' data-token='{{ csrf_token() }}'></span>
 	{% for message in guestbook %}
 
 		{# stars for the count messages #}

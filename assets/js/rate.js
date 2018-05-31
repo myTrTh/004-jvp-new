@@ -5,10 +5,12 @@ $(function(){
 		var sign = row.substr(0, 1);
 		var id = row.substr(1);
 
+		var token = $('#token').attr('data-token');
+		var token = 'sdfsd';
 		$('#u' + id).html('');
 		$('#d' + id).html('');
 
-		var senddata = 'id='+escape(id)+'&sign='+escape(sign);
+		var senddata = 'id='+escape(id)+'&sign='+escape(sign)+'&csrf_token='+escape(token);
 		$.ajaxSetup({cache: false}); 
 		$.ajax({
 			url: "/ajax/guestbook/rate",
@@ -17,6 +19,7 @@ $(function(){
 			dataType: "json",
 			success: function(data){
 				if (data.error == 1) {
+
 					alert(data.error_message);
 				} else {
 					// update message rate

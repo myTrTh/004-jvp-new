@@ -38,12 +38,20 @@ class GuestbookManager extends Manager
 
 	public function rate($request)
 	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('csrf_token'))) {
+			return array (
+				'error' => 1,
+				'error_message' => $error
+			);
+		}
+			
+
 		// // if no user
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User)) {
 			return array (
 				'error' => 1,
-				'error-message' => 'Вы не зарегистрированы.'
+				'error_message' => 'Вы не зарегистрированы.'
 			);
 		}
 
