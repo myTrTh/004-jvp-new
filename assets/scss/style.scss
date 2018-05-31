@@ -476,6 +476,7 @@ input[type='submit']:hover, .button:hover {
 		font-size: .9em;
 		width: 100%;
 		display: flex;
+		flex-wrap: wrap;
 		flex-direction: row-reverse;
 		div {
 			width: 3em;
@@ -484,6 +485,22 @@ input[type='submit']:hover, .button:hover {
 		}
 		.rate-up i, .rate-down i {
 			cursor: pointer;
+		}
+		.rate-panel-users {
+			width: 100%;
+			padding: 3px 5px;
+			font-size: .85em;
+			display: none;
+			background: #FAFAFA;
+			div {
+				width: 100%;
+			}
+			.rate-panel-up {
+				color: $green;
+			}
+			.rate-panel-down {
+				color: $red;
+			}			
 		}
 	}
 }
@@ -669,4 +686,8 @@ input[type='submit']:hover, .button:hover {
 
 .rate-low {
 	color: $red;	
+}
+
+.rate-level {
+	cursor: pointer;
 }

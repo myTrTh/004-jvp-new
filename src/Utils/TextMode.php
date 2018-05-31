@@ -157,4 +157,9 @@ class TextMode
 
 		return $message;
 	}
+
+	public function truncate(string $string, ?int $start, ?int $end)
+	{
+		return substr($string, $start, $end);
+	}
 }

@@ -14,8 +14,8 @@ class Rate extends Eloquent
 	 */
 	protected $dates = ['deleted_at'];
 
-	public function users()
+	public function user()
 	{
-		return $this->belongsToMany('App\Model\User');
+		return $this->belongsTo('App\Model\User');
 	}
 }

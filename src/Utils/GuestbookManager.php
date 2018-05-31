@@ -39,8 +39,8 @@ class GuestbookManager extends Manager
 	public function rate($request)
 	{
 		// // if no user
-		$author = $this->container['userManager']->getUser();
-		if (!is_object($author) && !($author instanceof User)) {
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User)) {
 			return array (
 				'error' => 1,
 				'error-message' => 'Вы не зарегистрированы.'
@@ -54,6 +54,9 @@ class GuestbookManager extends Manager
 			);
 		}
 
+		// запрет оценивать свои сообщения
+		// запрет оценивать сообщения повторно
+
 		// prepare data
 		$id = $request->get('id');
 		$sign = $request->get('sign');
@@ -66,7 +69,7 @@ class GuestbookManager extends Manager
 		} else {
 			return array (
 				'error' => 1,
-				'error_message' => 'Возникла ошибка при голосовании1.'
+				'error_message' => 'Возникла ошибка при голосовании.'
 			);
 		}
 
@@ -81,19 +84,33 @@ class GuestbookManager extends Manager
 
 		$rate = new Rate();
 		$rate->message_id = $message->id;
-		$rate->author_id = $author->id;
-		$rate->user_id = $message->user_id;
+		$rate->author_id = $message->user_id;
+		$rate->user_id = $user->id;
 		$rate->sign = $s;
 		$rate->save();
 
-		$message_rates = $message->rates->sum('sign');
-		$message_user = $message->author->rates->sum('sign');
+		$message_sum_rates = $message->rates->sum('sign');
+		$author_sum_rates = $message->author->rates->sum('sign');
+
+		$plus = '';
+		$minus = '';
+		foreach ($message->rates as $rate) {
+			if ($rate->sign == 1)
+				$plus .= $rate->user->username.', ';
+			else
+				$minus .= $rate->user->username.', ';
+		}
+
+		$plus = substr($plus, 0, -2);
+		$minus = substr($minus, 0, -2);
 
 		return array (
 			'error' => 0,
-			'message_rates' => $message_rates,
+			'message_sum_rates' => $message_sum_rates,
 			'user' => $message->user_id,
-			'message_user' => $message_user
+			'author_sum_rates' => $author_sum_rates,
+			'plus_users' => $plus,
+			'minus_users' => $minus
 		);
 	}
 }

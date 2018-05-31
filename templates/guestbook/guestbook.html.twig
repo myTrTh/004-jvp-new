@@ -133,7 +133,26 @@
 				{% endif %}
 				</div>
 				<div class="rate-panel-users">
-					{{ message.author.rates.user_id }}
+					<div class="rate-users-no-{{ message.id }}">
+					{% if message.rates|length == 0 %}
+						Голосов нет
+					{% endif %}
+					</div>
+					{% set plus = '' %}
+					{% set minus = '' %}
+					{% for rate in message.rates %}
+						{% if rate.sign == 1 %}
+							{% set plus = plus ~ rate.user.username ~ ', ' %}
+						{% elseif rate.sign == -1 %}
+							{% set minus = minus ~ rate.user.username ~ ', ' %}
+						{% endif %}
+					{% endfor %}
+					<div class="rate-panel-up rate-users-up-{{ message.id }}">
+						{{ truncate(plus, 0, -2) }}
+					</div>
+					<div class="rate-panel-down rate-users-down-{{ message.id }}">
+						{{ truncate(minus, 0, -2) }}
+					</div>
 				</div>
 			</div>
 		</div>
