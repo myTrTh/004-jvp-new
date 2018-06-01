@@ -1,0 +1,38 @@
+.admin-panel {
+	margin-bottom: 20px;
+	background: #999999;
+	div {
+		display: inline-block;
+		font-family: $font_header;
+		font-size: .9em;
+		padding: 0 3px 2px 3px;
+		font-weight: bold;
+		cursor: pointer;
+		a {
+			color: $color_white !important;
+		}
+		a:hover {
+			color: $color_grey1 !important;
+		}
+	}
+}
+
+.admin-panel-wrapper {
+	margin-bottom: 8px;
+	font-size: .9em;	
+}
+
+.admin-panel-users {
+	background: #F5F5F5;
+	border: 1px solid $color_grey2;
+	font-weight: 600;
+	cursor: pointer;
+	padding: 0 3px 2px 3px;
+}
+
+.admin-panel-info {
+	border: 1px solid $color_grey2;
+	border-top: none;
+	padding: 0 3px 2px 3px;
+	display: none;
+}

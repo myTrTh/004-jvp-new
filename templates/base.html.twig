@@ -33,6 +33,9 @@
 					<li><a href="#">INFO</a>
 						<ul class='down-menu'>
 							<li><a href="{{ path('user_profile') }}">ПРОФИЛЬ</a></li>
+							{% if isAccess('ROLE_MODERATOR') or isAccess('ROLE_ADMIN') %}
+								<li><a href="{{ path('admin_panel') }}">АДМИНКА</a></li>
+							{% endif %}
 							<li><a href="{{ path('auth_logout') }}">ВЫЙТИ</a></li>
 						</ul>
 					</li>

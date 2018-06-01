@@ -11,6 +11,8 @@ class AdminManager extends Manager
 {
 	public function setRoles($id, $request)
 	{
+		$this->container['db'];
+
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
@@ -18,6 +20,8 @@ class AdminManager extends Manager
 		$roles = $request->get('roles');
 		if (count($roles) == 0)
 			return 'У пользователя должна быть как минимум одна роль.';
+		else
+			return print_r($roles);
 
 		$user = User::where('id', $id)->first();
 
@@ -53,6 +57,8 @@ class AdminManager extends Manager
 
 	public function setPermissions($id, $request)
 	{
+		$this->container['db'];
+
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 

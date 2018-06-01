@@ -56,7 +56,7 @@ class TextMode
 		// }
 		// 	// $message = preg_replace($patternB, "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span><div class='spoiler-body'>$1</div></div>", $message);
 	
-		$pattern_quote = "/(\[quote)(?:\ ?author=([a-zA-Z0-9а-яёА-ЯЁ\_\@\ ]+))?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \-\.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
+		$pattern_quote = "/(\[quote)(?:\ ?author=([\s\S]+)?)?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \-\.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
 		$how_quote = substr_count($message, "[quote");
 
 		for($j=0;$j<$how_quote;$j++) {

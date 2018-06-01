@@ -1,0 +1,1 @@
+.checkbox{display:none}.checkbox-custom{position:relative;width:20px;height:20px;border:2px solid #ccc;border-radius:3px}.checkbox-custom,.label{display:inline-block;vertical-align:middle}.checkbox:checked+.checkbox-custom:before{content:"";display:block;position:absolute;top:2px;right:2px;bottom:2px;left:2px;background:#413548;border-radius:2px}

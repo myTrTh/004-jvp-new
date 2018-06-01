@@ -1,4 +1,4 @@
-// import
+// import out
 @import '_flatpickr.min.css';
 @import '_font-awesome.scss';
 
@@ -371,13 +371,22 @@ input[type='submit']:hover, .button:hover {
 		font-size: 0.9em;
 		min-width: 25px;
 		display: inline-block;
-		background: #dbdbdb;		
+		cursor: pointer;
+		background: #dbdbdb;
 		border-radius: 3px;
 		text-align: center;
 		a {
 			font-size: inherit;
 			font-weight: 700;
+			display: block;
+			width: 100%;
 		}
+	}
+	.active {
+		background: #fafafa;
+	}
+	span:hover {
+		background: #fafafa;
 	}
 	.background-none {
 		background: none;
@@ -699,3 +708,11 @@ input[type='submit']:hover, .button:hover {
 .rate-level {
 	cursor: pointer;
 }
+
+.inline-block {
+	display: inline-block;
+}
+
+// import
+@import '_admin.scss';
+@import '_input.scss';
