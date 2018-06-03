@@ -16,16 +16,18 @@ class AdminController extends Controller
 	{
 		$error = '';
 		
-		$roles = $this->container['userManager']->getRoles();
 		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
 
 		$this->container['db'];
 		$users = User::all();
 
+		$role_user = Role::where('role', 'ROLE_USER')->first();
+
 		return $this->render('admin/index.html.twig', [
 			'users' => $users,
-			'error' => $error			
+			'error' => $error,
+			'role_user' => $role_user
 		]);
 	}
 

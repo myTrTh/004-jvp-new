@@ -6,8 +6,25 @@
 	{% include 'admin/_panel.html.twig' %}
 	
 	{% for user in users %}
+
+	{% set den = 0 %}
+	{% set constraints = '' %}
+	{% for permission in role_user.permissions %}
+		{% if permission.id not in user.permissions.keyBy('id')|keys %}
+			{% set den = 1 %}
+			{% if constraints == '' %}
+				{% set constraints = permission.permission %}
+			{% else %}
+				{% set constraints = constraints ~ ', ' ~ permission.permission %}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
 	<div class="admin-panel-wrapper">
-		<div class='admin-panel-users'>
+		{% if den == 1 %}
+			<div class='admin-panel-users ban-color'>
+		{% else %}
+			<div class='admin-panel-users'>
+		{% endif %}
 			{{ user.username }}
 		</div>
 		<div class="admin-panel-info">
@@ -15,6 +32,9 @@
 			<br>
 			{% if isAccess('ROLE_SUPER_ADMIN') or hierarchyAccess(user.id) or app.user.id == user.id %}
 				<a href="{{ path('admin_permissions', {'id': user.id}) }}">Разрешения</a>
+			{% endif %}
+			{% if den %}
+				<br>Ограничения: {{ constraints }}
 			{% endif %}
 			<div class="user-last-info">las</div>
 		</div>
