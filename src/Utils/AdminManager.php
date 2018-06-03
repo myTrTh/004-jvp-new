@@ -18,8 +18,13 @@ class AdminManager extends Manager
 
 		// prepare data
 		$roles = $request->get('roles');
+
 		if (count($roles) == 0)
 			return 'У пользователя должна быть как минимум одна роль.';
+		
+		// if no ROLE_USER
+		if (!in_array(1, $roles))
+			return 'У пользователя обязательно должна быть роль ROLE_USER.';
 
 		$user = User::where('id', $id)->first();
 

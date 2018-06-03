@@ -203,10 +203,15 @@ class UserManager extends Manager
 		$ruler = 0;
 		$user = 0;
 		foreach ($hierarchy as $key => $value) {
-			if (in_array($value, array_keys($roles1)))
-				$ruler += 1;
-			if (in_array($value, array_keys($roles2)))
-				$user += 1;
+			if (in_array($value, array_keys($roles1))) {
+				if ($ruler < $key)
+					$ruler = $key;
+			}
+
+			if (in_array($value, array_keys($roles2))) {
+				if ($user < $key)
+					$user = $key;
+			}
 		}
 
 		if ($ruler > $user)

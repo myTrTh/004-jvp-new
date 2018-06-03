@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: разрешения {% endblock %}
+{% block header %} Админка: разрешения {% endblock %}
+{% block body %}
+
+	<a href='{{ path('admin_panel') }}'>Назад к пользователям</a>
+	<br><br>
+	{% if user %}
+		<b>Логин: {{ user.username }}</b><br>
+		<b>email: {{ user.email }}</b><br><br>
+		{% if app.user.image %}
+			<img class="user-image" src="{{ app.path }}/images/users/{{ app.user.image }}">
+		{% else %}
+			<i class="profile-image fa fa-user" aria-hidden="true"></i><br>
+		{% endif %}		
+
+		<div class="user-permissons">
+		{# IF IT'S ME #}
+		{% if user.id == app.user.id %}
+			<b>Мои роли:</b><br>
+				{% for role in roles %}
+					{% if  role.id in user.roles.keyBy('id')|keys %}
+						{{ role.role }}<br>
+					{% endif %}
+				{% endfor %}
+			<b>Мои разрешения:</b><br>
+				{% for role in roles %}
+					{% if  role.id in user.roles.keyBy('id')|keys %}
+						{% for permission in role.permissions %}
+							{% if  permission.id in user.permissions.keyBy('id')|keys %}
+								{{ permission.permission }}<br>
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+		{# IF OTHER USER #}
+		{% else %}
+
+				{% if error %}
+					<div class="message-error">{{ error }}</div>
+				{% endif %}
+
+				{% if success %}
+					<div class="message-success">{{ success }}</div>
+				{% endif %}
+
+				{% if isAccess('ROLE_SUPER_ADMIN') %}
+				<b>Роли:</b><br>
+				<form id="form-rol-{{ user.id }}" method='post' action='{{ path('admin_permissions', {'id': user.id }) }}'>
+					{% for role in roles %}
+						{% if role.role != 'ROLE_SUPER_ADMIN' %}
+							<label>	
+							{% if  role.id in user.roles.keyBy('id')|keys %}
+								<input class='radio' class='checkbox' type='checkbox' name='roles[]' checked value='{{ role.id }}'>
+								<span class="radio-custom"></span>
+                    			<span class="label">{{ role.role }}</span>								
+							{% else %}
+								<input class='radio' type='checkbox' name='roles[]' value='{{ role.id }}'>
+								<span class="radio-custom"></span>
+                    			<span class="label">{{ role.role }}</span>								
+							{% endif %}
+							</label>
+						{% endif %}
+					{% endfor %}
+					<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+					<input type='submit' name='submit_set_user_roles' value='Установить роли'>
+				</form>
+				<hr>
+				{% endif %}
+
+				{% if isAccess('ROLE_SUPER_ADMIN') or (hierarchyAccess(user.id) and (isPermission('role-control-user') or isPermission('role-control-moderator') or isPermission('role-control-admin'))) %}
+				<b>Разрешения:</b><br>
+				<form id="form-per-{{ user.id }}" method='post' action='{{ path('admin_permissions', {'id': user.id }) }}'>
+
+					{% if (isAccess('ROLE_SUPER_ADMIN') or (isAccess('ROLE_MODERATOR') and isPermission('role-control-user'))) and isUserAccess(user.id, 'ROLE_USER') %}						
+						{% for permission in permissions_user %}
+							<label>
+							{% if permission.id in user.permissions.keyBy('id')|keys %}
+								<input class='checkbox' type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>
+							{% else %}
+								<input class='checkbox' type='checkbox' name='permissions[]' value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
+							{% endif %}
+							</label>
+						{% endfor %}
+					{% endif %}
+					{% if (isAccess('ROLE_SUPER_ADMIN') or (isAccess('ROLE_ADMIN') and isPermission('role-control-moderator'))) and isUserAccess(user.id, 'ROLE_MODERATOR') %}
+						{% for permission in permissions_moderator %}
+							<label>				
+							{% if permission.id in user.permissions.keyBy('id')|keys %}
+								<input class="checkbox" type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
+							{% else %}
+								<input class='checkbox' type='checkbox' name='permissions[]' value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>
+							{% endif %}
+							</label>
+						{% endfor %}
+					{% endif %}
+
+					{% if isAccess('ROLE_SUPER_ADMIN') and isUserAccess(user.id, 'ROLE_ADMIN') %}	
+						{% for permission in permissions_admin %}
+							<label>				
+							{% if permission.id in user.permissions.keyBy('id')|keys %}
+								<input class='checkbox' type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
+							{% else %}
+								<input class='checkbox' type='checkbox' name='permissions[]' value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
+							{% endif %}
+							</label>
+						{% endfor %}
+					{% endif %}
+					<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+					<input type='submit' name='submit_set_user_permissions' value='Установить разрешения'>
+				</form>
+			{% endif %}
+		{% endif %}
+		</div>
+
+	{% else %}
+		Пользователь не найден
+	{% endif %}
+
+{% endblock %}

@@ -16,9 +16,9 @@
 			<label>Логин <br><input class='l-middle' type='text' name='username' value='{{ lastUsername }}'></label>
 			<label>Пароль <br><input class='l-middle' type='password' name='password'></label>
 			<label>
-				<div class='checkbox-line'>
-					<input type='checkbox' class='checkbox-text' name='remember_me'> Запомнить меня
-				</div>
+					<input class='checkbox' type='checkbox' class='checkbox-text' name='remember_me'>
+					<span class="checkbox-custom"></span>
+                    <span class="label">Запомнить меня</span>													
 			</label>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 			<input type='submit' name='submit_login' value='Вход'>

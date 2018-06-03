@@ -5,7 +5,7 @@ $(function() {
 	});
 });
 
-// set permissions and roles
+// set permissions 
 $(function() {
 	$('[id ^= "set-permissions"]').on('click', function() {
 		var button = $(this).attr('id');
@@ -24,8 +24,10 @@ $(function() {
 			dataType: "json",
 			success: function(data){
 				if (data.success == 1) {
+					$('.error-pfield-' + user).html('');
 					$('.success-pfield-' + user).html(data.message);
 				} else {
+					$('.success-pfield-' + user).html('');					
 					$('.error-pfield-' + user).html(data);
 				}
 			}
@@ -33,7 +35,7 @@ $(function() {
 	})
 })
 
-// set permissions and roles
+// set  roles
 $(function() {
 	$('[id ^= "set-roles"]').on('click', function() {
 		var button = $(this).attr('id');
@@ -53,8 +55,10 @@ $(function() {
 			dataType: "json",
 			success: function(data){
 				if (data.success == 1) {
+					$('.error-rfield-' + user).html('');
 					$('.success-rfield-' + user).html(data.message);
 				} else {
+					$('.success-rfield-' + user).html('');
 					$('.error-rfield-' + user).html(data);
 				}
 			}
