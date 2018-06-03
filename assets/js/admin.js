@@ -15,7 +15,7 @@ $(function() {
 		$('#form-per-' + user + ' input:checkbox:checked').each(function() {
 			permissions.push($(this).val());
 		});
-		var senddata = 'user='+escape(user)+'&permissions='+escape(permissions)+'&_csrf_token='+escape(token);		
+		var senddata = 'user='+encodeURIComponent(user)+'&permissions='+encodeURIComponent(permissions)+'&_csrf_token='+encodeURIComponent(token);
 		$.ajaxSetup({cache: false}); 
 		$.ajax({
 			url: "/ajax/admin/permissions",
@@ -44,7 +44,7 @@ $(function() {
 			roles.push($(this).val());
 		});
 		console.log(roles);
-		var senddata = 'user='+escape(user)+'&roles='+escape(roles)+'&_csrf_token='+escape(token);		
+		var senddata = 'user='+encodeURIComponent(user)+'&roles='+encodeURIComponent(roles)+'&_csrf_token='+encodeURIComponent(token);		
 		$.ajaxSetup({cache: false}); 
 		$.ajax({
 			url: "/ajax/admin/roles",

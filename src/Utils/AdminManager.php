@@ -20,8 +20,6 @@ class AdminManager extends Manager
 		$roles = $request->get('roles');
 		if (count($roles) == 0)
 			return 'У пользователя должна быть как минимум одна роль.';
-		else
-			return print_r($roles);
 
 		$user = User::where('id', $id)->first();
 
@@ -48,8 +46,6 @@ class AdminManager extends Manager
 			foreach ($roles as $role) {
 				$role = Role::where('id', $role)->first();
 				$user->roles()->attach($role);
-				// no add permissions from role, it's will do handle
-				// $user->permissions()->attach($role->permissions);
 			}
 		}
 		return;

@@ -48,13 +48,17 @@
 				<form id="form-rol-{{ user.id }}" method='post' action='{{ path('admin_user', {'id': user.id }) }}'>
 					{% for role in roles %}
 						{% if role.role != 'ROLE_SUPER_ADMIN' %}
-							<div class='checkbox-line'>	
+							<label>	
 							{% if  role.id in user.roles.keyBy('id')|keys %}
-								<input class='checkbox' type='checkbox' name='roles[]' checked value='{{ role.id }}'>{{ role.role }}<br>
+								<input class='radio' class='checkbox' type='checkbox' name='roles[]' checked value='{{ role.id }}'>
+								<span class="radio-custom"></span>
+                    			<span class="label">{{ role.role }}</span>								
 							{% else %}
-								<input type='checkbox' name='roles[]' value='{{ role.id }}'>{{ role.role }}<br>
+								<input class='radio' type='checkbox' name='roles[]' value='{{ role.id }}'>
+								<span class="radio-custom"></span>
+                    			<span class="label">{{ role.role }}</span>								
 							{% endif %}
-							</div>
+							</label>
 						{% endif %}
 					{% endfor %}
 					<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
@@ -65,12 +69,11 @@
 				</form>
 				<hr>
 				{% endif %}
-				{% if hierarchyAccess(user.id) and (isPermission('role-control-user') or isPermission('role-control-moderator') or isPermission('role-control-admin')) %}
+				{% if (hierarchyAccess(user.id) and (isPermission('role-control-user') or isPermission('role-control-moderator') or isPermission('role-control-admin'))) or isAccess('ROLE_SUPER_ADMIN') %}
 				<b>Разрешения:</b><br>
 				<form id="form-per-{{ user.id }}" method='post' action='{{ path('admin_user', {'id': user.id }) }}'>
 					{% if isPermission('role-control-user') %}
 						{% for permission in permissions_user %}
-							<div class='checkbox-line'>				
 							<label>
 							{% if permission.id in user.permissions.keyBy('id')|keys %}
 								<input class='checkbox' type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>
@@ -82,31 +85,38 @@
                     			<span class="label">{{ permission.permission }}</span>								
 							{% endif %}
 							</label>
-							</div>
 						{% endfor %}
 					{% endif %}
 
-					{% if isPermission('role-control-moderator') %}
+					{% if isPermission('role-control-moderator') or isAccess('ROLE_SUPER_ADMIN') %}
 						{% for permission in permissions_moderator %}
-							<div class='checkbox-line'>				
+							<label>				
 							{% if permission.id in user.permissions.keyBy('id')|keys %}
-								<input type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>{{ permission.permission }}<br>
+								<input class="checkbox" type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
 							{% else %}
-								<input type='checkbox' name='permissions[]' value='{{ permission.id }}'>{{ permission.permission }}<br>
+								<input class='checkbox' type='checkbox' name='permissions[]' value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
 							{% endif %}
-							</div>
+							</label>
 						{% endfor %}
 					{% endif %}
 
-					{% if isPermission('role-control-admin') %}
+					{% if isPermission('role-control-admin') or isAccess('ROLE_SUPER_ADMIN') %}
 						{% for permission in permissions_admin %}
-							<div class='checkbox-line'>				
+							<label>				
 							{% if permission.id in user.permissions.keyBy('id')|keys %}
-								<input type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>{{ permission.permission }}<br>
+								<input class='checkbox' type='checkbox' name='permissions[]' checked value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
 							{% else %}
-								<input type='checkbox' name='permissions[]' value='{{ permission.id }}'>{{ permission.permission }}<br>
+								<input class='checkbox' type='checkbox' name='permissions[]' value='{{ permission.id }}'>
+								<span class="checkbox-custom"></span>
+                    			<span class="label">{{ permission.permission }}</span>								
 							{% endif %}
-							</div>
+							</label>
 						{% endfor %}
 					{% endif %}
 					<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>

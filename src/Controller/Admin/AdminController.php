@@ -51,12 +51,19 @@ class AdminController extends Controller
 	{
 		$request = Request::createFromGlobals();
 		$id = $request->get('user');
+		$token = $request->get('_csrf_token');
+		$permissions = explode(",", $request->get('permissions'));
+		$request = new Request([
+			'permissions' => $permissions,
+			'_csrf_token' => $token
+		]);
 		$result = $this->container['adminManager']->setPermissions($id, $request);
-		if (!$result)
+		if (!$result) {
 			$result = [
 				'success' => 1,
 				'message' => 'Разрешения успешно установлены.'
 			];
+		}
 
 		return new Response(json_encode($result));
 	}
@@ -65,12 +72,19 @@ class AdminController extends Controller
 	{
 		$request = Request::createFromGlobals();
 		$id = $request->get('user');
+		$token = $request->get('_csrf_token');
+		$roles = explode(",", $request->get('roles'));
+		$request = new Request([
+			'roles' => $roles,
+			'_csrf_token' => $token
+		]);
 		$result = $this->container['adminManager']->setRoles($id, $request);
-		if (!$result)
+		if (!$result) {
 			$result = [
 				'success' => 1,
 				'message' => 'Роли успешно установлены.'
 			];
+		}
 
 		return new Response(json_encode($result));
 	}
