@@ -14,10 +14,8 @@ Capsule::schema()->create('contents', function($table){
 	$table->increments('id');
 	$table->string('type');
 	$table->string('title');
-	$table->string('description');
-	$table->text('article');
+	$table->text('article')->nullable();
 	$table->integer('user_id');
-	$table->string('image')->nullable();
 	$table->softDeletes();	
 	$table->timestamps();
 });

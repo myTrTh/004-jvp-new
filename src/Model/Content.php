@@ -13,9 +13,4 @@ class Content extends Eloquent
 	 * @var array
 	 */
 	protected $dates = ['deleted_at'];
-
-	public function author()
-	{
-		return $this->belongsTo('App\Model\User', 'user_id', 'id');
-	}
 }

@@ -17,7 +17,7 @@
 					<ul class='down-menu'>
 						<li><a href="">АКТИВНЫЕ</a></li>
 						<li><a href="">АРХИВ</a></li>
-						<li><a href="">ПРАВИЛА</a></li>
+						<li><a href="{{ path('content_show', {'type': 'rules'}) }}">ПРАВИЛА</a></li>
 					</ul>
 				</li>
 				<li><a href="">МЫ</a>
@@ -51,7 +51,10 @@
 				{% block body %}{% endblock %}
 			</article>				
 		</section>
-		<footer>© JUVEPRO 2015 - {{ 'now'|date('Y') }} </footer>
+		<footer>© JUVEPRO 2015 - {{ 'now'|date('Y') }} |
+		<a class='footer-a' href='{{ path('content_show', {'type': 'faq'}) }}'>FAQ</a> |
+        <a class='footer-a' href='{{ path('content_show', {'type': 'about'}) }}'>О нас</a>
+		</footer>
 	</div>
 	<script type="text/javascript" src="{{ app.path }}/js/jquery.min.js"></script>
 	<script type="text/javascript" src="{{ app.path }}/js/libs.js"></script>

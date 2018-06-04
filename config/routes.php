@@ -49,10 +49,8 @@ $routes->add('admin_guestbook', new Route('/admin/guestbook/{page}', array('_con
 // $routes->add('ajax_guestbook_rate', new Route('ajax/guestbook/rate', array('_controller' => 'App\Controller\GuestbookController::ajax_rate')));
 
 // content routes
-// $routes->add('content_list', new Route('/{type}/{page}', array('_controller' => 'App\Controller\ContentController::list', 'type' => 'content', 'page' => 1), array('type' => 'content', 'page' => '[0-9]+')));
-// $routes->add('content_add', new Route('/{type}/add', array('_controller' => 'App\Controller\ContentController::add', 'type' => 'content'), array('type' => 'content')));
-// $routes->add('content_edit', new Route('/{type}/edit/{id}', array('_controller' => 'App\Controller\ContentController::edit', 'type' => 'content'), array('type' => 'content', 'id' => '[0-9]+')));
-// $routes->add('content_delete', new Route('/{type}/delete/{id}', array('_controller' => 'App\Controller\ContentController::delete', 'type' => 'content'), array('type' => 'content', 'id' => '[0-9]+')));
+$routes->add('content_show', new Route('/{type}', array('_controller' => 'App\Controller\ContentController::show'), array('type' => 'rules|faq|about|alert')));
+$routes->add('content_edit', new Route('/{type}/edit', array('_controller' => 'App\Controller\ContentController::edit'), array('type' => 'rules|faq|about|alert')));
 
 // guestbook routes
 $routes->add('guestbook', new Route('/guestbook/{page}', array('_controller' => 'App\Controller\GuestbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));

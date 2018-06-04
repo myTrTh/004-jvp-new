@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ content.title }} {% endblock %}
+{% block header %} {{ content.title }} {% endblock %}
+{% block body %}
+
+	{{ textMode(content.article)|raw|nl2br }}
+
+{% endblock %}

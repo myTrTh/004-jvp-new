@@ -129,6 +129,10 @@ a:hover {
 	color: $color_link;
 }
 
+.link-light {
+	color: $color_grey;
+}
+
 .link-out:hover {
 	color: $color_link_active;
 }
@@ -211,6 +215,12 @@ footer {
 	justify-content: center;
 	align-items: center;
 	color: $color_grey;
+	a {
+		text-decoration: none;
+		color: $color_grey !important;
+		text-transform: uppercase;
+		font-weight: normal;
+	}
 }
 
 // form, input

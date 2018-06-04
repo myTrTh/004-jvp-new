@@ -34,7 +34,6 @@ class Application
 
 			$session = $this->container['session'];
 			$session->activate();
-
 			$response = call_user_func_array(array($controller, $action), $parameters);
 			$response->send();
 
@@ -43,7 +42,7 @@ class Application
 			$error = "\n".date('Y-m-d H:i:s');
 			$error .= ' '.$e->getMessage();
 			$error .= $e->getFile().' on line: '.$e->getLine();
-			echo $error;
+			// echo $error;
 			error_log($error, 3, __DIR__.'/../var/log/error.log');	
 
 			$session = $this->container['session'];
@@ -58,7 +57,7 @@ class Application
 			$error = "\n".date('Y-m-d H:i:s');
 			$error .= ' '.$t->getMessage();
 			$error .= $t->getFile().' on line: '.$t->getLine();
-			echo $error;
+			// echo $error;
 			error_log($error, 3, __DIR__.'/../var/log/error.log');	
 
 			$session = $this->container['session'];

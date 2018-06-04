@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Контент {% endblock %}
+{% block header %} Контент {% endblock %}
+{% block body %}
+
+	{% include 'admin/_panel.html.twig' %}
+	<h5>
+		{% for types in all_types %}
+			{% if content.type == types.type %}
+				{{ types.title }}
+			{% else %}
+				<a class='link-light' href="{{ path('content_edit', {'type': types.type}) }}">{{ types.title }}</a>
+			{% endif %}
+		{% endfor %}
+	</h5>
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div><br>
+	{% endif %}
+
+	<form method='post' action='{{ path('content_edit', {'type': type}) }}'>
+		{% include 'bbcode.html.twig' %}
+			<textarea type='text' name='article'>{{ content.article }}</textarea></label>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<br>
+		<input type='submit' name='submit_content_edit' value='Редактировать'>
+	</form>
+
+{% endblock %}
