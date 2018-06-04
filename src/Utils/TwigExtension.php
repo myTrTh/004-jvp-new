@@ -33,6 +33,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('isUserPermission', array($this, 'isUserPermission')),
             new TwigFunction('hierarchyAccess', array($this, 'hierarchyAccess')),
             new TwigFunction('textMode', array($this, 'textMode')),
+            new TwigFunction('adminTextMode', array($this, 'adminTextMode')),
             new TwigFunction('truncate', array($this, 'truncate')),
             new TwigFunction('beautiful_date', array($this, 'beautiful_date')),
             new TwigFunction('getPageNumber', array($this, 'getPageNumber')),
@@ -83,6 +84,11 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
     {
         return $this->container['textMode']->textMode($message);
     }
+
+    public function adminTextMode($message)
+    {
+        return $this->container['textMode']->adminTextMode($message);
+    }    
 
     public function truncate ($string, $start, $end)
     {
