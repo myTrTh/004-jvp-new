@@ -69,11 +69,13 @@
 		<div class="guestbook" id="post{{ message.id }}">
 			<div class="guestbook-head">
 				{% if message.author.username|length > 20 %}
-					<div class="guestbook-head-user-normal">{{ message.author.username }}</div>
+					<div class="guestbook-head-user-normal"><span class='username'>{{ message.author.username }}</span>
 				{% else %}
-					<div class="guestbook-head-user">{{ message.author.username }}</div>					
-				{% endif %}
-				<div class="guestbook-image">
+					<div class="guestbook-head-user"><span class='username'>{{ message.author.username }}</span>	
+				{% endif %}					
+				<div class="guestbook-post-count-hidden">Постов: {{ message.author.messages|length }}</div>
+				</div>
+				<div class="guestbook-image">				
 				{% if message.author.image %}
 					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
 				{% else %}
