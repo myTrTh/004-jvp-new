@@ -108,6 +108,7 @@
 				<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>
 			</div>
 			<div class="guestbook-rate-panel">
+			{% if rate_show == 1 %}
 				<div id='d{{ message.id }}' class='tumbler rate-down'>
 				{% if app.user.id != message.author.id and rate_access == 1 %}
 					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
@@ -140,6 +141,7 @@
 						{{ truncate(minus, 0, -2) }}
 					</div>
 				</div>
+			{% endif %}
 			</div>
 		</div>
 	{% endfor %}

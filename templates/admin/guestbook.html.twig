@@ -19,6 +19,8 @@
 		<div class="message-error">{{ error }}</div>
 	{% endif %}<br>
 
+	{# hide rate #}
+	{% set rate_show = 0 %}
 	{# page navigation #}
 	{% set page_name = 'admin_guestbook' %}
 	{% include 'guestbook/_guestbook.html.twig' %}
