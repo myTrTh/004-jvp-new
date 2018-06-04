@@ -1,0 +1,149 @@
+	{% include 'pagenavigation.html.twig' %}
+	<br>
+
+	<span id='token' data-token='{{ csrf_token() }}'></span>
+	{% for message in guestbook %}
+
+		{# stars for the count messages #}
+		{% if message.author.messages|length < 50 %}
+			{% set stars = 0 %}
+		{% elseif message.author.messages|length >= 50 and message.author.messages|length < 100 %}
+			{% set stars = 1 %}
+		{% elseif message.author.messages|length >= 100 and message.author.messages|length < 250 %}
+			{% set stars = 2 %}
+		{% elseif message.author.messages|length >= 250 and message.author.messages|length < 500 %}
+			{% set stars = 3 %}
+		{% elseif message.author.messages|length >= 500 and message.author.messages|length < 1000 %}
+			{% set stars = 4 %}
+		{% elseif message.author.messages|length >= 1000 and message.author.messages|length < 2500 %}
+			{% set stars = 5 %}
+		{% elseif message.author.messages|length >= 2500 %}
+			{% set stars = 6 %}
+		{% endif %}
+
+	{# order for set up and down #}
+		{% set date_order = "now"|date_modify("-3 days")|date("d.m.Y H:i:s") %}
+
+		{% if date(date_order) > date(message.created_at) %}
+			{% set rate_access = 0 %}
+		{% else %}
+			{% if isPermission('rate-action') %}
+				{% set rate_access = 1 %}
+			{% endif %}
+		{% endif %}
+
+		{% set plus = '' %}
+		{% set minus = '' %}
+		{% for rate in message.rates %}
+			{% if app.user.id in rate.user_id %}
+				{% set rate_access = 0 %}
+			{% endif %}
+			{% if rate.sign == 1 %}
+				{% set plus = plus ~ rate.user.username ~ ', ' %}
+			{% elseif rate.sign == -1 %}
+				{% set minus = minus ~ rate.user.username ~ ', ' %}
+			{% endif %}
+		{% endfor %}		
+
+		<div class="guestbook" id="post{{ message.id }}">
+			<div class="guestbook-head">
+				{% if message.author.username|length > 20 %}
+					<div class="guestbook-head-user-normal"><span class='username'>{{ message.author.username }}</span>
+				{% else %}
+					<div class="guestbook-head-user"><span class='username'>{{ message.author.username }}</span>	
+				{% endif %}					
+				<div class="guestbook-post-count-hidden">Постов: {{ message.author.messages|length }}</div>
+				</div>
+				<div class="guestbook-image">				
+				{% if message.author.image %}
+					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
+				{% else %}
+						<i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br>
+				{% endif %}
+				</div>
+				<div class="guestbook-post-count">Постов: {{ message.author.messages|length }}</div>
+				<div class="guestbook-head-star">
+				{% if stars > 0 %}
+					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
+				{% endif %}					
+				</div>
+				<div class="guestbook-head-rate">
+					{% if message.author.rates.sum('sign') > 0 %}
+					<div class='r{{ message.author.id }}'>
+						<div class='rate-high'>
+							<i class="fa fa-plus-circle" aria-hidden="true"></i>
+							{{ message.author.rates.sum('sign') }}
+						</div>
+					</div>
+					{% elseif message.author.rates.sum('sign') == 0 %}
+					<div class='r{{ message.author.id }}'>
+						<div class='rate-middle'>
+							<i class="fa fa-circle" aria-hidden="true"></i>							
+							{{ message.author.rates.sum('sign') }}
+						</div>
+					</div>
+					{% elseif message.author.rates.sum('sign') < 0 %}
+					<div class='r{{ message.author.id }}'>
+						<div class='rate-low'>
+							<i class="fa fa-minus-circle" aria-hidden="true"></i>
+							{{ message.author.rates.sum('sign')|abs }}
+						</div>
+					</div>
+					{% endif %}
+				</div>
+			</div>		
+			<div class="guestbook-content">
+				<div class="guestbook-content-head">
+					<span class="guestbook-content-date">{{ beautiful_date(message.created_at) }}</span>
+					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">
+					{% if isPermission('guestbook-write') %}
+						Цитата
+					{% endif %}
+					</span>
+				</div>
+				<div class="guestbook-content-post" id="message{{ message.id }}">
+					{{ textMode(message.message)|raw|nl2br }}
+				</div>
+				<div class="hidden" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
+				<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>
+			</div>
+			<div class="guestbook-rate-panel">
+				<div id='d{{ message.id }}' class='tumbler rate-down'>
+				{% if app.user.id != message.author.id and rate_access == 1 %}
+					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+				{% endif %}
+				</div>
+				<div id='l{{ message.id }}' class='rate-level'>
+				{% if message.rates.sum('sign') > 0 %}
+					<span class='rate-high'>+{{ message.rates.sum('sign') }}</span>
+				{% elseif message.rates.sum('sign') == 0 %}
+					<span class='rate-middle'>{{ message.rates.sum('sign') }}</span>
+				{% elseif message.rates.sum('sign') < 0 %}
+					<span class='rate-low'>{{ message.rates.sum('sign') }}</span>
+				{% endif %}
+				</div>
+				<div id='u{{ message.id }}' class='tumbler rate-up'>
+				{% if app.user.id != message.author.id and rate_access == 1 %}
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				{% endif %}
+				</div>
+				<div class="rate-panel-users">
+					<div class="rate-users-no-{{ message.id }}">
+					{% if message.rates|length == 0 %}
+						Голосов нет
+					{% endif %}
+					</div>
+					<div class="rate-panel-up rate-users-up-{{ message.id }}">
+						{{ truncate(plus, 0, -2) }}
+					</div>
+					<div class="rate-panel-down rate-users-down-{{ message.id }}">
+						{{ truncate(minus, 0, -2) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+	<br>
+	{# page navigation #}
+	{% include 'pagenavigation.html.twig' %}

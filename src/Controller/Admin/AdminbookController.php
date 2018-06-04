@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Core\Controller;
-use App\Model\Guestbook;
+use App\Model\Adminbook;
 use App\Model\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GuestbookController extends Controller
+class AdminbookController extends Controller
 {
 	public function guestbook($page)
 	{
@@ -16,8 +16,8 @@ class GuestbookController extends Controller
 
 		$limit = 20;
 		$offset = ($page - 1) * $limit;
-		$guestbook = Guestbook::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
-		$count = Guestbook::orderBy('id', 'desc')->count();
+		$guestbook = Adminbook::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+		$count = Adminbook::orderBy('id', 'desc')->count();
 
 		$request = Request::createFromGlobals();
 		$lastGuestbook = trim($request->get('message'));
@@ -32,13 +32,13 @@ class GuestbookController extends Controller
 			if (!$this->container['userManager']->isPermission('guestbook-write'))
 				return "Вам запрещено писать сообщения.";
 
-			$error = $this->container['guestbookManager']->add($request);
+			$error = $this->container['guestbookManager']->add($request, 'adminbook');
 
 			if ($error === null)
-				return $this->redirectToRoute('guestbook');
+				return $this->redirectToRoute('admin_guestbook');
 		}
 
-		return $this->render('guestbook/guestbook.html.twig', [
+		return $this->render('admin/guestbook.html.twig', [
 			'guestbook' => $guestbook,
 			'page' => $page,
 			'limit' => $limit,

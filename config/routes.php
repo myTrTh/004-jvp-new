@@ -44,8 +44,9 @@ $routes->add('permission_delete', new Route('/permissions/delete/{id}', array('_
 $routes->add('admin_panel', new Route('/admin/panel', array('_controller' => 'App\Controller\Admin\AdminController::index')));
 $routes->add('ajax_admin_permissions', new Route('/ajax/admin/permissions', array('_controller' => 'App\Controller\Admin\AdminController::ajax_permissions')));
 $routes->add('ajax_admin_roles', new Route('/ajax/admin/roles', array('_controller' => 'App\Controller\Admin\AdminController::ajax_roles')));
-$routes->add('admin_guestbook', new Route('/admin/guestbook', array('_controller' => 'App\Controller\Admin\AdminController::guestbook')));
 $routes->add('admin_permissions', new Route('/admin/permissions/{id}', array('_controller' => 'App\Controller\Admin\AdminController::permissions'), array('id' => '[0-9]+')));
+$routes->add('admin_guestbook', new Route('/admin/guestbook/{page}', array('_controller' => 'App\Controller\Admin\AdminbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));
+// $routes->add('ajax_guestbook_rate', new Route('ajax/guestbook/rate', array('_controller' => 'App\Controller\GuestbookController::ajax_rate')));
 
 // content routes
 // $routes->add('content_list', new Route('/{type}/{page}', array('_controller' => 'App\Controller\ContentController::list', 'type' => 'content', 'page' => 1), array('type' => 'content', 'page' => '[0-9]+')));

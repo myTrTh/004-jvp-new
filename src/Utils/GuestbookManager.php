@@ -5,12 +5,13 @@ namespace App\Utils;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use App\Model\Guestbook;
+use App\Model\Adminbook;
 use App\Model\User;
 use App\Model\Rate;
 
 class GuestbookManager extends Manager
 {
-	public function add($request)
+	public function add($request, $book = 'guestbook')
 	{
 		// prepare data
 		$message = trim($request->get('message'));
@@ -21,8 +22,13 @@ class GuestbookManager extends Manager
 		if ($error = $this->ifEmptyStringValidate($message))
 			return $error;
 
-		if ($error = $this->duplicate($message))
-			return $error;
+		if ($book == 'guestbook') {
+			if ($error = $this->duplicate($message))
+				return $error;
+		} else if ($book == 'adminbook') {
+			if ($error = $this->adminDuplicate($message))
+				return $error;			
+		}
 
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceOf User))
@@ -31,7 +37,10 @@ class GuestbookManager extends Manager
 		if ($this->container['userManager']->isPermission('guestbook-write') === false)
 			return 'Вам запрещенно писать сообщения';
 
-		$guestbook = new Guestbook();
+		if ($book == 'guestbook')
+			$guestbook = new Guestbook();
+		else if ($book == 'adminbook')
+			$guestbook = new Adminbook();
 		$guestbook->user_id = $user->id;		
 		$guestbook->message = $message;
 		$guestbook->save();

@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Гостевая книга {% endblock %}
-{% block header %} Гостевая книга {% endblock %}
+{% block title %} Админка: Штаб {% endblock %}
+{% block header %} Админка {% endblock %}
 {% block body %}
+	{% include 'admin/_panel.html.twig' %}
+	<h4>Штаб</h4>
 
 	{% if isPermission('guestbook-write') %}
-		<form method='post' enctype='multipart/form-data' action='{{ path('guestbook') }}'>
+		<form method='post' enctype='multipart/form-data' action='{{ path('admin_guestbook') }}'>
 			{% include 'bbcode.html.twig' %}
 			<textarea name='message'>{{ lastMessage }}</textarea>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'><br>
@@ -18,7 +20,7 @@
 	{% endif %}<br>
 
 	{# page navigation #}
-	{% set page_name = 'guestbook' %}
+	{% set page_name = 'admin_guestbook' %}
 	{% include 'guestbook/_guestbook.html.twig' %}
 
 {% endblock %}

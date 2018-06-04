@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Guestbook;
+use App\Model\Adminbook;
 use App\Model\Permission;
 
 class Manager
@@ -166,4 +167,18 @@ class Manager
 
 		return;
 	}
+
+	public function adminDuplicate($message)
+	{
+		$this->container['db'];
+
+		$user = $this->container['userManager']->getUser();
+
+		$post = Adminbook::latest()->first();
+
+		if (is_object($post) && $post->message == $message && $post->user_id == $user->id)
+			return 'Вы уже отправляли этого сообщение.';
+
+		return;
+	}	
 }

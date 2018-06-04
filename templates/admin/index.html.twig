@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Админка: пользователи {% endblock %}
-{% block header %} Пользователи {% endblock %}
+{% block header %} Админка {% endblock %}
 {% block body %}
 	{% include 'admin/_panel.html.twig' %}
-	
+	<h4>Пользователи</h4>	
+
 	{% for user in users %}
 
 	{% set den = 0 %}
