@@ -30,31 +30,31 @@ class TextMode
 		// $patternB = "/post(?:\:|\/)([0-9]+)/si";
 		// $message = preg_replace($patternB, "<a href='/post/$1'>post/$1</a>", $message);		
 
-		// $how_spoiler = substr_count($message, "[spoiler");		
-		// $pattern_spoiler = "/\[spoiler\=*?([\s\S]+)?\]([\s\S]+)?\[\/spoiler\]/uiU";
-		// for($i=0;$i<$how_spoiler;$i++) {
-		// 	$message = preg_replace_callback($pattern_spoiler, function($matches) {
-		// 		if($matches[1])
-		// 			$head = $matches[1];
-		// 		else
-		// 			$head = 0;
+		$how_spoiler = substr_count($message, "[spoiler");		
+		$pattern_spoiler = "/\[spoiler\=*?([\s\S]+)?\]([\s\S]+)?\[\/spoiler\]/uiU";
+		for($i=0;$i<$how_spoiler;$i++) {
+			$message = preg_replace_callback($pattern_spoiler, function($matches) {
+				if($matches[1])
+					$head = $matches[1];
+				else
+					$head = 0;
 
-		// 		if($matches[2])
-		// 			$content = trim($matches[2]);
-		// 		else
-		// 			$content = "";
+				if($matches[2])
+					$content = trim($matches[2]);
+				else
+					$content = "";
 
-		// 		if($head === 0) {
-		// 			$result = "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span></div><div class='spoiler-body'>".$content."</div>";
-		// 		} else {
-		// 			$result = "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> ".$head."</span></div><div class='spoiler-body'>".$content."</div>";
-		// 		}
+				if($head === 0) {
+					$result = "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span></div><div class='spoiler-body'>".$content."</div>";
+				} else {
+					$result = "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> ".$head."</span></div><div class='spoiler-body'>".$content."</div>";
+				}
 
-		// 		return $result;
+				return $result;
 
-		// 	}, $message);
-		// }
-		// 	// $message = preg_replace($patternB, "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span><div class='spoiler-body'>$1</div></div>", $message);
+			}, $message);
+		}
+			// $message = preg_replace($patternB, "<div class='spoiler'><span class='sign'>+</span><span class='spoiler-name'> спойлер</span><div class='spoiler-body'>$1</div></div>", $message);
 	
 		$pattern_quote = "/(\[quote)(?:\ ?author=([\s\S]+)?)?(?:\ ?date=([a-zA-Zа-яёА-ЯЁ0-9\ \-\.\,\:]+))?(?:\ ?post=([0-9]+))?\]([\s\S]+)?(\[\/quote\])/siuU";
 		$how_quote = substr_count($message, "[quote");

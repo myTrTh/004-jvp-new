@@ -110,3 +110,18 @@ $(function(){
 
 	});
 })
+
+// spoiler
+$(function(){
+	$(document).on('click', '.spoiler-name', function() {	
+		var head = $(this).parent();
+		var spoiler = head.next();
+		spoiler.slideToggle(300);
+
+		var sign = $('.sign:first', head).html();
+		if(sign == '+')
+			$('.sign:first', head).html('−');
+		else
+			$('.sign:first', head).html('+');		
+	});
+})

@@ -1,0 +1,73 @@
+// vote
+.vote-options input {
+	margin-bottom: 10px;
+}
+
+.vote-title {
+	margin-bottom: 25px;
+	a {
+		font-size: 1.3em;
+		text-transform: uppercase;
+	}
+}
+
+.vote-option-result {
+	margin-bottom: 10px;
+}
+
+.vote-option-users {
+	font-size: .8em;
+}
+
+.vote-progress-bar {
+	height: 10px;
+	border-radius: 0 5px 5px 0;
+	background-color: #eceeef;
+}
+
+.progress-line {
+	height: 10px;
+	background-color: $color_red2;
+	border-radius: 0 5px 5px 0;	
+}
+
+.vote-result-bar {
+	display: flex;
+	border-bottom: solid 1px $color_grey2;
+	margin-bottom: 15px;
+}
+
+.vote-option-bar {
+	display: flex;
+	margin-bottom: 5px;
+}
+
+.vote-result-info, .vote-option-bar-info {
+	text-align: right;
+	flex: 1 0 55px;
+	font-weight: bold;
+}
+
+.vote-result-percent, .vote-option-bar-percent {
+	text-align: right;
+	flex: 0 1 55px;
+	color: $color_grey3;
+}
+
+.vote-users {
+	color: $color_black7;
+}
+
+.vote-info {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.block-vote {
+	padding: 3px;
+	font-size: .9em;
+}
+
+.control-panel-ed {
+	font-size: .8em;
+}
