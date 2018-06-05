@@ -101,4 +101,14 @@ class Upload {
 			imagejpeg($thumb, $rowimage);
 		}
 	}
+
+	public function imageProportions($image)
+	{
+		$info = getimagesize($this->pre_path.'/images/users/'.$image);
+		// if width bigger than height
+		if ($info[0] > $info[1])
+			return 1;
+		else
+			return 0;
+	}
 }

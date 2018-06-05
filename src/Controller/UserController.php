@@ -4,9 +4,21 @@ namespace App\Controller;
 
 use App\Core\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use App\Model\User;
 
 class UserController extends Controller
 {
+	public function list()
+	{
+		$this->container['db'];
+		
+		$users = User::all();
+
+		return $this->render('user/list.html.twig', [
+			'users' => $users
+		]);
+	}
+
 	public function profile()
 	{
 		$user = $this->container['userManager']->getUser();
@@ -24,7 +36,7 @@ class UserController extends Controller
 				$error = $userManager->addImage($request);
 
 				if ($error === null)
-					$this->redirectToRoute('user_profile');
+					$this->redirectToRoute('profile');
 			} else {
 				$error = "Вы не выбрали изображение";
 			}
@@ -36,7 +48,7 @@ class UserController extends Controller
 			$error = $userManager->deleteImage($request);
 
 			if ($error === null)
-				$this->redirectToRoute('user_profile');
+				$this->redirectToRoute('profile');
 		}
 
 		return $this->render('user/profile.html.twig', array(

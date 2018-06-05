@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Пользователи {% endblock %}
+{% block header %} Пользователи {% endblock %}
+{% block body %}
+	
+	<div class="users">
+	{% for user in users %}
+		<div class="user">
+			<div class="user-image">
+				{% if user.image %}
+					{% if imageProportions(user.image) %}
+						{% set rotation = 'image-width' %}
+					{% else %}
+						{% set rotation = 'image-height' %}
+					{% endif %}
+					<div class="{{ rotation }}">
+						<img class="user-image" src="{{ app.path }}/images/users/{{ app.user.image }}">
+					</div>
+				{% else %}
+					<img class="user-image" src="{{ app.path }}/images/interface/no_user.png">				
+				{% endif %}
+			</div>
+			<div class="user-info">
+				{% if user.username|length > 20 %}
+					<div class="user-info-username-small">{{ user.username }}
+				{% else %}
+					<div class="user-info-username">{{ user.username }}
+				{% endif %}
+				</div>
+				<div class="user-info-other">
+				since: {{ user.created_at|date('d.m.Y') }}<br>
+				shirt number: -
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+
+{% endblock %}

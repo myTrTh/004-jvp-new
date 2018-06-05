@@ -5,20 +5,20 @@
 {% block body %}
 
 		{% if app.user.image %}
-			<form method="post" action="{{ path('user_profile') }}">
+			<form method="post" action="{{ path('profile') }}">
 				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
 				<input type="submit" class='l-short' name="submit_delete_image" value="х">				
 			</form>
 			<img class="user-image" src="{{ app.path }}/images/users/{{ app.user.image }}">
 		{% else %}
-			<i class="profile-image fa fa-user" aria-hidden="true"></i><br>
+			<img class="user-image" src="{{ app.path }}/images/interface/no_user.png">			
 		{% endif %}
 
 		{% if error %}
 			<div class="message-error">{{ error }}</div>
 		{% endif %}
 
-		<form method='post' enctype='multipart/form-data' action="{{ path('user_profile') }}">
+		<form method='post' enctype='multipart/form-data' action="{{ path('profile') }}">
 			<input type="file" name="userfile">
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 			<input type="submit" name="submit_upload_image" value="Загрузить">

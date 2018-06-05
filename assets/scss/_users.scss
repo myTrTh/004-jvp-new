@@ -1,0 +1,34 @@
+.users {
+	display: flex;
+	flex-wrap: wrap;
+	font-family: $font_header;
+	.user {
+		display: flex;
+		flex: 1 1 220px;
+		max-width: 250px;
+		height: 150px;
+		border: solid 1px #ccc;
+		margin: 5px;
+		.user-image {
+			padding: 4px 0 0 4px;
+			width: 70px;
+			height: 150px;
+			img {
+				max-width: 50px;
+				max-height: 50px;
+			}
+		}
+		.user-info {
+			padding: 5px 5px 5px 0;
+			.user-info-username {
+				font-size: 1.2em;
+			}
+			.user-info-username-small {
+				font-size: 1.1em;
+			}			
+			.user-info-other {
+				color: $color_grey;
+			}
+		}
+	}
+}

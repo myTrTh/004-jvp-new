@@ -51,14 +51,15 @@
 					<div class="guestbook-head-user-normal"><span class='username'>{{ message.author.username }}</span>
 				{% else %}
 					<div class="guestbook-head-user"><span class='username'>{{ message.author.username }}</span>	
-				{% endif %}					
+				{% endif %}
 				<div class="guestbook-post-count-hidden">Постов: {{ message.author.messages|length }}</div>
 				</div>
 				<div class="guestbook-image">				
 				{% if message.author.image %}
 					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
 				{% else %}
-						<i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br>
+					<img src="{{ app.path }}/images/interface/no_user.png">					
+						{# <i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br> #}
 				{% endif %}
 				</div>
 				<div class="guestbook-post-count">Постов: {{ message.author.messages|length }}</div>

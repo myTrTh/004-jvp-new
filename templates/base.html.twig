@@ -22,7 +22,7 @@
 				</li>
 				<li><a href="">МЫ</a>
 					<ul class='down-menu'>
-						<li><a href="">КОМАНДЫ</a></li>
+						<li><a href="{{ path('user_list') }}">КОМАНДЫ</a></li>
 						<li><a href="">РЕЙТИНГ</a></li>
 						<li><a href="{{ path('vote_list') }}">ОПРОСЫ</a></li>
 						<li><a href="">СТАТИСТИКА</a></li>
@@ -32,7 +32,7 @@
 				{% if app.user %}
 					<li><a href="#">INFO</a>
 						<ul class='down-menu'>
-							<li><a href="{{ path('user_profile') }}">ПРОФИЛЬ</a></li>
+							<li><a href="{{ path('profile') }}">ПРОФИЛЬ</a></li>
 							{% if isAccess('ROLE_MODERATOR') or isAccess('ROLE_ADMIN') %}
 								<li><a href="{{ path('admin_panel') }}">АДМИНКА</a></li>
 							{% endif %}

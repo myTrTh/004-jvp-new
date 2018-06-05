@@ -37,6 +37,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             new TwigFunction('truncate', array($this, 'truncate')),
             new TwigFunction('beautiful_date', array($this, 'beautiful_date')),
             new TwigFunction('getPageNumber', array($this, 'getPageNumber')),
+            new TwigFunction('imageProportions', array($this, 'imageProportions')),
         ];
     }
 
@@ -103,5 +104,10 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
     public function getPageNumber()
     {
         return $this->container['controller']->getPageNumber();
+    }
+
+    public function imageProportions($image)
+    {
+        return $this->container['upload']->imageProportions($image);
     }
 }

@@ -24,8 +24,9 @@ $routes->add('auth_reset_password_send_email', new Route('/reset-password/send-e
 $routes->add('auth_reset_password_confirmation', new Route('/reset-password/{token}', array('_controller' => 'App\Controller\AuthController::resetPasswordConfirmation'), array('token' => '.+')));
 
 // user routes
-$routes->add('user_profile', new Route('/profile', array('_controller' => 'App\Controller\UserController::profile')));
+$routes->add('profile', new Route('/profile', array('_controller' => 'App\Controller\UserController::profile')));
 $routes->add('user_change_password', new Route('/profile/change-password', array('_controller' => 'App\Controller\UserController::changePassword')));
+$routes->add('user_list', new Route('/users', array('_controller' => 'App\Controller\UserController::list')));
 
 // role routes
 $routes->add('role_list', new Route('/roles', array('_controller' => 'App\Controller\Admin\RoleController::list')));

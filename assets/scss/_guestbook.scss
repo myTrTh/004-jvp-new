@@ -73,6 +73,7 @@
 		.guestbook-head-star {
 			font-size: .8em;
 			color: #CAA91A;
+			margin-bottom: 3px;
 			@media only all and (max-width: $site_width_collapse) {
 				display: none
 			}
