@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Настройки {% endblock %}
+{% block header %} Настройки {% endblock %}
+{% block body %}
+
+	<a href="{{ path('profile') }}">Вернуться в профиль</a><br><br>
+	<div class="profile">
+		<div class="profile-info">
+		<h3 class='weight-normal'>Изображение</h3>
+		{% if user.image %}
+			<form method="post" action="{{ path('settings') }}">
+				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
+				<input type="submit" class='l-short' name="submit_delete_image" value="х">				
+			</form>
+			<img class="user-image" src="{{ app.path }}/images/users/{{ user.image }}">
+		{% else %}
+			<img class="user-image" src="{{ app.path }}/images/interface/no_user.png">			
+		{% endif %}
+
+		{% if error %}
+			<div class="message-error">{{ error }}</div>
+		{% endif %}
+
+		<form method='post' enctype='multipart/form-data' action="{{ path('settings') }}">
+			<input type="file" name="userfile">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type="submit" name="submit_upload_image" value="Загрузить">
+		</form>
+		</div>
+
+	</div>
+{% endblock %}

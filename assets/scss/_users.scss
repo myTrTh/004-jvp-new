@@ -60,3 +60,36 @@
 	padding: 3px;
 	font-size: .8em;
 }
+
+.profile {
+	display: flex;
+	.profile-info {
+		flex: 1 0 200px;
+	}
+	.p-wide {
+		flex-basis: 400px;
+	}
+	.p-center {
+		text-align: center;
+	}
+	ul li {
+		border-bottom: solid 1px $color_grey2;
+		padding: 5px 0;
+	}
+	ul li:nth-child(1) {
+		border-bottom: none;
+		padding-bottom: 10px;
+		padding-top: 0;
+	}
+}
+
+.fa-user {
+	margin-right: 7px;
+}
+
+.h-username {
+	font-size: 2.2em;
+	font-family: $font_header;
+	margin: 0;
+	padding: 0;
+}

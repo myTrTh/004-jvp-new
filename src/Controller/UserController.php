@@ -33,13 +33,24 @@ class UserController extends Controller
 		$this->container['db'];
 
 		$user = User::where('id', $id)->first();
-		
-		return $this->render('user/show.html.twig', array(
+
+		return $this->render('user/profile.html.twig', array(
 			'user' => $user
 		));
 	}
 
 	public function profile()
+	{
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return $this->redirectToRoute('auth_login');
+
+		return $this->render('user/profile.html.twig', array(
+			'user' => $user
+		));
+	}	
+
+	public function settings()
 	{
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User))
@@ -52,11 +63,10 @@ class UserController extends Controller
 
 			if ($request->files->get('userfile')) {
 
-				$userManager = $this->container['userManager'];
-				$error = $userManager->addImage($request);
+				$error = $this->container['userManager']->addImage($request);
 
 				if ($error === null)
-					$this->redirectToRoute('profile');
+					return $this->redirectToRoute('settings');
 			} else {
 				$error = "Вы не выбрали изображение";
 			}
@@ -64,16 +74,16 @@ class UserController extends Controller
 
 		if ($request->get('submit_delete_image')) {
 
-			$userManager = $this->container['userManager'];
-			$error = $userManager->deleteImage($request);
+			$error = $this->container['userManager']->deleteImage($request);
 
 			if ($error === null)
-				$this->redirectToRoute('profile');
+				return $this->redirectToRoute('settings');
 		}
 
-		return $this->render('user/profile.html.twig', array(
+		return $this->render('user/settings.html.twig', array(
+			'user' => $user,
 			'error' => $error
-		));
+		));		
 	}
 
 	public function changePassword()
