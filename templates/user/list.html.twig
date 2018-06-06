@@ -41,9 +41,9 @@
 			</div>
 			<div class="user-info">
 				{% if user.username|length > 20 %}
-					<div class="user-info-username-small">{{ user.username }}
+					<div class="user-info-username-small"><a class='no-style' href="{{ path('user_profile', {'id': user.id}) }}">{{ user.username }}</a>
 				{% else %}
-					<div class="user-info-username">{{ user.username }}
+					<div class="user-info-username"><a class='no-style' href="{{ path('user_profile', {'id': user.id}) }}">{{ user.username }}</a>
 				{% endif %}
 				</div>
 				<div class="user-info-other">

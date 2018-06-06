@@ -28,6 +28,17 @@ class UserController extends Controller
 		]);
 	}
 
+	public function show($id)
+	{
+		$this->container['db'];
+
+		$user = User::where('id', $id)->first();
+		
+		return $this->render('user/show.html.twig', array(
+			'user' => $user
+		));
+	}
+
 	public function profile()
 	{
 		$user = $this->container['userManager']->getUser();
