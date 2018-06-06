@@ -6,16 +6,23 @@
 		display: flex;
 		flex: 1 1 220px;
 		max-width: 250px;
-		height: 150px;
+		height: 110px;
 		border: solid 1px #ccc;
 		margin: 5px;
 		.user-image {
 			padding: 4px 0 0 4px;
-			width: 70px;
+			width: 60px;
 			height: 150px;
 			img {
-				max-width: 50px;
-				max-height: 50px;
+				max-width: 100px;
+				max-height: 100px;
+			}
+			div {
+				margin: 6px 0 0 3px;
+				border-radius: 25px;	
+				width: 50px !important;
+				height: 50px !important;
+				overflow: hidden;
 			}
 		}
 		.user-info {
@@ -28,7 +35,28 @@
 			}			
 			.user-info-other {
 				color: $color_grey;
+				font-size: .9em;
 			}
 		}
 	}
+}
+
+.image-width {
+	img {
+		height: 50px !important;
+	}
+}
+
+.image-height {
+	img {
+		width: 50px !important;
+	}
+}
+
+.users-panel-sort {
+	text-align: right;
+	background: $color_grey2;
+	margin: 5px;
+	padding: 3px;
+	font-size: .8em;
 }

@@ -4,6 +4,22 @@
 {% block header %} Пользователи {% endblock %}
 {% block body %}
 	
+	{% set sort1 = 'alpha_desc' %}
+	{% set sort2 = 'since_asc' %}
+	{% set sign1 = 'up' %}
+	{% set sign2 = 'down' %}
+	{% if sort == 'alpha_desc' %}
+		{% set sort1 = 'alpha_asc' %}
+		{% set sign1 = 'down' %}			
+	{% endif %}
+	{% if sort == 'since_asc' %}
+		{% set sort2 = 'since_desc' %}
+		{% set sign2 = 'up' %}			
+	{% endif %}	
+	<div class="users-panel-sort">
+		Сортировать по <a href="{{ path('user_list', {'sort': sort1}) }}">алфавиту <i class="fa fa-chevron-{{ sign1 }}" aria-hidden="true"></i></a>
+		| <a href="{{ path('user_list', {'sort': sort2}) }}">дате регистрации <i class="fa fa-chevron-{{ sign2 }}" aria-hidden="true"></i></a>
+	</div>
 	<div class="users">
 	{% for user in users %}
 		<div class="user">
@@ -15,10 +31,12 @@
 						{% set rotation = 'image-height' %}
 					{% endif %}
 					<div class="{{ rotation }}">
-						<img class="user-image" src="{{ app.path }}/images/users/{{ app.user.image }}">
+						<img src="{{ app.path }}/images/users/{{ user.image }}">
 					</div>
 				{% else %}
-					<img class="user-image" src="{{ app.path }}/images/interface/no_user.png">				
+					<div class="image-height">
+						<img src="{{ app.path }}/images/interface/no_user.png">				
+					</div>
 				{% endif %}
 			</div>
 			<div class="user-info">

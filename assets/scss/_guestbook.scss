@@ -21,7 +21,7 @@
 			padding: 10px 3px 3px 6px;			
 			text-align: left;
 			flex-wrap: wrap;
-			background-color: #d8d8d8;
+			background-color: $color_grey1;
 		}
 		.guestbook-image img {
 			border-radius: 3px;
@@ -71,15 +71,16 @@
 		}
 
 		.guestbook-head-star {
-			font-size: .8em;
+			font-size: .9em;
 			color: #CAA91A;
-			margin-bottom: 3px;
+			margin: -5px 0 5px 0;
 			@media only all and (max-width: $site_width_collapse) {
 				display: none
 			}
 		}
 		.guestbook-head-rate div {
 			font-size: .95em !important;
+			margin-top: 3px;
 			@media only all and (max-width: $site_width_collapse) {
 				display: none
 			}			

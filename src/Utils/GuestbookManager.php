@@ -19,7 +19,7 @@ class GuestbookManager extends Manager
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
 			return $error;
 
-		if ($error = $this->ifEmptyStringValidate($message))
+		if ($error = $this->ifEmptyStringValidate($message, 'Сообщение'))
 			return $error;
 
 		if ($book == 'guestbook') {

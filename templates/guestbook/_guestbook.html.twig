@@ -54,6 +54,12 @@
 				{% endif %}
 				<div class="guestbook-post-count-hidden">Постов: {{ message.author.messages|length }}</div>
 				</div>
+				<div class="guestbook-head-star">
+				{% set stars = 5 %}
+				{% if stars > 0 %}
+					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
+				{% endif %}					
+				</div>	
 				<div class="guestbook-image">				
 				{% if message.author.image %}
 					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
@@ -63,11 +69,11 @@
 				{% endif %}
 				</div>
 				<div class="guestbook-post-count">Постов: {{ message.author.messages|length }}</div>
-				<div class="guestbook-head-star">
+{# 				<div class="guestbook-head-star">
 				{% if stars > 0 %}
 					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
 				{% endif %}					
-				</div>
+				</div> #}
 				<div class="guestbook-head-rate">
 					{% if message.author.rates.sum('sign') > 0 %}
 					<div class='r{{ message.author.id }}'>

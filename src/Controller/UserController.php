@@ -8,14 +8,23 @@ use App\Model\User;
 
 class UserController extends Controller
 {
-	public function list()
+	public function list($sort)
 	{
 		$this->container['db'];
 		
-		$users = User::all();
+		// default sort
+		$condition = 'username';
+		$order = 'asc';		
+
+		if ($sort == 'alpha_desc') { $condition = 'username'; $order = 'desc'; }
+		if ($sort == 'since_asc') { $condition = 'created_at'; $order = 'asc'; }
+		if ($sort == 'since_desc') { $condition = 'created_at'; $order = 'desc'; }
+
+		$users = User::orderBy($condition, $order)->get();
 
 		return $this->render('user/list.html.twig', [
-			'users' => $users
+			'users' => $users,
+			'sort' => $sort
 		]);
 	}
 
