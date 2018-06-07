@@ -13,14 +13,14 @@
 				<li class='logo'><a class='logo' href="{{ path('app_index') }}">
 					<img src="{{ app.path }}/images/interface/king.png">
 				</a></li>
-				<li><a href="{{ path('guestbook') }}">ТУРНИРЫ</a>
+				<li><a>ТУРНИРЫ</a>
 					<ul class='down-menu'>
 						<li><a href="">АКТИВНЫЕ</a></li>
 						<li><a href="">АРХИВ</a></li>
 						<li><a href="{{ path('content_show', {'type': 'rules'}) }}">ПРАВИЛА</a></li>
 					</ul>
 				</li>
-				<li><a href="">МЫ</a>
+				<li><a>МЫ</a>
 					<ul class='down-menu'>
 						<li><a href="{{ path('user_list') }}">КОМАНДЫ</a></li>
 						<li><a href="">РЕЙТИНГ</a></li>
@@ -30,7 +30,7 @@
 				</li>
 				<li><a href="{{ path('guestbook') }}">ГЕСТА</a></li>
 				{% if app.user %}
-					<li><a href="#">INFO</a>
+					<li><a>INFO</a>
 						<ul class='down-menu'>
 							<li><a href="{{ path('profile') }}">ПРОФИЛЬ</a></li>
 							{% if isAccess('ROLE_MODERATOR') or isAccess('ROLE_ADMIN') %}

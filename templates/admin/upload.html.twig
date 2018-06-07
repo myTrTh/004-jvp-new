@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: Загрузка изображений {% endblock %}
+{% block header %} Админка {% endblock %}
+{% block body %}
+	{% include 'admin/_panel.html.twig' %}
+	<h4>Загрузка изображений</h4>
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+
+	<form method='post' enctype='multipart/form-data' action="{{ path('admin_upload') }}">
+		<label>
+		 	<input class='radio' value='1' type='radio' checked name='image_type'>
+		    <span class="radio-custom"></span>
+            <span class="label">Лого турнира</span>													
+		</label>
+		<label>
+		 	<input class='radio' value='2' type='radio' name='image_type'>
+		    <span class="radio-custom"></span>
+            <span class="label">Нашивка пользователя в гостевой</span>													
+		</label>
+		<label>
+		 	<input class='radio' value='3' type='radio' name='image_type'>
+		    <span class="radio-custom"></span>
+            <span class="label">Кубок пользователя в профиле</span>													
+		</label>						
+		<input type="file" name="userfile">
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type="submit" name="submit_upload_image" value="Загрузить">
+	</form>
+
+{% endblock %}

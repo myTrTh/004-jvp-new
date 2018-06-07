@@ -87,4 +87,27 @@ class AdminController extends Controller
 			'error' => $error
 		]);
 	}
+
+	public function upload()
+	{
+		$error = '';
+
+		$request = Request::createFromGlobals();
+		if ($request->get('submit_upload_image')) {
+
+			if ($request->files->get('userfile')) {
+
+				$error = $this->container['adminManager']->addImage($request);
+
+				if ($error === null)
+					return $this->redirectToRoute('settings');
+			} else {
+				$error = "Вы не выбрали изображение";
+			}
+		}
+
+		return $this->render('admin/upload.html.twig', [
+			'error' => $error
+		]);
+	}
 }

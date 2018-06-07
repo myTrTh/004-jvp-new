@@ -75,4 +75,31 @@ class AdminManager extends Manager
 
 		return;
 	}
+
+	public function addImage($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$path = $request->get('image_type');
+
+		$dir = '/images/tournaments/'.$path;
+
+		$uploadedFile = $request->files->get('userfile');
+
+		$upload = $this->container['upload'];
+		$file = $upload->upload($uploadedFile, $dir, 150000, 200, 200);
+
+		if ($file[0]) {
+			$oldimage = $user->image;
+			$upload->delete($oldimage, $dir);
+
+			$user->image = $file[1];
+			$user->save();
+		} else {
+			return $file[1];
+		}
+
+		return;
+	}	
 }

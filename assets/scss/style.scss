@@ -390,9 +390,9 @@ input[type='submit']:hover, .button:hover {
 // pagenavigation
 .pagenavigation {
 	span {
-		padding: 3px;
-		font-size: 0.9em;
-		min-width: 25px;
+		padding: 2px;
+		font-size: 0.8em;
+		min-width: 1.5em;
 		display: inline-block;
 		cursor: pointer;
 		background: #dbdbdb;
@@ -407,6 +407,7 @@ input[type='submit']:hover, .button:hover {
 	}
 	.active {
 		background: #fafafa;
+		border: solid 1px #dbdbdb;
 	}
 	span:hover {
 		background: #fafafa;

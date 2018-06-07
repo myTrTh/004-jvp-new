@@ -7,7 +7,7 @@
 	<h4>Штаб</h4>
 
 	{% if isPermission('guestbook-write') %}
-		<form method='post' enctype='multipart/form-data' action='{{ path('admin_guestbook') }}'>
+		<form method='post' action='{{ path('admin_guestbook') }}'>
 			{% include 'bbcode.html.twig' %}
 			<textarea name='message'>{{ lastMessage }}</textarea>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'><br>

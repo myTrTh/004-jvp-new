@@ -49,7 +49,7 @@ $routes->add('ajax_admin_permissions', new Route('/ajax/admin/permissions', arra
 $routes->add('ajax_admin_roles', new Route('/ajax/admin/roles', array('_controller' => 'App\Controller\Admin\AdminController::ajax_roles')));
 $routes->add('admin_permissions', new Route('/admin/permissions/{id}', array('_controller' => 'App\Controller\Admin\AdminController::permissions'), array('id' => '[0-9]+')));
 $routes->add('admin_guestbook', new Route('/admin/guestbook/{page}', array('_controller' => 'App\Controller\Admin\AdminbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));
-// $routes->add('ajax_guestbook_rate', new Route('ajax/guestbook/rate', array('_controller' => 'App\Controller\GuestbookController::ajax_rate')));
+$routes->add('admin_upload', new Route('/admin/upload', array('_controller' => 'App\Controller\Admin\AdminController::upload')));
 
 // content routes
 $routes->add('content_show', new Route('/{type}', array('_controller' => 'App\Controller\ContentController::show'), array('type' => 'rules|faq|about|alert')));
