@@ -2,13 +2,27 @@
 	max-width: 50px;
 	max-height: 70px;
 	margin-top: 2px;
+	margin: 0 10px 10px 0;
 }
 
 .upload {
 	display: flex;
+	flex-wrap: wrap;
 	margin-bottom: 10px;
 }
 
 .upload-image {
 	text-align: center;
+}
+
+.show-panel {
+	display: flex;
+	margin: 10px 0;
+	flex-wrap: wrap;
+	.show-panel-image {
+		width: 80px;
+	}
+	.show-panel-user {
+		width: 150px;
+	}
 }

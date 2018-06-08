@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: Нашивки {% endblock %}
+{% block header %} Админка {% endblock %}
+{% block body %}
+	{% include 'admin/_panel.html.twig' %}
+	<h4>Нашивки</h4>
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+
+	{% if not upload is empty %}
+	<form method='post' action='{{ path('admin_achives') }}'>
+		<select name='user'>
+			{% for user in users %}
+			<option value='{{ user.id }}'>{{ user.username }}</option>
+			{% endfor %}
+		</select>
+		<br><br>
+		{% for image in upload %}
+			<input type='radio' name='image' value='{{ image.id }}'>
+			<img class='upload-panel' src='{{ app.path }}/images/tournaments/achive/{{ image.image }}'>
+		{% endfor %}
+		<br>
+		<label>Причина добавления<br>
+		<input type='text' name='description'>
+		</label>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'><br>
+		<input type='submit' name='submit_add_achive' value='Добавить'>
+	</form>	
+	{% endif %}
+	<div class='show-panel'>
+	{% for achive in achives %}
+		<div class="show-panel-image">
+			<img class='upload-panel' src='{{ app.path }}/images/tournaments/achive/{{ achive.image.image }}'>
+		</div>		
+		<div class="show-panel-user">{{ achive.user.username }}</div>
+		<div class="show-panel-description">{{ achive.description }}</div>
+	{% endfor %}
+	</div>
+{% endblock %}

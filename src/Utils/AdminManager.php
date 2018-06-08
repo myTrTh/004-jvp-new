@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Upload;
+use App\Model\Achive;
 
 class AdminManager extends Manager
 {
@@ -135,4 +136,29 @@ class AdminManager extends Manager
 
 		return;
 	}	
+
+	public function addAchive($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$image_id = $request->get('image');
+		$user_id = $request->get('user');
+		$description = trim($request->get('description'));
+
+		$user = User::where('id', $user_id)->first();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Пользователь не найден.';
+		
+		$image = Upload::where('id', $image_id)->first();
+		if (!is_object($image) && !($image instanceof Upload))
+			return 'Изображение не найдено.';
+
+		$achive = new Achive();
+		$achive->user_id = $user->id;
+		$achive->image_id = $image->id;
+		$achive->description = $description;
+		$achive->save();
+
+	}
 }

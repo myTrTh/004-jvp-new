@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Upload;
+use App\Model\Achive;
 use App\Model\Permission;
 use App\Utils\RoleManager;
 
@@ -127,6 +128,30 @@ class AdminController extends Controller
 			'logos' => $logo,
 			'achives' => $achive,
 			'cups' => $cup
+		]);
+	}
+
+	public function Achive()
+	{
+		$this->container['db'];
+
+		$request = Request::createFromGlobals();
+		if ($request->get('submit_add_achive')) {
+			$error = $this->container['adminManager']->addAchive($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('admin_achives');
+		}
+
+		$achives = Achive::all();
+		$users = User::orderBy('username', 'asc')->get();
+		$upload = Upload::where('type', 'achive')->orderBy('id', 'desc')->get();
+
+		return $this->render('admin/achives.html.twig', [
+			'error' => $error,
+			'achives' => $achives,
+			'users' => $users,
+			'upload' => $upload
 		]);
 	}
 }
