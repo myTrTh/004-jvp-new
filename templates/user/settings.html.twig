@@ -10,7 +10,7 @@
 		<h3 class='weight-normal'>Изображение</h3>
 		{% if user.image %}
 			<form method="post" action="{{ path('settings') }}">
-				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>				
+				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 				<input type="submit" class='l-short' name="submit_delete_image" value="х">				
 			</form>
 			<img class="user-image" src="{{ app.path }}/images/users/{{ user.image }}">

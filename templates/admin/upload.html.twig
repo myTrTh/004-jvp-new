@@ -12,17 +12,17 @@
 
 	<form method='post' enctype='multipart/form-data' action="{{ path('admin_upload') }}">
 		<label>
-		 	<input class='radio' value='1' type='radio' checked name='image_type'>
+		 	<input class='radio' value='logo' type='radio' checked name='image_type'>
 		    <span class="radio-custom"></span>
             <span class="label">Лого турнира</span>													
 		</label>
 		<label>
-		 	<input class='radio' value='2' type='radio' name='image_type'>
+		 	<input class='radio' value='achive' type='radio' name='image_type'>
 		    <span class="radio-custom"></span>
             <span class="label">Нашивка пользователя в гостевой</span>													
 		</label>
 		<label>
-		 	<input class='radio' value='3' type='radio' name='image_type'>
+		 	<input class='radio' value='cup' type='radio' name='image_type'>
 		    <span class="radio-custom"></span>
             <span class="label">Кубок пользователя в профиле</span>													
 		</label>						
@@ -30,5 +30,47 @@
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 		<input type="submit" name="submit_upload_image" value="Загрузить">
 	</form>
+	<br>
+	{% if not logos is empty %}<h3>ЛОГО ТУРНИРОВ</h3>{% endif %}
+	<div class="upload">
+	{% for logo in logos %}
+		<div class="upload-image">
+		<form method="post" action="{{ path('admin_upload') }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='hidden' name='upload-image' value='{{ logo.id }}'>
+			<input type="submit" class='l-short' name="submit_delete_image" value="х">
+		</form>		
+		<img class="upload-panel" src="{{ app.path }}/images/tournaments/logo/{{ logo.image }}">
+		</div>
+	{% endfor %}
+	</div>
+
+	{% if not achives is empty %}<h3>НАШИВКИ ПОЛЬЗОВАТЕЛЕЙ</h3>{% endif %}
+	<div class="upload">		
+	{% for achive in achives %}
+		<div class="upload-image">
+		<form method="post" action="{{ path('admin_upload') }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='hidden' name='upload-image' value='{{ achive.id }}'>
+			<input type="submit" class='l-short' name="submit_delete_image" value="х">
+		</form>				
+		<img class="upload-panel" src="{{ app.path }}/images/tournaments/achive/{{ achive.image }}">
+		</div>
+	{% endfor %}
+	</div>
+
+	{% if not cups is empty %}<h3>КУБКИ</h3>{% endif %}
+	<div class="upload">
+	{% for cup in cups %}
+		<div class="upload-image">
+		<form method="post" action="{{ path('admin_upload') }}">
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='hidden' name='upload-image' value='{{ cup.id }}'>
+			<input type="submit" class='l-short' name="submit_delete_image" value="х">
+		</form>				
+		<img class="upload-panel" src="{{ app.path }}/images/tournaments/cup/{{ cup.image }}">
+		</div>		
+	{% endfor %}
+	</div>
 
 {% endblock %}

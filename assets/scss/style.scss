@@ -422,11 +422,10 @@ input[type='submit']:hover, .button:hover {
 	color: $color_green3;
 }
 
-
-
 // import
 @import '_admin.scss';
 @import '_input.scss';
 @import '_guestbook.scss';
 @import '_vote.scss';
 @import '_users.scss';
+@import '_tournaments.scss';

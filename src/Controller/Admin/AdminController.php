@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Model\User;
 use App\Model\Role;
+use App\Model\Upload;
 use App\Model\Permission;
 use App\Utils\RoleManager;
 
@@ -14,10 +15,10 @@ class AdminController extends Controller
 {
 	public function index()
 	{
-		$error = '';
-		
 		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
 			return $this->render('error/page403.html.twig', array('errno' => 403));
+
+		$error = '';
 
 		$this->container['db'];
 		$users = User::all();
@@ -90,6 +91,9 @@ class AdminController extends Controller
 
 	public function upload()
 	{
+		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
+			return $this->render('error/page403.html.twig', array('errno' => 403));
+
 		$error = '';
 
 		$request = Request::createFromGlobals();
@@ -100,14 +104,29 @@ class AdminController extends Controller
 				$error = $this->container['adminManager']->addImage($request);
 
 				if ($error === null)
-					return $this->redirectToRoute('settings');
+					return $this->redirectToRoute('admin_upload');
 			} else {
 				$error = "Вы не выбрали изображение";
 			}
 		}
 
+		if ($request->get('submit_delete_image')) {
+
+			$error = $this->container['adminManager']->deleteImage($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('admin_upload');
+		}
+
+		$logo = Upload::where('type', 'logo')->orderBy('id', 'desc')->get();
+		$achive = Upload::where('type', 'achive')->orderBy('id', 'desc')->get();
+		$cup = Upload::where('type', 'cup')->orderBy('id', 'desc')->get();
+
 		return $this->render('admin/upload.html.twig', [
-			'error' => $error
+			'error' => $error,
+			'logos' => $logo,
+			'achives' => $achive,
+			'cups' => $cup
 		]);
 	}
 }

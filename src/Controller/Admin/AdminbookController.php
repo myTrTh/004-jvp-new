@@ -12,6 +12,9 @@ class AdminbookController extends Controller
 {
 	public function guestbook($page)
 	{
+		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
+			return $this->render('error/page403.html.twig', array('errno' => 403));
+
 		$this->container['db'];
 
 		$limit = 20;
@@ -46,13 +49,5 @@ class AdminbookController extends Controller
 			'error' => $error,
 			'lastGuestbook' => $lastGuestbook
 		]);
-	}
-
-	public function ajax_rate()
-	{
-		$request = Request::createFromGlobals();
-		$result = $this->container['guestbookManager']->rate($request);
-
-		return new Response(json_encode($result));
 	}
 }

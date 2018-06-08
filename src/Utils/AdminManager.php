@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use App\Model\User;
 use App\Model\Role;
+use App\Model\Upload;
 
 class AdminManager extends Manager
 {
@@ -82,23 +83,55 @@ class AdminManager extends Manager
 			return $error;
 
 		$path = $request->get('image_type');
+		if ($path != 'logo' && $path != 'achive' && $path != 'cup')
+			return 'Выбран неправильный тип';
 
 		$dir = '/images/tournaments/'.$path;
 
 		$uploadedFile = $request->files->get('userfile');
 
-		$upload = $this->container['upload'];
-		$file = $upload->upload($uploadedFile, $dir, 150000, 200, 200);
+		$file = $this->container['upload']->upload($uploadedFile, $dir, 150000, 200, 200);
+
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Пользователь не найден.';		
+
 
 		if ($file[0]) {
-			$oldimage = $user->image;
-			$upload->delete($oldimage, $dir);
-
-			$user->image = $file[1];
-			$user->save();
+			$upload = new Upload();
+			$upload->type = $path;
+			$upload->image = $file[1];
+			$upload->user_id = $user->id;
+			$upload->save();
 		} else {
 			return $file[1];
 		}
+
+		return;
+	}
+
+	public function deleteImage($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Вы не авторизированы.';
+
+		$upload = $this->container['upload'];
+
+		$id = $request->get('upload-image');
+
+		$image = Upload::where('id', $id)->first();
+		if (!is_object($image) && !($image instanceof Upload))
+			return 'Изображение не найдено.';
+
+		$dir = 'images/tournaments/'.$image->type;
+
+		$upload->delete($image->image, $dir);
+
+		$image->delete();
 
 		return;
 	}	

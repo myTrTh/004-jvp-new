@@ -13,4 +13,5 @@ class Upload extends Eloquent
 	 * @var array
 	 */
 	protected $dates = ['deleted_at'];
+	protected $table = 'upload';	
 }
