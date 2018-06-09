@@ -9,6 +9,7 @@ use App\Model\User;
 use App\Model\Role;
 use App\Model\Upload;
 use App\Model\Achive;
+use App\Model\Cup;
 use App\Model\Permission;
 use App\Utils\RoleManager;
 
@@ -131,7 +132,7 @@ class AdminController extends Controller
 		]);
 	}
 
-	public function Achive()
+	public function achives()
 	{
 		$this->container['db'];
 
@@ -143,7 +144,14 @@ class AdminController extends Controller
 				return $this->redirectToRoute('admin_achives');
 		}
 
-		$achives = Achive::all();
+		if ($request->get('submit_delete_achive')) {
+			$error = $this->container['adminManager']->deleteAchive($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('admin_achives');			
+		}
+
+		$achives = Achive::orderBy('id', 'desc')->get();
 		$users = User::orderBy('username', 'asc')->get();
 		$upload = Upload::where('type', 'achive')->orderBy('id', 'desc')->get();
 
@@ -154,4 +162,35 @@ class AdminController extends Controller
 			'upload' => $upload
 		]);
 	}
+
+	public function cups()
+	{
+		$this->container['db'];
+
+		$request = Request::createFromGlobals();
+		if ($request->get('submit_add_cups')) {
+			$error = $this->container['adminManager']->addCups($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('admin_cups');
+		}
+
+		if ($request->get('submit_delete_cups')) {
+			$error = $this->container['adminManager']->deleteCups($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('admin_cups');			
+		}
+
+		$cups = Cup::orderBy('id', 'desc')->get();
+		$users = User::orderBy('username', 'asc')->get();
+		$upload = Upload::where('type', 'cup')->orderBy('id', 'desc')->get();
+
+		return $this->render('admin/cups.html.twig', [
+			'error' => $error,
+			'cups' => $cups,
+			'users' => $users,
+			'upload' => $upload
+		]);
+	}	
 }

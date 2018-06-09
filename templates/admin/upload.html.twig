@@ -53,7 +53,7 @@
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 			<input type='hidden' name='upload-image' value='{{ achive.id }}'>
 			<input type="submit" class='l-short' name="submit_delete_image" value="х">
-		</form>				
+		</form>
 		<img class="upload-panel" src="{{ app.path }}/images/tournaments/achive/{{ achive.image }}">
 		</div>
 	{% endfor %}

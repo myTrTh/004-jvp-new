@@ -50,7 +50,8 @@ $routes->add('ajax_admin_roles', new Route('/ajax/admin/roles', array('_controll
 $routes->add('admin_permissions', new Route('/admin/permissions/{id}', array('_controller' => 'App\Controller\Admin\AdminController::permissions'), array('id' => '[0-9]+')));
 $routes->add('admin_guestbook', new Route('/admin/guestbook/{page}', array('_controller' => 'App\Controller\Admin\AdminbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));
 $routes->add('admin_upload', new Route('/admin/upload', array('_controller' => 'App\Controller\Admin\AdminController::upload')));
-$routes->add('admin_achives', new Route('/admin/achives', array('_controller' => 'App\Controller\Admin\AdminController::Achive')));
+$routes->add('admin_achives', new Route('/admin/achives', array('_controller' => 'App\Controller\Admin\AdminController::achives')));
+$routes->add('admin_cups', new Route('/admin/cups', array('_controller' => 'App\Controller\Admin\AdminController::cups')));
 
 // content routes
 $routes->add('content_show', new Route('/{type}', array('_controller' => 'App\Controller\ContentController::show'), array('type' => 'rules|faq|about|alert')));

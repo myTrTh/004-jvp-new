@@ -8,6 +8,7 @@ use App\Model\User;
 use App\Model\Role;
 use App\Model\Upload;
 use App\Model\Achive;
+use App\Model\Cup;
 
 class AdminManager extends Manager
 {
@@ -161,4 +162,59 @@ class AdminManager extends Manager
 		$achive->save();
 
 	}
+
+	public function deleteAchive($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$achive_id = $request->get('achive_id');
+
+		$achive = Achive::where('id', $achive_id)->first();
+		if (!is_object($achive) && !($achive instanceof Achive))
+			return 'Запись не найдена.';
+		
+		$achive->delete();
+
+	}
+
+	public function addCups($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$image_id = $request->get('image');
+		$user_id = $request->get('user');
+		$description = trim($request->get('description'));
+
+		$user = User::where('id', $user_id)->first();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Пользователь не найден.';
+		
+		$image = Upload::where('id', $image_id)->first();
+		if (!is_object($image) && !($image instanceof Upload))
+			return 'Изображение не найдено.';
+
+		$cup = new Cup();
+		$cup->user_id = $user->id;
+		$cup->image_id = $image->id;
+		$cup->description = $description;
+		$cup->save();
+
+	}
+
+	public function deleteCups($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$cup_id = $request->get('cup_id');
+
+		$cup = Cup::where('id', $cup_id)->first();
+		if (!is_object($cup) && !($cup instanceof Cups))
+			return 'Запись не найдена.';
+		
+		$cup->delete();
+
+	}	
 }

@@ -17,12 +17,22 @@
 
 .show-panel {
 	display: flex;
+	width: 100%;
 	margin: 10px 0;
 	flex-wrap: wrap;
+	div {
+		display: flex;
+		align-items: center;
+	}
 	.show-panel-image {
 		width: 80px;
 	}
 	.show-panel-user {
 		width: 150px;
+	}
+	.show-panel-close {
+		padding-right: 10px;
+		justify-content: flex-end;
+		flex: 1 0 auto;
 	}
 }
