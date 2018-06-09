@@ -5,7 +5,7 @@
 	border-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 	.guestbook-head {
 		flex: 0 1 170px;
 		font-family: $font_header;		
@@ -283,4 +283,16 @@
 
 .inline-block {
 	display: inline-block;
+}
+
+.guestbook-panel-achives {
+	display: flex;
+	position: absolute;
+	margin-top: -17px;
+	margin-left: 5px;
+	img {
+		max-width: 34px;
+		max-height: 34px;
+		margin-right: 5px;
+	}
 }

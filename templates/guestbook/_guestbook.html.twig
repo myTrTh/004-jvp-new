@@ -46,6 +46,13 @@
 		{% endfor %}		
 
 		<div class="guestbook" id="post{{ message.id }}">
+		{% if not message.author.achives is empty %}
+			<div class="guestbook-panel-achives">
+			{% for achive in message.author.achives %}
+				<img src="{{ app.path }}/images/tournaments/achive/{{ achive.image.image }}">
+			{% endfor %}
+			</div>
+		{% endif %}
 			<div class="guestbook-head">
 				{% if message.author.username|length > 20 %}
 					<div class="guestbook-head-user-normal"><span class='username'>{{ message.author.username }}</span>
@@ -55,7 +62,6 @@
 				<div class="guestbook-post-count-hidden">Постов: {{ message.author.messages|length }}</div>
 				</div>
 				<div class="guestbook-head-star">
-				{% set stars = 5 %}
 				{% if stars > 0 %}
 					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
 				{% endif %}					
@@ -69,11 +75,11 @@
 				{% endif %}
 				</div>
 				<div class="guestbook-post-count">Постов: {{ message.author.messages|length }}</div>
-{# 				<div class="guestbook-head-star">
+				<div class="guestbook-head-star">
 				{% if stars > 0 %}
 					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
 				{% endif %}					
-				</div> #}
+				</div>
 				<div class="guestbook-head-rate">
 					{% if message.author.rates.sum('sign') > 0 %}
 					<div class='r{{ message.author.id }}'>
