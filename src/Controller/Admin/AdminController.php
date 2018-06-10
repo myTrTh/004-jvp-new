@@ -135,7 +135,8 @@ class AdminController extends Controller
 	public function achives()
 	{
 		$this->container['db'];
-
+		$error = '';
+		
 		$request = Request::createFromGlobals();
 		if ($request->get('submit_add_achive')) {
 			$error = $this->container['adminManager']->addAchive($request);
@@ -166,6 +167,8 @@ class AdminController extends Controller
 	public function cups()
 	{
 		$this->container['db'];
+
+		$error = '';
 
 		$request = Request::createFromGlobals();
 		if ($request->get('submit_add_cups')) {

@@ -38,4 +38,9 @@ class User extends Eloquent
 	{
 		return $this->hasMany('App\Model\Achive', 'user_id', 'id');
 	}
+
+	public function cups()
+	{
+		return $this->hasMany('App\Model\Cup', 'user_id', 'id');
+	}
 }

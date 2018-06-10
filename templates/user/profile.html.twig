@@ -35,6 +35,18 @@
 				нУМЕРА
 			</div>
 		</div>
+		{% if not user.cups is empty %}
+			<div class='profile-cup'>
+			{% for cup in user.cups %}
+				<img class='profile-cup-img' src="{{ app.path }}/images/tournaments/cup/{{ cup.image.image }}">
+			{% endfor %}
+			<div class="cup-board"></div>
+			{% for cup in user.cups %}
+				<div class="cup-description">
+					<i class="fa fa-futbol-o" aria-hidden="true"></i> {{ cup.description }}</div>
+			{% endfor %}			
+			</div>
+		{% endif %}
 
 	{% else %}
 		<h5>Пользователь не найден</h5>
