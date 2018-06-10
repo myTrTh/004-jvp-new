@@ -5,6 +5,7 @@ namespace App;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use App\Controller\ErrorController;
+use App\Core\Listener;
 
 class Application
 {
@@ -35,7 +36,11 @@ class Application
 			$session = $this->container['session'];
 			$session->activate();
 			$response = call_user_func_array(array($controller, $action), $parameters);
+
+			$listener = new Listener($this->container);
+
 			$response->send();
+			$listener->activity();
 
 		} catch (ResourceNotFoundException $e) {
 	
