@@ -1,7 +1,7 @@
 // guestbook
 .guestbook {
 	background-color: $color_white;
-	box-shadow:  0 0 5px $color_grey2;
+	box-shadow:  0 0 5px $color_grey3;
 	border-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
@@ -12,9 +12,6 @@
 		text-align: center;
 		padding: 10px 3px 3px 3px;
 		box-sizing: border-box;
-		@media only all and (max-width: $site_middle_collapse) {		
-			flex-basis: 150px;
-		}
 		@media only all and (max-width: $site_width_collapse) {
 			display: flex;
 			flex: 0 0 100%;
@@ -288,11 +285,18 @@
 .guestbook-panel-achives {
 	display: flex;
 	position: absolute;
-	margin-top: -17px;
+	margin-top: -20px;
 	margin-left: 5px;
+	@media only all and (max-width: $site_middle_collapse) {
+		margin-top: -17px;
+	}	
 	img {
 		max-width: 34px;
 		max-height: 34px;
 		margin-right: 5px;
+		@media only all and (max-width: $site_middle_collapse) {
+			max-width: 25px;
+			max-height: 25px;
+		}
 	}
 }

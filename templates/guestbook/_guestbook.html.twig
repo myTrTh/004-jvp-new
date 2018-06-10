@@ -75,11 +75,6 @@
 				{% endif %}
 				</div>
 				<div class="guestbook-post-count">Постов: {{ message.author.messages|length }}</div>
-				<div class="guestbook-head-star">
-				{% if stars > 0 %}
-					{% for i in 1..stars %}<i class="fa fa-star" aria-hidden="true"></i>{% endfor %}
-				{% endif %}					
-				</div>
 				<div class="guestbook-head-rate">
 					{% if message.author.rates.sum('sign') > 0 %}
 					<div class='r{{ message.author.id }}'>
