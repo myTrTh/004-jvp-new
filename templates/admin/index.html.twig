@@ -33,11 +33,18 @@
 			<br>
 			{% if isAccess('ROLE_SUPER_ADMIN') or hierarchyAccess(user.id) or app.user.id == user.id %}
 				<a href="{{ path('admin_permissions', {'id': user.id}) }}">Разрешения</a>
+				<br><br>
 			{% endif %}
 			{% if den %}
 				<br>Ограничения: {{ constraints }}
 			{% endif %}
-			<div class="user-last-info">las</div>
+			<div class="user-last-info">
+				<b>Last Page:</b> {{ user.activity.lastPage }}<br>
+				<b>IP:</b> {{ user.activity.ip }}<br>
+				{% if isAccess('ROLE_SUPER_ADMIN') %}
+				<b>UserAgent:</b> {{ user.activity.userAgent }}<br>
+				{% endif %}
+			</div>
 		</div>
 	</div>		
 	{% endfor %}

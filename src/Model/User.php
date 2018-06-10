@@ -43,4 +43,9 @@ class User extends Eloquent
 	{
 		return $this->hasMany('App\Model\Cup', 'user_id', 'id');
 	}
+
+	public function activity()
+	{
+		return $this->belongsTo('App\Model\Activity', 'id', 'user_id');
+	}
 }
