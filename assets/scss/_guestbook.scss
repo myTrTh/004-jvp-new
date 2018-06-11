@@ -300,3 +300,17 @@
 		}
 	}
 }
+
+.notification-guestbook {
+	margin-bottom: 23px;
+}
+
+.message-banned {
+	color: $color_grey;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.guestbook-banned {
+	background-color: $color_grey1;
+}

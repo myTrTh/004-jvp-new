@@ -428,6 +428,10 @@ input[type='submit']:hover, .button:hover {
 	margin-left: 3px;
 }
 
+.underline {
+	text-decoration: underline;
+}
+
 // import
 @import '_admin.scss';
 @import '_input.scss';

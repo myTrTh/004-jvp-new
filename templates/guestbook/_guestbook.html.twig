@@ -2,6 +2,14 @@
 	<br>
 
 	<span id='token' data-token='{{ csrf_token() }}'></span>
+
+	{% if app.notification.guestbook %}
+		{% set post_id = count - app.notification.guestbook + 1 %}
+		<div class="notification-guestbook">
+			<a class='underline' href="{{ path('guestbook_post', {'post_id': post_id}) }}">Перейти к непрочитанным</a>
+		</div>
+	{% endif %}
+
 	{% for message in guestbook %}
 
 		{# stars for the count messages #}
@@ -45,7 +53,7 @@
 			{% endif %}
 		{% endfor %}		
 
-		<div class="guestbook" id="post{{ message.id }}">
+		<div {% if message.deleted_at %} class="guestbook guestbook-banned" {% else %} class="guestbook" {% endif %} id="post{{ message.id }}">
 		{% if not message.author.achives is empty %}
 			<div class="guestbook-panel-achives">
 			{% for achive in message.author.achives %}
@@ -110,7 +118,11 @@
 					</span>
 				</div>
 				<div class="guestbook-content-post" id="message{{ message.id }}">
+					{% if message.deleted_at %}
+						<span class='message-banned'>Сообщение удаленно администратором.</span>
+					{% else %}
 					{{ textMode(message.message)|raw|nl2br }}
+					{% endif %}
 				</div>
 				<div class="hidden" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
 				<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>

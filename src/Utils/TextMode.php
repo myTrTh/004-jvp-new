@@ -27,8 +27,8 @@ class TextMode
 		$message = preg_replace($patternB, "<span class='right'>$1</span>", $message);
 		$patternB = "/\[center\](.*?)\[\/center\]/si";
 		$message = preg_replace($patternB, "<span class='center'>$1</span>", $message);
-		// $patternB = "/post(?:\:|\/)([0-9]+)/si";
-		// $message = preg_replace($patternB, "<a href='/post/$1'>post/$1</a>", $message);		
+		$patternB = "/post(?:\:|\/)([0-9]+)/si";
+		$message = preg_replace($patternB, "<a class='link-out' href='/post/$1'>post/$1</a>", $message);		
 
 		$how_spoiler = substr_count($message, "[spoiler");		
 		$pattern_spoiler = "/\[spoiler\=*?([\s\S]+)?\]([\s\S]+)?\[\/spoiler\]/uiU";

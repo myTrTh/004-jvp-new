@@ -60,6 +60,7 @@ $routes->add('content_edit', new Route('/admin/{type}/edit', array('_controller'
 // guestbook routes
 $routes->add('guestbook', new Route('/guestbook/{page}', array('_controller' => 'App\Controller\GuestbookController::guestbook', 'page' => 1), array('page' => '[0-9]+')));
 $routes->add('ajax_guestbook_rate', new Route('ajax/guestbook/rate', array('_controller' => 'App\Controller\GuestbookController::ajax_rate')));
+$routes->add('guestbook_post', new Route('/post/{post_id}', array('_controller' => 'App\Controller\GuestbookController::post'), array('post_id' => '[0-9]+')));
 
 // votes routes
 $routes->add('vote_list', new Route('/votes/{page}', array('_controller' => 'App\Controller\VoteController::list', 'page' => 1), array('page' => '[0-9]+')));

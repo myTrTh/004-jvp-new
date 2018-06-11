@@ -16,8 +16,8 @@ class GuestbookController extends Controller
 
 		$limit = 20;
 		$offset = ($page - 1) * $limit;
-		$guestbook = Guestbook::orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
-		$count = Guestbook::orderBy('id', 'desc')->count();
+		$guestbook = Guestbook::withTrashed()->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+		$count = Guestbook::withTrashed()->count();
 
 		$request = Request::createFromGlobals();
 		$lastGuestbook = trim($request->get('message'));
@@ -54,5 +54,17 @@ class GuestbookController extends Controller
 		$result = $this->container['guestbookManager']->rate($request);
 
 		return new Response(json_encode($result));
+	}
+
+	public function post($post_id)
+	{
+		$this->container['db'];
+
+		$limit = 20;
+		$count = ceil(Guestbook::withTrashed()->count() / $limit);
+		$number_page = floor($post_id/$limit);
+		$page = $count - $number_page;
+
+        return $this->redirectToRoute('guestbook', ['page' => $page, '_fragment' => 'post'.$post_id]);
 	}
 }
