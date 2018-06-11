@@ -8,12 +8,14 @@ use Twig\TwigFunction;
 use App\Utils\TokenManager;
 use App\Utils\UserManager;
 use App\Utils\Dater;
+use App\Core\Listener;
 
 class TwigExtension extends AbstractExtension implements GlobalsInterface
 {
     private $tokenManager;
     private $container;
     private $userManager;
+    private $listener;
 
     public function __construct($container)
     {
@@ -21,6 +23,7 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
 
         $this->tokenManager = new TokenManager();
         $this->userManager = new userManager($container);
+        $this->listener = new Listener($container);
     }
 
     public function getFunctions(): array
@@ -46,7 +49,8 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
         return [
             'app' => [
                 'user' => $this->userManager->getUser(),
-                'path' => $this->container['assets']->assets()
+                'path' => $this->container['assets']->assets(),
+                'notification' => $this->listener->notification()
             ]
         ];
     }

@@ -19,12 +19,13 @@ class View
 		$this->container = $container;
 
 		// configure Twig
-		$loader = new Twig_Loader_Filesystem(__DIR__.'/../../templates/');
-		$this->twig = new Twig_Environment($loader, array(
-	   		'cache' => __DIR__.'/../../var/cache/twig/compilation_cache',
-	   		'auto_reload' => true,
-	   		'debug' => true,
-		));
+		// $loader = new Twig_Loader_Filesystem(__DIR__.'/../../templates/');
+		// $this->twig = new Twig_Environment($loader, array(
+	 //   		'cache' => __DIR__.'/../../var/cache/twig/compilation_cache',
+	 //   		'auto_reload' => true,
+	 //   		'debug' => true,
+		// ));
+		$this->twig = $this->container['twig'];
 
 		$router = $container['router'];
 

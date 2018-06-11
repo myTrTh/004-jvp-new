@@ -39,7 +39,7 @@ class Application
 
 			$listener = new Listener($this->container);
 			$listener->activity();
-			$listener->notification();
+			$listener->setNotification();
 
 			$response->send();
 

@@ -18,6 +18,8 @@ use App\Utils\VoteManager;
 use App\Utils\AuthManager;
 use App\Utils\Mailer;
 use App\Utils\Upload;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 
 class ServiceProvider 
 {
@@ -91,7 +93,17 @@ class ServiceProvider
 		};		
 		$this->container['mailer'] = function ($c) {
 			return new Mailer($c);
-		};		
+		};
+
+		$this->container['twig'] = function() {
+			$loader = new Twig_Loader_Filesystem(__DIR__.'/../../templates/');
+			$twig = new Twig_Environment($loader, array(
+		   		'cache' => __DIR__.'/../../var/cache/twig/compilation_cache',
+		   		'auto_reload' => true,
+		   		'debug' => true,
+			));
+			return $twig;
+		};
 	}
 
 	public function get()

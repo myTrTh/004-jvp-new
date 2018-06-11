@@ -423,6 +423,11 @@ input[type='submit']:hover, .button:hover {
 	color: $color_green3;
 }
 
+.notification {
+	font-size: .8em;
+	margin-left: 3px;
+}
+
 // import
 @import '_admin.scss';
 @import '_input.scss';

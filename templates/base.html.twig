@@ -28,7 +28,13 @@
 						<li><a href="">СТАТИСТИКА</a></li>
 					</ul>
 				</li>
-				<li><a href="{{ path('guestbook') }}">ГЕСТА</a></li>
+				<li><a href="{{ path('guestbook') }}">ГЕСТА
+					{% if app.notification.guestbook %}
+					<span class='notification'>						
+						<i class='fa fa-bell-o'></i> {{ app.notification.guestbook }}
+					</span>
+					{% endif %}
+				</a></li>
 				{% if app.user %}
 					<li><a>INFO</a>
 						<ul class='down-menu'>
