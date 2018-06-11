@@ -38,9 +38,10 @@ class Application
 			$response = call_user_func_array(array($controller, $action), $parameters);
 
 			$listener = new Listener($this->container);
+			$listener->activity();
+			$listener->notification();
 
 			$response->send();
-			$listener->activity();
 
 		} catch (ResourceNotFoundException $e) {
 	

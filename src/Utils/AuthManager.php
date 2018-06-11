@@ -47,6 +47,7 @@ class AuthManager extends Manager
 		$role = Role::where('id', $role_for_new_user)->first();
 		$permissions = $role->permissions;
 
+		$options = ['notification' => ['guestbook' => 1, 'vote' => 1]];
 		
 		// if need confirmation registration
 		if ($this->container['config']['auth']['registration_confirmation']) {
@@ -54,6 +55,7 @@ class AuthManager extends Manager
 			$user->is_active = 0;
 			$user->confirmation_token = $this->encodePassword(uniqid());
 			$user->confirmation_datetime = new \DateTime();
+			$user->options = serialize($options);
 			$user->save();
 			$user->roles()->sync($role_for_new_user);
 			$user->permissions()->sync($permissions);
@@ -66,6 +68,7 @@ class AuthManager extends Manager
 			$user->is_active = 1;
 			$user->confirmation_token = null;
 			$user->confirmation_datetime = null;
+			$user->options = serialize($options);			
 			$user->save();
 			$user->roles()->sync($role_for_new_user);
 			$user->permissions()->sync($permissions);

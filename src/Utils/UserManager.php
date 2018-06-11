@@ -194,6 +194,25 @@ class UserManager extends Manager
 		return;
 	}
 
+	public function setNotification($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Вы не авторизированы.';
+
+		$notification_guestbook = $request->get('guestbook');
+		$notification_vote = $request->get('vote');
+
+		$options = unserialize($user->options);
+		$options['notification']['guestbook'] = $notification_guestbook;
+		$options['notification']['vote'] = $notification_vote;
+		$user->options = serialize($options);
+		$user->save();
+	}
+
 	public function hierarchyAccess($id)
 	{
 		$hierarchy = $this->container['config']['role_hierarchy'];

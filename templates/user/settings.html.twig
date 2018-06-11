@@ -7,7 +7,7 @@
 	<a href="{{ path('profile') }}">Вернуться в профиль</a><br><br>
 	<div class="profile">
 		<div class="profile-info">
-		<h3 class='weight-normal'>Изображение</h3>
+		<h3>Изображение</h3>
 		{% if user.image %}
 			<form method="post" action="{{ path('settings') }}">
 				<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
@@ -30,4 +30,20 @@
 		</div>
 
 	</div>
+	<br>
+	<h3>Уведомления</h3>
+		<form method="post" action="{{ path('settings') }}">
+			<label>
+				<input class='checkbox' type="checkbox" 	{% if user.options.notification.guestbook %} checked {% endif %} name="guestbook" value="1">
+				<span class="checkbox-custom"></span>
+            	<span class="label">Гостевая книга</span>
+            </label>
+			<label>
+				<input class='checkbox' type="checkbox" {% if user.options.notification.vote %} checked {% endif %} name="vote" value="1">
+				<span class="checkbox-custom"></span>
+            	<span class="label">Опросы</span>			
+            </label>
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type="submit" name="submit_notification" value="Установить">			
+		</form>
 {% endblock %}

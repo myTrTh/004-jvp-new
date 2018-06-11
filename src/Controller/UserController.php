@@ -80,6 +80,16 @@ class UserController extends Controller
 				return $this->redirectToRoute('settings');
 		}
 
+		if ($request->get('submit_notification')) {
+			$error = $this->container['userManager']->setNotification($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('settings');
+		}
+
+		$options = unserialize($user->options);
+		$user->options = $options;
+
 		return $this->render('user/settings.html.twig', array(
 			'user' => $user,
 			'error' => $error
