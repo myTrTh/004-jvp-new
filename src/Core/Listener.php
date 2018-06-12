@@ -6,6 +6,8 @@ use App\Model\User;
 use App\Model\Activity;
 use App\Model\Notification;
 use App\Model\Guestbook;
+use App\Model\VoteHead;
+use App\Model\VoteUser;
 use Symfony\Component\HttpFoundation\Request;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -45,11 +47,10 @@ class Listener
 			return;
 
 		$options = unserialize($user->options);
+		$request = Request::createFromGlobals();
 
         // GUESTBOOK NOTIFICATION
 		if ($options['notification']['guestbook']) {
-
-			$request = Request::createFromGlobals();
 
 			if (preg_match('/\/guestbook$/', $request->getPathInfo())) {
 
@@ -64,6 +65,21 @@ class Listener
 					$guestbook->touch();
 			}
 		}
+
+        // VOTES NOTIFICATION
+        if($options['notification']['vote']) {
+            // $this->twig->addGlobal('notification_vote', $new_votes);
+
+	        if (preg_match("/vote\/[0-9]+/", $request->getPathInfo(), $vote)) {
+	        	$vote_page = Notification::where('user_id', $user->id)->where('route', $vote[0])->first();
+	        	if (!is_object($vote_page) && !($vote_page instanceof Notification)) {
+	        		$vote_page = new Notification();
+	        		$vote_page->user_id = $user->id;
+	        		$vote_page->route = $vote[0];
+	        		$vote_page->save();
+	        	}
+	        }
+    	}
 	}
 
 	public function notification()
@@ -73,11 +89,12 @@ class Listener
 			return;
 
 		$options = unserialize($user->options);
+		$request = Request::createFromGlobals();
+		
+		$notification = [];
 
         // GUESTBOOK NOTIFICATION
 		if ($options['notification']['guestbook']) {
-
-			$request = Request::createFromGlobals();
 
 			$guestbook = Notification::where('user_id', $user->id)->where('route', 'guestbook')->first();
 
@@ -88,30 +105,37 @@ class Listener
 				$guestbook->updated_at = new \DateTime();
 			$messages_new = Guestbook::where('created_at', '>', $guestbook->updated_at)->where('user_id', '!=', $user->id)->count();
 
-			return ['guestbook' => $messages_new];
+			$notification['guestbook'] = $messages_new;
 		}
+
+        // VOTES NOTIFICATION
+		if ($options['notification']['vote']) {
+
+			$all_votes = VoteHead::where('created_at', '>', Carbon::now()->subDays(3))->pluck('id')->toArray();
+
+			if (count($all_votes) > 0) {
+
+				// set votes
+				$set_votes = VoteUser::where('user_id', $user->id)->whereIn('vote_head_id', $all_votes)->pluck('vote_head_id')->toArray();
+
+				$votes_id = [];
+				// visit votes
+				$visit_votes = Notification::where('user_id', $user->id)->where('created_at', '>', Carbon::now()->subDays(3))->where('route', 'like', 'vote/%')->get();
+				foreach ($visit_votes as $vote) {
+					$votes_id[] = substr($vote->route, 5);
+				}
+
+				$votes_id = array_unique($votes_id);
+
+				$votes = count(array_diff($all_votes, $set_votes, $votes_id));
+
+			} else {
+				$votes = 0;
+			}
+
+			$notification['vote'] = $votes;
+		}
+
+		return $notification;
 	}
-
-
-  //       $guestbook_last_date = Notification::where('id', $user->id)->where('route', 'guestbook')->latest()->first();
-  //       if ($guestbook_last_date) {
-			
-		// 	$new_messages = Guestbook::where('created_at', '>', $guestbook_last_date->created_at)->count();
-		// 	echo $new_messages;
-
-  //       }
-
-
-  //       $guestbook_notification = Notification::where('id', $user_id)->where('route', 'guestbook')->first();
-		// if (!is_object($guestbook_notification) && !($guestbook_notification instanceof Notification))
-		// 	$guestbook_notification = new Notification();
-
-		// $guestbook_notification->user_id = $user->id;
-		// $guestbook_notification->route = "guestbook";
-		// $guestbook_notification->save();
-
-        // $new_guestbook = $this->em->getRepository('AppUserBundle:Notification')->get_single_new($userId, 'AppGuestbookBundle:Guestbook', $guestbook_last_date);
-
-        // if($options['notification']['notification_guestbook'] == 'true')
-        //     $this->twig->addGlobal('notification_guestbook', $new_guestbook);
 }

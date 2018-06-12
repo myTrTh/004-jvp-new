@@ -27,11 +27,11 @@ class View
 		// ));
 		$this->twig = $this->container['twig'];
 
-		$router = $container['router'];
+		// $router = $container['router'];
 
-		$this->twig->addExtension(new RoutingExtension(new UrlGenerator($router->getRoutes(), $router->getRequestContext())));
-		$this->twig->addExtension(new Twig_Extension_Debug());
-		$this->twig->addExtension(new TwigExtension($this->container));
+		// $this->twig->addExtension(new RoutingExtension(new UrlGenerator($router->getRoutes(), $router->getRequestContext())));
+		// $this->twig->addExtension(new Twig_Extension_Debug());
+		// $this->twig->addExtension(new TwigExtension($this->container));
 	}
 
 	public function render(string $template, $data = null)

@@ -20,11 +20,11 @@
 						<li><a href="{{ path('content_show', {'type': 'rules'}) }}">ПРАВИЛА</a></li>
 					</ul>
 				</li>
-				<li><a>МЫ</a>
+				<li><a>МЫ {% if app.notification.vote > 0 %} * {% endif %}</a>
 					<ul class='down-menu'>
 						<li><a href="{{ path('user_list') }}">КОМАНДЫ</a></li>
 						<li><a href="">РЕЙТИНГ</a></li>
-						<li><a href="{{ path('vote_list') }}">ОПРОСЫ</a></li>
+						<li><a href="{{ path('vote_list') }}">ОПРОСЫ {% if app.notification.vote > 0 %} (NEW {{ app.notification.vote }}) {% endif %}</a></li>
 						<li><a href="">СТАТИСТИКА</a></li>
 					</ul>
 				</li>

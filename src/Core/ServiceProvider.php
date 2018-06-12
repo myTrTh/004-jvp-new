@@ -20,6 +20,10 @@ use App\Utils\Mailer;
 use App\Utils\Upload;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Twig_Extension_Debug;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use App\Utils\TwigExtension;
 
 class ServiceProvider 
 {
@@ -95,13 +99,17 @@ class ServiceProvider
 			return new Mailer($c);
 		};
 
-		$this->container['twig'] = function() {
+		$this->container['twig'] = function($c) {
 			$loader = new Twig_Loader_Filesystem(__DIR__.'/../../templates/');
 			$twig = new Twig_Environment($loader, array(
 		   		'cache' => __DIR__.'/../../var/cache/twig/compilation_cache',
 		   		'auto_reload' => true,
 		   		'debug' => true,
 			));
+			$router = $this->container['router'];
+			$twig->addExtension(new RoutingExtension(new UrlGenerator($router->getRoutes(), $router->getRequestContext())));
+			$twig->addExtension(new Twig_Extension_Debug());
+			$twig->addExtension(new TwigExtension($c));
 			return $twig;
 		};
 	}
