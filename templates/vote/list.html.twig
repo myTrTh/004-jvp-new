@@ -19,7 +19,11 @@
 				{% elseif vote.status == 0 %}
 					<i class="fa fa-circle" aria-hidden="true"></i>
 				{% endif %}
-				<a href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a>
+				{% if app.user.id not in vote.users.keyBy('user_id')|keys %}
+					<a class='bold' href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a>
+				{% else %}
+					<a class='weight-normal' href="{{ path('vote_show', {'id': vote.id }) }}">{{ vote.title }}</a>					
+				{% endif %}				
 				{% if isPermission('vote-control-all') or (isPermission('vote-control-own') and vote.user_id == app.user.id) %}
 					<span class='control-panel-ed'>
 					<a href='{{ path('vote_edit', {'id': vote.id}) }}'>

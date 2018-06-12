@@ -24,4 +24,9 @@ class VoteHead extends Eloquent
 	{
 		return $this->hasMany('App\Model\VoteOption');
 	}
+
+	public function users()
+	{
+		return $this->hasMany('App\Model\VoteUser');
+	}
 }
