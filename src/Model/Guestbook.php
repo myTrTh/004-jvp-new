@@ -23,5 +23,5 @@ class Guestbook extends Eloquent
 	public function rates()
 	{
 		return $this->hasMany('App\Model\Rate', 'message_id', 'id');
-	}	
+	}
 }

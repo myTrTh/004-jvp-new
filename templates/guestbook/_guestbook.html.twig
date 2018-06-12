@@ -51,7 +51,7 @@
 			{% elseif rate.sign == -1 %}
 				{% set minus = minus ~ rate.user.username ~ ', ' %}
 			{% endif %}
-		{% endfor %}		
+		{% endfor %}
 
 		<div {% if message.deleted_at %} class="guestbook guestbook-banned" {% else %} class="guestbook" {% endif %} id="post{{ message.id }}">
 		{% if not message.author.achives is empty %}
@@ -79,7 +79,6 @@
 					<img src="{{ app.path }}/images/users/{{ message.author.image }}">
 				{% else %}
 					<img src="{{ app.path }}/images/interface/no_user.png">					
-						{# <i class="guestbook-default-image fa fa-user" aria-hidden="true"></i><br> #}
 				{% endif %}
 				</div>
 				<div class="guestbook-post-count">Постов: {{ message.author.messages|length }}</div>
@@ -107,6 +106,20 @@
 					</div>
 					{% endif %}
 				</div>
+				{% if message.author.nach(message.author.id) %}
+				<div class='nach'>
+					{% for nach in message.author.nach(message.author.id) %}
+						<div class='nach-achive fa fa-asterisk' id='nach{{ n }}'>
+							<div class='toolkit'>
+								<div>
+									<span class='toolkit-info'>НАХ</span><span class='toolkit-body'>{{ nach }}</span>
+								</div>
+							<div class='triangle'></div>
+						</div>
+						</div>
+					{% endfor %}
+				</div>					
+				{% endif %}
 			</div>		
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">

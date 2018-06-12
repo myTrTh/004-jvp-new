@@ -125,3 +125,33 @@ $(function(){
 			$('.sign:first', head).html('+');		
 	});
 })
+
+// nach //
+$(function(){
+	$('div[id^="nach"]').on('mouseenter', function(e){
+		e.preventDefault();
+		$('.toolkit', this).stop(true, false).slideDown(200);
+	})
+})
+
+$(function(){
+	$('div[id^="nach"]').on('mouseleave', function(e){
+		e.preventDefault();
+		$('.toolkit', this).stop(true, false).slideUp(200);
+	})
+})
+
+// top nach //
+$(function(){
+	$('div[id^="topnach"]').on('mouseenter', function(e){
+		e.preventDefault();
+		$('.toptoolkit', this).stop(true, false).fadeIn(200);
+	})
+})
+
+$(function(){
+	$('div[id^="topnach"]').on('mouseleave', function(e){
+		e.preventDefault();
+		$('.toptoolkit', this).stop(true, false).fadeOut(200);
+	})
+})

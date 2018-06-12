@@ -48,4 +48,9 @@ class User extends Eloquent
 	{
 		return $this->belongsTo('App\Model\Activity', 'id', 'user_id');
 	}
+
+	public function nach($user_id)
+	{
+		return Guestbook::where('user_id', $user_id)->where('id', 'like', '%000')->pluck('id')->toArray();
+	}
 }

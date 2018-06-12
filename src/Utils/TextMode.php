@@ -179,5 +179,5 @@ class TextMode
 		$message = preg_replace($patternB, '<img class="content-img" src="$1">', $message);	
 
 		return $message;
-	}	
+	}
 }
