@@ -52,6 +52,7 @@ $routes->add('admin_guestbook', new Route('/admin/guestbook/{page}', array('_con
 $routes->add('admin_upload', new Route('/admin/upload', array('_controller' => 'App\Controller\Admin\AdminController::upload')));
 $routes->add('admin_achives', new Route('/admin/achives', array('_controller' => 'App\Controller\Admin\AdminController::achives')));
 $routes->add('admin_cups', new Route('/admin/cups', array('_controller' => 'App\Controller\Admin\AdminController::cups')));
+$routes->add('admin_nach', new Route('/admin/nach', array('_controller' => 'App\Controller\Admin\AdminController::nach')));
 
 // content routes
 $routes->add('content_show', new Route('/{type}', array('_controller' => 'App\Controller\ContentController::show'), array('type' => 'rules|faq|about|alert')));

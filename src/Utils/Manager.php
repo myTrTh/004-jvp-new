@@ -181,4 +181,13 @@ class Manager
 
 		return;
 	}	
+
+	public function ifNumber($number)
+	{
+		if (!is_int($number))
+			return 'Значение должно быть числом';
+
+		if ($number <= 0)
+			return 'Число должно быть положительным';
+	}
 }

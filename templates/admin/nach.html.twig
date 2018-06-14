@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: Штаб {% endblock %}
+{% block header %} Админка {% endblock %}
+{% block body %}
+	{% include 'admin/_panel.html.twig' %}
+	<h4>Нахи</h4>
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}<br>
+
+		<form method='post' action='{{ path('admin_nach') }}'>
+			<label>Заголовок<br><input type='text' name='title' value="{{ lastTitle }}"></label>
+			<label>Описание<br>
+			{% set adminbb = 1 %}			
+			{% include 'bbcode.html.twig' %}
+			<textarea name='description'>{{ lastDescription }}</textarea></label>
+			<label>Номер сообщения<br><input type='text' name='number' value="{{ lastNumber }}"></label>			
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type='submit' name='submit_add_nach' value='Создать'>
+		</form>
+		<br>
+		{% for nach in nachs %}
+			<h4>{{ nach.message_id }} :: {{ nach.title }}</h4>
+			{{ textMode(nach.description)|raw|nl2br }}			
+			{% if nach.user_id %}
+				Назначено: {{ nach.user.username }}
+			{% endif %}
+			<br><br>
+		{% endfor %}
+
+{% endblock %}

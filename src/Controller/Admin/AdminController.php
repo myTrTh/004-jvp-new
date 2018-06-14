@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Model\User;
 use App\Model\Role;
 use App\Model\Upload;
+use App\Model\Nach;
 use App\Model\Achive;
 use App\Model\Activity;
 use App\Model\Cup;
@@ -135,6 +136,9 @@ class AdminController extends Controller
 
 	public function achives()
 	{
+		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
+			return $this->render('error/page403.html.twig', array('errno' => 403));
+
 		$this->container['db'];
 		$error = '';
 		
@@ -167,6 +171,9 @@ class AdminController extends Controller
 
 	public function cups()
 	{
+		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
+			return $this->render('error/page403.html.twig', array('errno' => 403));
+
 		$this->container['db'];
 
 		$error = '';
@@ -196,5 +203,37 @@ class AdminController extends Controller
 			'users' => $users,
 			'upload' => $upload
 		]);
-	}	
+	}
+
+	public function nach()
+	{
+		if (!$this->container['userManager']->isAccess('ROLE_MODERATOR') && !$this->container['userManager']->isAccess('ROLE_ADMIN') && !$this->container['userManager']->isAccess('ROLE_SUPER_ADMIN'))
+			return $this->render('error/page403.html.twig', array('errno' => 403));
+
+		$this->container['db'];
+
+		$request = Request::createFromGlobals();
+
+		$error = '';
+		$lastTitle = $request->get('title');
+		$lastDescription = $request->get('description');
+		$lastNumber = $request->get('number');
+
+		if ($request->get('submit_add_nach')) {
+			$error = $this->container['adminManager']->addNach($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('admin_nach');
+		}		
+
+		$nachs = Nach::orderBy('message_id', 'desc')->get();
+
+		return $this->render('admin/nach.html.twig', [
+			'error' => $error,
+			'nachs' => $nachs,
+			'lastTitle' => $lastTitle,
+			'lastNumber' => $lastNumber,
+			'lastDescription' => $lastDescription
+		]);
+	}
 }

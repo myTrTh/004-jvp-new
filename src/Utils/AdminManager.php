@@ -9,6 +9,7 @@ use App\Model\Role;
 use App\Model\Upload;
 use App\Model\Achive;
 use App\Model\Cup;
+use App\Model\Nach;
 
 class AdminManager extends Manager
 {
@@ -215,6 +216,37 @@ class AdminManager extends Manager
 			return 'Запись не найдена.';
 		
 		$cup->delete();
+
+	}	
+
+	public function addNach($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$title = trim($request->get('title'));
+		$description = trim($request->get('description'));
+		$number = (int) $request->get('number');
+
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Вы не авторизированы';
+
+		if ($error = $this->ifEmptyStringValidate($title, 'Заголовок'))
+			return $error;
+
+		if ($error = $this->ifEmptyStringValidate($description, 'Описание'))
+			return $error;
+
+		if ($error = $this->ifNumber($number))
+			return $error;			
+
+		$nach = new Nach();
+		$nach->title = $title;
+		$nach->description = $description;
+		$nach->message_id = $number;
+		$nach->author = $user->id;
+		$nach->save();
 
 	}	
 }
