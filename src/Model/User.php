@@ -51,6 +51,11 @@ class User extends Eloquent
 
 	public function nach($user_id)
 	{
-		return Guestbook::where('user_id', $user_id)->where('id', 'like', '%000')->pluck('id')->toArray();
+		return Guestbook::where('user_id', $user_id)->where('id', 'like', '%00')->pluck('id')->toArray();
+	}
+
+	public function supernach()
+	{
+		return $this->hasMany('App\Model\Nach', 'user_id', 'id');
 	}
 }

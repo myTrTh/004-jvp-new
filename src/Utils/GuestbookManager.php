@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Model\Guestbook;
 use App\Model\Adminbook;
 use App\Model\User;
+use App\Model\Nach;
 use App\Model\Rate;
 
 class GuestbookManager extends Manager
@@ -44,6 +45,9 @@ class GuestbookManager extends Manager
 		$guestbook->user_id = $user->id;		
 		$guestbook->message = $message;
 		$guestbook->save();
+
+		// check and add super nach
+		$this->supernach($guestbook->id);
 
 		return;
 	}
@@ -145,5 +149,14 @@ class GuestbookManager extends Manager
 			'plus_users' => $plus,
 			'minus_users' => $minus
 		);
+	}
+
+	public function supernach($message_id)
+	{
+		$nach = Nach::whereNull('user_id')->where('message_id', '<=', $message_id)->get();
+		foreach ($nach as $n) {
+			$n->user_id = $n->message->author->id;
+			$n->save();
+		}
 	}
 }

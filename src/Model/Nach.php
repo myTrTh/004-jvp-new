@@ -11,5 +11,10 @@ class Nach extends Eloquent
 	public function user()
 	{
 		return $this->belongsTo('App\Model\User', 'user_id', 'id');
-	}	
+	}
+
+	public function message()
+	{
+		return $this->belongsTo('App\Model\Guestbook', 'message_id', 'id');
+	}
 }

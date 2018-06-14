@@ -25,7 +25,8 @@
 			<h4>{{ nach.message_id }} :: {{ nach.title }}</h4>
 			{{ textMode(nach.description)|raw|nl2br }}			
 			{% if nach.user_id %}
-				Назначено: {{ nach.user.username }}
+				<br>
+				Получил: {{ nach.user.username }}
 			{% endif %}
 			<br><br>
 		{% endfor %}

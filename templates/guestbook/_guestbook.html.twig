@@ -106,6 +106,18 @@
 					</div>
 					{% endif %}
 				</div>
+				{% if message.author.supernach %}
+				<div class='topnach'>
+					{% for supernach in message.author.supernach %}
+					<div  class='topnach-achive fa fa-flash' id='topnach{{ supernach.number }}'>
+						<div class='toptoolkit'>
+							<div class='toptoolkit-info'><strong>ТОПНАХ #{{ supernach.number }}</strong>  {{ supernach.title }}</div>
+							<div class='toptoolkit-body'>{{ textMode(supernach.description)|raw|nl2br }}</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% endif %}
 				{% if message.author.nach(message.author.id) %}
 				<div class='nach'>
 					{% for nach in message.author.nach(message.author.id) %}
