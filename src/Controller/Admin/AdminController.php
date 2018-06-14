@@ -9,6 +9,7 @@ use App\Model\User;
 use App\Model\Role;
 use App\Model\Upload;
 use App\Model\Achive;
+use App\Model\Activity;
 use App\Model\Cup;
 use App\Model\Permission;
 use App\Utils\RoleManager;
@@ -23,7 +24,7 @@ class AdminController extends Controller
 		$error = '';
 
 		$this->container['db'];
-		$users = User::all();
+		$users = Activity::orderBy('updated_at', 'desc')->get();
 
 		$role_user = Role::where('role', 'ROLE_USER')->first();
 

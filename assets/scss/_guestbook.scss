@@ -94,15 +94,19 @@
 			font-size: .8em;
 			color: $color_grey3;
 			margin-bottom: 10px;
+			display: flex;
 			.guestbook-content-quote {
-				float: right;
 				cursor: pointer;
 				color: $color_grey_light;
 				font-size: .95em;
 			}
+			.guestbook-content-id {
+				margin-left: 15px;
+			}			
 			.guestbook-content-date {
 				color: $color_grey_light;
 				font-size: .95em;
+				flex: 1 0 auto;
 			}
 		}
 		.guestbook-content-post {
@@ -164,6 +168,9 @@
 	width: 100%;
 	font-size: .8rem;
 	background-color: #ededed;
+}
+.link-quote-author {
+	color: $color_grey3;
 }
 
 .bookquote {

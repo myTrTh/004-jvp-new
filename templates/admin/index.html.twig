@@ -6,12 +6,12 @@
 	{% include 'admin/_panel.html.twig' %}
 	<h4>Пользователи</h4>	
 
-	{% for user in users %}
+	{% for activity in users %}
 
 	{% set den = 0 %}
 	{% set constraints = '' %}
 	{% for permission in role_user.permissions %}
-		{% if permission.id not in user.permissions.keyBy('id')|keys %}
+		{% if permission.id not in activity.user.permissions.keyBy('id')|keys %}
 			{% set den = 1 %}
 			{% if constraints == '' %}
 				{% set constraints = permission.permission %}
@@ -26,23 +26,23 @@
 		{% else %}
 			<div class='admin-panel-users'>
 		{% endif %}
-			{{ user.username }}
+			<span class='admin-panel-users-username'>{{ activity.user.username }}</span> {{ beautiful_date(activity.updated_at) }}
 		</div>
 		<div class="admin-panel-info">
-			<a href="#">Перейти в профиль</a>
+			<a href="{{ path('user_profile', {'id': activity.user_id}) }}">Перейти в профиль</a>
 			<br>
-			{% if isAccess('ROLE_SUPER_ADMIN') or hierarchyAccess(user.id) or app.user.id == user.id %}
-				<a href="{{ path('admin_permissions', {'id': user.id}) }}">Разрешения</a>
-				<br><br>
+			{% if isAccess('ROLE_SUPER_ADMIN') or hierarchyAccess(activity.user.id) or app.user.id == activity.user.id %}
+				<a href="{{ path('admin_permissions', {'id': activity.user.id}) }}">Разрешения</a>
 			{% endif %}
 			{% if den %}
 				<br>Ограничения: {{ constraints }}
 			{% endif %}
+			<br><br>			
 			<div class="user-last-info">
-				<b>Last Page:</b> {{ user.activity.lastPage }}<br>
-				<b>IP:</b> {{ user.activity.ip }}<br>
+				<b>Last Page:</b> {{ activity.lastPage }}<br>
+				<b>IP:</b> {{ activity.ip }}<br>
 				{% if isAccess('ROLE_SUPER_ADMIN') %}
-				<b>UserAgent:</b> {{ user.activity.userAgent }}<br>
+				<b>UserAgent:</b> {{ activity.userAgent }}<br>
 				{% endif %}
 			</div>
 		</div>

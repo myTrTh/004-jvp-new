@@ -129,6 +129,7 @@
 						Цитата
 					{% endif %}
 					</span>
+					<span class="guestbook-content-id">#{{ message.id }}</span>					
 				</div>
 				<div class="guestbook-content-post" id="message{{ message.id }}">
 					{% if message.deleted_at %}
