@@ -87,11 +87,21 @@ class UserController extends Controller
 				return $this->redirectToRoute('settings');
 		}
 
+		if ($request->get('submit_timezone')) {
+			$error = $this->container['userManager']->setTimezone($request);
+
+			if ($error === null)
+				return $this->redirectToRoute('settings');
+		}
+
 		$options = unserialize($user->options);
 		$user->options = $options;
 
+		$timezones = $this->container['dater']->timeZoneShortList();
+
 		return $this->render('user/settings.html.twig', array(
 			'user' => $user,
+			'timezones' => $timezones,
 			'error' => $error
 		));		
 	}

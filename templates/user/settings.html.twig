@@ -34,7 +34,7 @@
 	<h3>Уведомления</h3>
 		<form method="post" action="{{ path('settings') }}">
 			<label>
-				<input class='checkbox' type="checkbox" 	{% if user.options.notification.guestbook %} checked {% endif %} name="guestbook" value="1">
+				<input class='checkbox' type="checkbox" {% if user.options.notification.guestbook %} checked {% endif %} name="guestbook" value="1">
 				<span class="checkbox-custom"></span>
             	<span class="label">Гостевая книга</span>
             </label>
@@ -45,5 +45,16 @@
             </label>
 			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 			<input type="submit" name="submit_notification" value="Установить">			
+		</form>
+		<br>
+		<h3>Часовой пояс</h3>
+		<form method='post' action='{{ path("settings") }}'>
+			<select name='user_timezone'>
+				{% for timezone, offset in timezones %}
+					<option {% if user.options.timezone == timezone %} selected {% endif %} value='{{ timezone }}'>{{ timezone }} {% if loop.index != 1 %}({% endif %}{% if offset > 0%}+{% endif %}{{ offset }}{% if loop.index != 1 %}){% endif %}</option>
+				{% endfor %}
+			</select>
+			<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+			<input type="submit" name="submit_timezone" value="Установить">				
 		</form>
 {% endblock %}

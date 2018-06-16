@@ -194,6 +194,28 @@ class UserManager extends Manager
 		return;
 	}
 
+	public function setTimezone($request)
+	{
+		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
+			return $error;
+
+		$timezone = $request->get('user_timezone');
+
+		$tzlist = $this->container['dater']->timeZoneShortList();
+		$tzlist = array_flip($tzlist);
+		if (!in_array($timezone, $tzlist))
+			return 'Некорректное значение часового пояса';
+
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Вы не авторизированы.';
+
+		$options = unserialize($user->options);
+		$options['timezone'] = $timezone;
+		$user->options = serialize($options);
+		$user->save();
+	}
+
 	public function setNotification($request)
 	{
 		if ($error = $this->container['tokenManager']->checkCSRFtoken($request->get('_csrf_token')))
