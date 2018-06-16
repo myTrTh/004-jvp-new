@@ -38,12 +38,38 @@ class GuestbookManager extends Manager
 		if ($this->container['userManager']->isPermission('guestbook-write') === false)
 			return 'Вам запрещенно писать сообщения';
 
-		if ($book == 'guestbook')
-			$guestbook = new Guestbook();
-		else if ($book == 'adminbook')
-			$guestbook = new Adminbook();
-		$guestbook->user_id = $user->id;		
-		$guestbook->message = $message;
+		$edit = $request->get('edit');
+		if ($edit) {
+
+			$guestbook = Guestbook::where('id', $edit)->first();
+			if (!is_object($guestbook) && !($guestbook instanceof Guestbook))
+				return 'Сообщение не существует';
+
+			if ($guestbook->user_id != $user->id)
+				return 'Вам запрещенно редактировать чужие сообщения';
+
+			$now = new \DateTime();
+			$now = $now->getTimeStamp();
+			$created = $guestbook->created_at->getTimeStamp() + (int) $this->container['config']['guestbook']['edit_time'];
+			if ($now > $created)
+				return 'Время редактирование истекло';
+
+			$guestbook->message = $message;
+
+			$session = new Session();
+			$session->set('edit', $edit);			
+
+		} else {
+
+			if ($book == 'guestbook')
+				$guestbook = new Guestbook();
+			else if ($book == 'adminbook')
+				$guestbook = new Adminbook();
+			$guestbook->user_id = $user->id;		
+			$guestbook->message = $message;
+
+		}
+
 		$guestbook->save();
 
 		// check and add super nach

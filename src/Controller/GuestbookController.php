@@ -7,6 +7,7 @@ use App\Model\Guestbook;
 use App\Model\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class GuestbookController extends Controller
 {
@@ -33,6 +34,14 @@ class GuestbookController extends Controller
 				return "Вам запрещено писать сообщения.";
 
 			$error = $this->container['guestbookManager']->add($request);
+
+			$session = new Session();
+			if ($session->get('edit') !== null && $error === null) {
+				$edit = $session->get('edit');
+				$session->remove('edit');
+				return $this->redirectToRoute('guestbook_post', ['post_id' => $edit]);
+
+			}
 
 			if ($error === null)
 				return $this->redirectToRoute('guestbook');

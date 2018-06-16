@@ -95,10 +95,16 @@
 			color: $color_grey3;
 			margin-bottom: 10px;
 			display: flex;
+			.guestbook-content-edit {
+				padding-left: 10px;
+				cursor: pointer;
+			}
 			.guestbook-content-quote {
 				cursor: pointer;
 				color: $color_grey_light;
 				font-size: .95em;
+				text-align: right;
+				flex: 1 0 auto;				
 			}
 			.guestbook-content-id {
 				margin-left: 15px;
@@ -106,7 +112,6 @@
 			.guestbook-content-date {
 				color: $color_grey_light;
 				font-size: .95em;
-				flex: 1 0 auto;
 			}
 		}
 		.guestbook-content-post {

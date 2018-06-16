@@ -155,3 +155,24 @@ $(function(){
 		$('.toptoolkit', this).stop(true, false).fadeOut(200);
 	})
 })
+
+$(function() {
+	$('.edit-post').on('click', function() {
+		var idpost = $(this).attr('id');
+		var id = idpost.substr(4);
+
+		var message = $('#hidden-message-' + id).text().trim();
+		var textarea = $('textarea');
+		var start = textarea[0].selectionStart;
+		var end = textarea[0].selectionEnd;
+		var alltext = textarea.val();
+		var start_text = alltext.substr(0, start);
+		var cursor_position = textarea.val().length;
+		var end_text = alltext.substr(end, cursor_position);
+		textarea.val(message);
+		textarea.focus();
+		textarea[0].setSelectionRange(start+message.length, start+message.length);
+		$('input:submit').val('Редактировать');
+		$('#guestbook-form').append("<input type='hidden' name='edit' value='" + id + "'>");
+	})
+})

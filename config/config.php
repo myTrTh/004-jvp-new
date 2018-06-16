@@ -31,5 +31,8 @@ return [
 		4 => 'ROLE_SUPER_ADMIN'
 	],
 	'assets'                        => '/../../public',
-	'filepath'                      => __DIR__.'/../public/'
+	'filepath'                      => __DIR__.'/../public/',
+	'guestbook' => [
+		'edit_time'                 => 900
+	]
 ];

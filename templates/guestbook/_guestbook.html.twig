@@ -29,6 +29,15 @@
 			{% set stars = 6 %}
 		{% endif %}
 
+	{% set post_date = message.created_at|date_modify("+15 minute")|date("d.m.Y H:i:s") %}
+	{# order for edit message #}
+	{% set now_date = "now"|date("d.m.Y H:i:s") %}
+
+	{% if date(now_date) > date(post_date) %}
+		{% set order_edit = 0 %}
+	{% else %}
+		{% set order_edit = 1 %}
+	{% endif %}
 	{# order for set up and down #}
 		{% set date_order = "now"|date_modify("-3 days")|date("d.m.Y H:i:s") %}
 
@@ -136,6 +145,11 @@
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">
 					<span class="guestbook-content-date">{{ beautiful_date(message.created_at) }}</span>
+					{% if order_edit == 1 and app.user.id == message.author.id %}
+						<span class="guestbook-content-edit">
+							<i id='edit{{ message.id }}' class='edit-post fa fa-pencil' title='Редактировать'></i>
+						</span>
+					{% endif %}
 					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">
 					{% if isPermission('guestbook-write') %}
 						Цитата
