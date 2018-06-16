@@ -325,6 +325,9 @@
 /* nach */
 
 .nach {
+	@media only all and (max-width: $site_width_collapse) {
+		display: none;
+	}	
 	text-align: left;
 	margin: 5px 7px 7px 7px;
 }
@@ -381,6 +384,9 @@
 
 /* topnach */
 .topnach {
+	@media only all and (max-width: $site_width_collapse) {
+		display: none;
+	}	
 	text-align: left;
 	margin: 10px 0 0 4px;
 }

@@ -14,3 +14,10 @@ $(function(){
 	});
 });
 
+// set timezone
+$(function() {
+	var date = new Date();
+	// var loc = Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
+	var loc = date.getTimezoneOffset()/60;
+	document.cookie = "timezone=" + loc + "; path=/";
+})

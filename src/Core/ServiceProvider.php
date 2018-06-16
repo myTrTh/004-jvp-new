@@ -86,8 +86,8 @@ class ServiceProvider
 		$this->container['textMode'] = function($c) {
 			return new TextMode($c);
 		};
-		$this->container['dater'] = function() {
-			return new Dater();
+		$this->container['dater'] = function($c) {
+			return new Dater($c);
 		};
 		$this->container['roleManager'] = function ($c) {
 			return new RoleManager($c);

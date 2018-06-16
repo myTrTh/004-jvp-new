@@ -2,8 +2,42 @@
 
 namespace App\Utils;
 
+use App\Model\User;
+
 class Dater
 {
+	private $container;
+
+	public function __construct($container)
+	{
+		$this->container = $container;
+	}
+
+	public function getTimeZone()
+	{
+		$timezone = Null;
+
+		// get user timezone if isset
+		$user = $this->container['userManager']->getUser();
+		if (is_object($user) && ($user instanceof User)) {
+
+			$options = unserialize($user->options);
+			if (isset($options['timezone'])) {
+				$timezone = $options['timezone'];
+			}
+		}
+
+		if ($timezone == Null) {
+
+			if(isset($_COOKIE['timezone'])) {
+				$timezone = (int) $_COOKIE['timezone'];
+			}
+		}
+
+
+		return $timezone;
+	}
+
 	public function beautiful_date($date) {
 
 		if(!is_object($date)) {
@@ -19,16 +53,7 @@ class Dater
 		# russians month name
 		$month = ['','января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 
-		$tz = null;
-		# extract timezone
-		if($tz === null) {
-			if(isset($_COOKIE['timezone']))
-				$timezone = (int) $_COOKIE['timezone'];
-			else
-				$timezone = 0;
-		} else {
-			$timezone = $tz;
-		}
+		$timezone = $this->getTimeZone();
 
 		$now = new \DateTime();
 
