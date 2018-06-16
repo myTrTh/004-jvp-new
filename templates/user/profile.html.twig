@@ -22,7 +22,7 @@
 				<li><div class='h-username'>{{ user.username }}</div></li>
 				<li><i class="fa fa-user fa-fix fa-calendar"></i> {{ user.created_at|date('d.m.Y') }}</li>
 				{% if app.user %}
-					<li><i class="fa fa-user fa-fix fa-clock-o"></i> Активность: {{ user.created_at|date('d.m.Y') }}</li>
+					<li><i class="fa fa-user fa-fix fa-clock-o"></i> Активность: {{ beautiful_date(user.activity.updated_at) }}</li>
 				{% endif %}
 				<li><i class="fa fa-user fa-fix fa-at"></i> Email: {{ user.email }}</li>
 				{% if user.id == app.user.id %}
