@@ -1,16 +1,16 @@
 // menu show 
 $(function(){
 	$('nav li').on('mouseenter', function(e){
-	  e.preventDefault(); 
-	  $('ul.down-menu', this).css({'display':'flex'});
+		e.preventDefault(); 
+		$('ul.down-menu', this).stop(true, false).css('display', 'flex');
 	});
 });
 
-// menu hide //
+// menu hide
 $(function(){
 	$('nav li').on('mouseleave', function(e){
-	  e.preventDefault(); 
-	  $('ul.down-menu', this).css({'display':'none'}).hide().slideUp();
+		e.preventDefault(); 
+		$('ul.down-menu', this).stop(true, false).css('display', 'none');
 	});
 });
 
