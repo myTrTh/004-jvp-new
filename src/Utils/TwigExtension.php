@@ -50,7 +50,8 @@ class TwigExtension extends AbstractExtension implements GlobalsInterface
             'app' => [
                 'user' => $this->userManager->getUser(),
                 'path' => $this->container['assets']->assets(),
-                'notification' => $this->listener->notification()
+                'notification' => $this->listener->notification(),
+                'config' => $this->container['config']
             ]
         ];
     }

@@ -34,7 +34,7 @@
 				font-size: 1.1em;
 			}			
 			.user-info-other {
-				color: $color_grey;
+				color: $color_grey3;
 				font-size: .9em;
 			}
 		}
@@ -92,4 +92,11 @@
 	font-family: $font_header;
 	margin: 0;
 	padding: 0;
+}
+
+.user-panel-achives {
+	img {
+		max-width: 30px;
+		max-height: 30px;
+	}
 }

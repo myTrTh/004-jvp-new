@@ -50,6 +50,13 @@
 				since: {{ user.created_at|date('d.m.Y') }}<br>
 				shirt number: -
 				</div>
+				{% if not user.achives is empty %}
+					<div class="user-panel-achives">
+					{% for achive in user.achives %}
+						<img src="{{ app.path }}/images/tournaments/achive/{{ achive.image.image }}">
+					{% endfor %}
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	{% endfor %}

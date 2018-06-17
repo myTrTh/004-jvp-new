@@ -6,7 +6,7 @@
 	{% if app.notification.guestbook %}
 		{% set post_id = count - app.notification.guestbook + 1 %}
 		<div class="notification-guestbook">
-			<a class='underline' href="{{ path('guestbook_post', {'post_id': post_id}) }}">Перейти к непрочитанным</a>
+			<a class='underline' href="{{ path('guestbook_post', {'post_id': post_id}) }}">Перейти к непрочитанным ({{ app.notification.guestbook }}) </a>
 		</div>
 	{% endif %}
 
@@ -29,7 +29,9 @@
 			{% set stars = 6 %}
 		{% endif %}
 
-	{% set post_date = message.created_at|date_modify("+15 minute")|date("d.m.Y H:i:s") %}
+	{% set edit_time_row = app.config.guestbook.edit_time / 60 %}
+	{% set edit_time = "+ "~edit_time_row~" minute" %}
+	{% set post_date = message.created_at|date_modify(edit_time)|date("d.m.Y H:i:s") %}
 	{# order for edit message #}
 	{% set now_date = "now"|date("d.m.Y H:i:s") %}
 
@@ -145,16 +147,16 @@
 			<div class="guestbook-content">
 				<div class="guestbook-content-head">
 					<span class="guestbook-content-date">{{ beautiful_date(message.created_at) }}</span>
-					{% if order_edit == 1 and app.user.id == message.author.id %}
+					{% if order_edit == 1 and app.user.id == message.author.id and message.deleted_at == null %}
 						<span class="guestbook-content-edit">
 							<i id='edit{{ message.id }}' class='edit-post fa fa-pencil' title='Редактировать'></i>
 						</span>
 					{% endif %}
+					{% if isPermission('guestbook-write') and message.deleted_at == null %}
 					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">
-					{% if isPermission('guestbook-write') %}
 						Цитата
-					{% endif %}
 					</span>
+					{% endif %}
 					<span class="guestbook-content-id">#{{ message.id }}</span>					
 				</div>
 				<div class="guestbook-content-post" id="message{{ message.id }}">
@@ -165,7 +167,11 @@
 					{% endif %}
 				</div>
 				<div class="hidden" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
-				<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>
+				{% if message.deleted_at %}				
+					<div class="hidden" id="hidden-message-{{ message.id }}">Сообщение удаленно администратором.</div>
+				{% else %}
+					<div class="hidden" id="hidden-message-{{ message.id }}">{{ message.message }}</div>
+				{% endif %}
 			</div>
 			<div class="guestbook-rate-panel">
 			{% if rate_show == 1 %}

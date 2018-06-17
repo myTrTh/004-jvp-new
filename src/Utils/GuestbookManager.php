@@ -42,8 +42,12 @@ class GuestbookManager extends Manager
 		if ($edit) {
 
 			$guestbook = Guestbook::where('id', $edit)->first();
+
 			if (!is_object($guestbook) && !($guestbook instanceof Guestbook))
 				return 'Сообщение не существует';
+
+			if ($guestbook->deleted_at != null)
+				return 'Сообщение недоступно для редактирования';
 
 			if ($guestbook->user_id != $user->id)
 				return 'Вам запрещенно редактировать чужие сообщения';

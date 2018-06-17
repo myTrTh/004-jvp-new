@@ -104,10 +104,12 @@
 				color: $color_grey_light;
 				font-size: .95em;
 				text-align: right;
-				flex: 1 0 auto;				
+				margin-right: 15px;
+				flex: 1 0 auto;
 			}
 			.guestbook-content-id {
-				margin-left: 15px;
+				margin-left: auto;
+				text-align: right;				
 			}			
 			.guestbook-content-date {
 				color: $color_grey_light;
