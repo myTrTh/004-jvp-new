@@ -57,7 +57,13 @@ class AuthController extends Controller
 			$error = $auth->login($request);
 
 			if ($error === null) {
-				return $this->redirectToRoute('app_index');
+				$session = new Session();
+
+				if ($session->get('page_return') !== null) {
+					return $this->redirectToRoute($session->get('page_return'));
+				} else {
+					return $this->redirectToRoute('app_index');
+				}
 			}			
 		}
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use App\Model\User;
 
 class UserController extends Controller
@@ -42,8 +43,11 @@ class UserController extends Controller
 	public function profile()
 	{
 		$user = $this->container['userManager']->getUser();
-		if (!is_object($user) && !($user instanceof User))
+		if (!is_object($user) && !($user instanceof User)) {
+			$session = new Session();
+			$session->set('page_return', 'profile');
 			return $this->redirectToRoute('auth_login');
+		}
 
 		return $this->render('user/profile.html.twig', array(
 			'user' => $user
@@ -53,8 +57,11 @@ class UserController extends Controller
 	public function settings()
 	{
 		$user = $this->container['userManager']->getUser();
-		if (!is_object($user) && !($user instanceof User))
+		if (!is_object($user) && !($user instanceof User)) {
+			$session = new Session();
+			$session->set('page_return', 'settings');
 			return $this->redirectToRoute('auth_login');
+		}
 
 		$error = '';
 
@@ -109,8 +116,11 @@ class UserController extends Controller
 	public function changePassword()
 	{
 		$user = $this->container['userManager']->getUser();
-		if (!is_object($user) && !($user instanceof User))
+		if (!is_object($user) && !($user instanceof User)) {
+			$session = new Session();
+			$session->set('page_return', 'user_change_password');
 			return $this->redirectToRoute('auth_login');
+		}
 
 		$request = Request::createFromGlobals();
 
@@ -119,7 +129,7 @@ class UserController extends Controller
 		$success = '';
 
 		if ($request->get('submit_change_password')) {
-			
+
 			$userManager = $this->container['userManager'];
 			$error = $userManager->changePassword($request);
 

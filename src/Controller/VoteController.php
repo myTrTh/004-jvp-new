@@ -8,6 +8,7 @@ use App\Model\VoteOption;
 use App\Model\VoteUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class VoteController extends Controller
 {
@@ -83,6 +84,13 @@ class VoteController extends Controller
 		$count = VoteUser::where('vote_head_id', $vote->id)->count();
 
 		if ($request->get('submit_vote_set')) {
+
+			$user = $this->container['userManager']->getUser();
+			if (!is_object($user) && !($user instanceof User)) {
+				$session = new Session();
+				$session->set('page_return', 'vote_show');
+				return $this->redirectToRoute('auth_login');
+			}
 
 			$error = $this->container['voteManager']->set($id, $request);
 
