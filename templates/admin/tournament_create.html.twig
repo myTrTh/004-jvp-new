@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: Создание турнира {% endblock %}
+{% block header %} Админка {% endblock %}
+{% block body %}
+	{% include 'admin/_panel.html.twig' %}
+	<h4>Создание турнира</h4>
+	<a href="{{ path('admin_tournaments') }}">Назад к турнирам</a>
+	<br><br>
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+	
+	<form method='post' action="{{ path('admin_tournament_create') }}">
+		<label>НАЗВАНИЕ ТУРНИРА<br><input class='l-middle' type="text" name="tournament_name"></label>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
+		<input type='submit' name='submit_tournament_create' value='Создать турнир'>
+	</form>
+{% endblock %}

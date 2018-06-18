@@ -6,6 +6,7 @@ use App\Core\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Model\User;
+use App\Model\Guestbook;
 
 class UserController extends Controller
 {
@@ -149,6 +150,28 @@ class UserController extends Controller
 		return $this->render('user/change_password.html.twig', [
 			'error' => $error,
 			'success' => $success
+		]);
+	}
+
+	public function messages($id, $page)
+	{
+		$this->container['db'];
+
+		$user = User::where('id', $id)->first();
+		if (!is_object($user) && !($user instanceof User))
+			return $this->render('error/page404.html.twig');
+
+		$limit = 20;
+		$offset = ($page - 1) * $limit;
+		$guestbook = Guestbook::withTrashed()->where('user_id', $id)->orderBy('id', 'desc')->offset($offset)->limit($limit)->get();
+		$count = Guestbook::withTrashed()->where('user_id', $id)->count();
+
+		return $this->render('user/messages.html.twig', [
+			'guestbook' => $guestbook,
+			'user' => $user,
+			'page' => $page,
+			'limit' => $limit,
+			'count' => $count
 		]);
 	}
 }

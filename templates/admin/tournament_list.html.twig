@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка: Турниры {% endblock %}
+{% block header %} Админка {% endblock %}
+{% block body %}
+	{% include 'admin/_panel.html.twig' %}
+	<h4>Турниры</h4>
+	{% if isPermission('tournament-control') %}
+		<a href="{{ path('admin_tournament_create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Создать турнир</a>
+		<br><br>
+	{% endif %}
+
+	{% for tournament in tournaments %}
+		<div class='tournaments-list'>
+			<div>
+				{% if tournament.image %}
+					<img src='{{ app.path }}/images/tournaments/logo/{{ tournament.image }}'>
+				{% else %}
+					<img src='{{ app.path }}/images/interface/default_logo.png'>
+				{% endif %}
+			</div>
+			<div><a href="{{ path('admin_tournament_show', {'id': tournament.id }) }}"><h2>{{ tournament.title }}</h2></a></div>
+		</div>
+	{% endfor %}
+
+{% endblock %}

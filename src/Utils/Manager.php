@@ -8,6 +8,7 @@ use App\Model\Role;
 use App\Model\Guestbook;
 use App\Model\Adminbook;
 use App\Model\Permission;
+use App\Model\Tournament;
 
 class Manager
 {
@@ -189,5 +190,15 @@ class Manager
 
 		if ($number <= 0)
 			return 'Число должно быть положительным';
+	}
+
+	public function ifDublicate($name)
+	{
+		$this->container['db'];
+
+		$tournament = Tournament::where('title', $name)->first();
+
+		if (is_object($tournament) && $tournament instanceof Tournament)
+			return 'Турнир с таким названием уже существует.';
 	}
 }

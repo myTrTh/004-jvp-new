@@ -6,6 +6,7 @@ use Pimple\Container;
 use App\Core\Controller;
 use App\Utils\TokenManager;
 use App\Utils\UserManager;
+use App\Utils\AdminTournament;
 use App\Utils\GuestbookManager;
 use App\Utils\RoleManager;
 use App\Utils\PermissionManager;
@@ -92,6 +93,9 @@ class ServiceProvider
 		$this->container['roleManager'] = function ($c) {
 			return new RoleManager($c);
 		};
+		$this->container['adminTournament'] = function ($c) {
+			return new AdminTournament($c);
+		};		
 		$this->container['permissionManager'] = function ($c) {
 			return new PermissionManager($c);
 		};		

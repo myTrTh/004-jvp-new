@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Админка:
+	{% if tournament %}
+		{{ tournament.title }}
+	{% else %}
+		Турнир не найден
+	{% endif %}
+{% endblock %}
+{% block header %} Админка {% endblock %}
+{% block body %}
+	{% include 'admin/_panel.html.twig' %}
+
+	{% if tournament %}
+		<h3>{{ tournament.title }}</h3>
+	{% else %}
+		<h6>ТУРНИР НЕ НАЙДЕН</h6>
+	{% endif %}
+	<a href="{{ path('admin_tournament_show', {'id': tournament.id }) }}">Назад к турниру</a>
+	<br><br>
+
+	{% if error %}
+		<div class="message-error">{{ error }}</div>
+	{% endif %}
+
+	{% if tournament %}
+
+	<h6>ТЕКУЩИЙ ЛОГОТИП</h6>
+	<div class='tournaments-list'>
+		<div>
+		{% if tournament.image %}
+			<img src='{{ app.path }}/images/tournaments/logo/{{ tournament.image }}'>
+		{% else %}
+			<img src='{{ app.path }}/images/interface/default_logo.png'>
+		{% endif %}	
+		</div>
+	</div><br>
+	<h6>ВЫБЕРИТЕ ЛОГОТИП</h6>
+	<form method='post' action='{{ path('admin_tournament_logo', {'id': tournament.id }) }}'>
+		{% for image in logo %}
+			<input type='radio' name='image' value='{{ image.id }}'>
+			<img class='upload-panel' src='{{ app.path }}/images/tournaments/logo/{{ image.image }}'>
+		{% endfor %}
+		<br>
+		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'><br>
+		<input type='submit' name='submit_tournament_logo' value='Установить'>
+	</form>		
+
+	{% endif %}
+
+{% endblock %}
