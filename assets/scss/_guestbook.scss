@@ -87,6 +87,7 @@
 		flex: 1 1 230px;
 		padding: 5px;
 		overflow: hidden;
+		position: relative;
 		word-wrap: break-word;
 		word-break: break-all;
 		word-break: break-word; /* для Chrome */		
@@ -118,6 +119,7 @@
 		}
 		.guestbook-content-post {
 			font-size: 1em;
+			margin-bottom: 14px;
 		}
 	}
 	.guestbook-rate-panel {
@@ -450,4 +452,12 @@
 
 .topnach-img {
 	width: 13px;
+}
+
+.message-edit-info {
+	font-size: .8em;
+	font-style: italic;
+	color: $color_grey;
+	position: absolute;
+	bottom: 0;
 }

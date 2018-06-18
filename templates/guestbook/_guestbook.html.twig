@@ -166,6 +166,9 @@
 					{{ textMode(message.message)|raw|nl2br }}
 					{% endif %}
 				</div>
+				{% if message.created_at != message.updated_at %}
+					<div class='message-edit-info'>...<i class="fa fa-edit"></i> {{ beautiful_date(message.updated_at) }}</div>
+				{% endif %}
 				<div class="hidden" id="hidden-date-{{ message.id }}">{{ message.created_at }}</div>
 				{% if message.deleted_at %}				
 					<div class="hidden" id="hidden-message-{{ message.id }}">Сообщение удаленно администратором.</div>

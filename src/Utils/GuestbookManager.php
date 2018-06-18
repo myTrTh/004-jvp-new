@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Model\Guestbook;
 use App\Model\Adminbook;
 use App\Model\User;
+use App\Model\Notification;
 use App\Model\Nach;
 use App\Model\Rate;
 
@@ -38,6 +39,7 @@ class GuestbookManager extends Manager
 		if ($this->container['userManager']->isPermission('guestbook-write') === false)
 			return 'Вам запрещенно писать сообщения';
 
+		// EDIT MESSAGE
 		$edit = $request->get('edit');
 		if ($edit) {
 
@@ -61,20 +63,28 @@ class GuestbookManager extends Manager
 			$guestbook->message = $message;
 
 			$session = new Session();
-			$session->set('edit', $edit);			
+			$session->set('edit', $edit);
+
+			// if no new show guestbook - not fix edit message
+			$last_guestbook_vizit = Notification::where('route', 'guestbook')->where('user_id', '!=', $user->id)->max('updated_at');
+
+			if ($guestbook->created_at->getTimeStamp() > strtotime($last_guestbook_vizit))
+				$guestbook->timestamps = false;
+			
+			$guestbook->save();
 
 		} else {
-
+			// ADD NEW MESSAGE
 			if ($book == 'guestbook')
 				$guestbook = new Guestbook();
 			else if ($book == 'adminbook')
 				$guestbook = new Adminbook();
 			$guestbook->user_id = $user->id;		
 			$guestbook->message = $message;
+			$guestbook->save();
 
 		}
 
-		$guestbook->save();
 
 		// check and add super nach
 		$this->supernach($guestbook->id);
