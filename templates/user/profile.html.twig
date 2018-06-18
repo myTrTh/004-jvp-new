@@ -117,7 +117,11 @@
 			</div>
 			{% endif %}
 		</div>		
-
+		<a href="{{ path('user_messages', {'id': user.id}) }}">
+			<div class='profile-board-info'>
+			<div class='profile-board-info-header'>СООБЩЕНИЯ В ГОСТЕВОЙ КНИГЕ ({{ user.messages|length }})</div>			
+			</div>
+		</a>
 	{% else %}
 		<h5>Пользователь не найден</h5>
 	{% endif %}

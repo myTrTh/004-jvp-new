@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Сообщения пользователя {% endblock %}
+{% block header %} Сообщения пользователя {% endblock %}
+{% block body %}
+
+	<a href="{{ path('user_profile', {'id': user.id }) }}">Назад в профиль</a>
+	<br><br>
+
+	{# hide rate #}
+	{% set rate_show = 1 %}
+	{% set quote_order = 0 %}
+	{# page navigation #}
+	{% set page_name = 'user/'~user.id~'/messages' %}
+	{% include 'guestbook/_guestbook.html.twig' %}
+
+{% endblock %}

@@ -146,9 +146,9 @@ class TextMode
 		$message = preg_replace_callback($patternS, function($matches) {
 			$smile = substr($matches[1], 1);
 			$assets = $this->container['assets'];
-			$path = '../public/images/smiles/'.$smile.'.gif';
-			$img_smile = "<img class='smile' src='{$path}'>";
-			if(file_exists($path)) {
+			$path = "images/smiles/".$smile.".gif";
+			$img_smile = "<img class='smile' src='/../../public/".$path."'>";
+			if(file_exists($this->container['config']['filepath'].$path)) {
 				return $img_smile;
 			} else {
 				return $matches[1];

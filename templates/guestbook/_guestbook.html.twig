@@ -152,7 +152,7 @@
 							<i id='edit{{ message.id }}' class='edit-post fa fa-pencil' title='Редактировать'></i>
 						</span>
 					{% endif %}
-					{% if isPermission('guestbook-write') and message.deleted_at == null %}
+					{% if isPermission('guestbook-write') and message.deleted_at == null and quote_order == 1 %}
 					<span class="guestbook-content-quote quote" id="quote{{ message.id }}">
 						Цитата
 					</span>

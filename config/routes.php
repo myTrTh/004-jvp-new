@@ -29,6 +29,7 @@ $routes->add('settings', new Route('/profile/settings', array('_controller' => '
 $routes->add('user_change_password', new Route('/profile/change-password', array('_controller' => 'App\Controller\UserController::changePassword')));
 $routes->add('user_list', new Route('/users/{sort}', array('_controller' => 'App\Controller\UserController::list', 'sort' => 'alpha_asc', array('sort' => 'alpha_asc|alpha_desc|since_asc|since_desc'))));
 $routes->add('user_profile', new Route('/user/{id}', array('_controller' => 'App\Controller\UserController::show'), array('id' => '[0-9]+')));
+$routes->add('user_messages', new Route('/user/{id}/messages/{page}', array('_controller' => 'App\Controller\UserController::messages', 'id' => 1, 'page' => 1), array('id' => '[0-9]+', 'page' => '[0-9]+')));
 
 // role routes
 $routes->add('role_list', new Route('/roles', array('_controller' => 'App\Controller\Admin\RoleController::list')));
