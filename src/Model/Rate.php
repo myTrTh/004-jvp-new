@@ -18,4 +18,9 @@ class Rate extends Eloquent
 	{
 		return $this->belongsTo('App\Model\User');
 	}
+
+	public function author()
+	{
+		return $this->belongsTo('App\Model\User', 'author_id', 'id');
+	}	
 }

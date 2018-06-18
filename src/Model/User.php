@@ -34,6 +34,11 @@ class User extends Eloquent
 		return $this->hasMany('App\Model\Rate', 'author_id', 'id');
 	}
 
+	public function rates_for_me()
+	{
+		return $this->hasMany('App\Model\Rate', 'user_id', 'id');
+	}	
+
 	public function achives()
 	{
 		return $this->hasMany('App\Model\Achive', 'user_id', 'id');

@@ -46,6 +46,77 @@
 			{% endfor %}			
 			</div>
 		{% endif %}
+		<div class='profile-board'>SPORTIVO</div>
+		<div class='profile-board'>COMUNICAZIONE</div>
+		<div class='profile-board-info'>
+
+			<div class='profile-board-wrapper'>
+				<div class='profile-board-info-header'>РЕЙТИНГ</div>
+				{% set sum_rate = rate.my_plus_count - rate.my_minus_count|abs %}
+				<div class='profile-board-info-body'>ОБЩИЙ 
+				{% if sum_rate == 0 %}
+					<span class='rate-right'>{{ sum_rate }}</span>
+				{% elseif sum_rate > 0 %}
+					<span class='rate-right-plus'>+{{ sum_rate }}</span>
+				{% else %}
+					<span class='rate-minus'>-{{ sum_rate }}</span>
+				{% endif %}
+				</div>
+				<div class='profile-board-info-body'>Плюсы <span class='rate-right-plus'>+{{ rate.my_plus_count }}</span></div>
+				<div class='profile-board-info-body'>Минусы <span class='rate-right-minus'>-{{ rate.my_minus_count }}</span></div>
+			</div>
+
+			{% if rate.my_plus %}
+			<div class='profile-board-wrapper'>
+				<div class='profile-board-info-header'>МНЕ ПЛЮСУЮТ</div>
+				{% for my_plus in rate.my_plus %}
+					<div class='profile-board-info-body'>
+						<a class='weight-normal' href="{{ path('user_profile', {'id': my_plus.user.id}) }}">{{ my_plus.user.username }}</a> <span class='rate-right-plus'>+{{ my_plus.signcount }}</span>
+					</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			{% if rate.my_minus %}
+			<div class='profile-board-wrapper'>
+				<div class='profile-board-info-header'>МНЕ МИНУСУЮТ</div>
+				{% for my_minus in rate.my_minus %}
+					<div class='profile-board-info-body'><a class='weight-normal' href="{{ path('user_profile', {'id': my_minus.user.id}) }}">{{ my_minus.user.username }}</a> <span class='rate-right-minus'>-{{ my_minus.signcount }}</span></div>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+
+		<div class='profile-board-info'>
+
+			<div class='profile-board-wrapper'>
+				<div class='profile-board-info-header'>Я ПОСТАВИЛ</div>
+				{% set sum_rate = rate.for_plus_count + rate.for_minus_count|abs %}
+				<div class='profile-board-info-body'>ВСЕГО <span class='rate-right'>{{ sum_rate }}</span></div>
+				<div class='profile-board-info-body'>Плюсов <span class='rate-right-plus'>+{{ rate.for_plus_count }}</span></div>
+				<div class='profile-board-info-body'>Минусов <span class='rate-right-minus'>-{{ rate.for_minus_count }}</span></div>
+			</div>
+
+			{% if rate.for_plus %}
+			<div class='profile-board-wrapper'>
+				<div class='profile-board-info-header'>Я ПЛЮСУЮ</div>
+				{% for for_plus in rate.for_plus %}
+					<div class='profile-board-info-body'>
+						<a class='weight-normal' href="{{ path('user_profile', {'id': for_plus.author.id}) }}">{{ for_plus.author.username }}</a> <span class='rate-right-plus'>+{{ for_plus.signcount }}</span>
+					</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+
+			{% if rate.for_minus %}
+			<div class='profile-board-wrapper'>
+				<div class='profile-board-info-header'>Я МИНУСУЮ</div>
+				{% for for_minus in rate.for_minus %}
+					<div class='profile-board-info-body'><a class='weight-normal' href="{{ path('user_profile', {'id': for_minus.author.id}) }}">{{ for_minus.author.username }}</a> <span class='rate-right-minus'>-{{ for_minus.signcount }}</span></div>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>		
 
 	{% else %}
 		<h5>Пользователь не найден</h5>

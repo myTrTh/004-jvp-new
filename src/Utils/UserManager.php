@@ -5,6 +5,7 @@ namespace App\Utils;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use App\Model\User;
+use App\Model\Rate;
 
 class UserManager extends Manager
 {
@@ -259,5 +260,30 @@ class UserManager extends Manager
 			return true;
 		else
 			return false;
+	}
+
+	public function getRate($author_id)
+	{
+		$my_rate_plus = Rate::selectRaw('user_id, count(sign) as signcount')->where('author_id', $author_id)->where('sign', '1')->groupBy('user_id')->orderBy('signcount', 'desc')->take(10)->get();
+		$my_sum_plus = Rate::where('author_id', $author_id)->where('sign', '1')->count();
+		$my_rate_minus = Rate::selectRaw('user_id, count(sign) as signcount')->where('author_id', $author_id)->where('sign', '-1')->groupBy('user_id')->orderBy('signcount', 'desc')->take(10)->get();
+		$my_sum_minus = Rate::where('author_id', $author_id)->where('sign', '-1')->count();		
+
+		$for_rate_plus = Rate::selectRaw('author_id, count(sign) as signcount')->where('user_id', $author_id)->where('sign', '1')->groupBy('author_id')->orderBy('signcount', 'desc')->take(10)->get();		
+		$for_rate_minus = Rate::selectRaw('author_id, count(sign) as signcount')->where('user_id', $author_id)->where('sign', '-1')->groupBy('author_id')->orderBy('signcount', 'desc')->take(10)->get();
+		$for_sum_plus = Rate::where('user_id', $author_id)->where('sign', '1')->count();		
+		$for_sum_minus = Rate::where('user_id', $author_id)->where('sign', '-1')->count();		
+
+		$rate = [
+			"my_plus" => $my_rate_plus,
+			"for_plus" => $for_rate_plus,
+			'my_plus_count' => $my_sum_plus,
+			'for_plus_count' => $for_sum_plus,
+			"my_minus" => $my_rate_minus,
+			"for_minus" => $for_rate_minus,
+			"my_minus_count" => $my_sum_minus,
+			"for_minus_count" => $for_sum_minus
+		];
+		return $rate;
 	}
 }

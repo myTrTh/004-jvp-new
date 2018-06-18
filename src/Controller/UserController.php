@@ -51,8 +51,11 @@ class UserController extends Controller
 			return $this->redirectToRoute('auth_login');
 		}
 
+		$rate = $this->container['userManager']->getRate($user->id);
+
 		return $this->render('user/profile.html.twig', array(
-			'user' => $user
+			'user' => $user,
+			'rate' => $rate
 		));
 	}	
 
