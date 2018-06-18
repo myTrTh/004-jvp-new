@@ -35,7 +35,7 @@ class Listener
 		$request = Request::createFromGlobals();
 		$activity->user_id = $user->id;
 		$activity->ip = $request->getClientIp();
-		$activity->userAgent = $_SERVER['HTTP_USER_AGENT'];
+		$activity->userAgent = $request->headers->get('User-Agent');
 		$activity->lastPage = $request->getPathInfo();
 		$activity->save();
 	}
@@ -50,7 +50,8 @@ class Listener
 		$request = Request::createFromGlobals();
 
         // GUESTBOOK NOTIFICATION
-		if ($options['notification']['guestbook']) {
+        // for all users, need for define edit message
+		// if ($options['notification']['guestbook']) {
 
 			if (preg_match('/\/guestbook$/', $request->getPathInfo())) {
 
@@ -64,7 +65,7 @@ class Listener
 					// update time
 					$guestbook->touch();
 			}
-		}
+		// }
 
         // VOTES NOTIFICATION
         if($options['notification']['vote']) {

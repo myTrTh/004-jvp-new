@@ -24,8 +24,8 @@
 				{% if app.user %}
 					<li><i class="fa fa-user fa-fix fa-clock-o"></i> Активность: {{ beautiful_date(user.activity.updated_at) }}</li>
 				{% endif %}
-				<li><i class="fa fa-user fa-fix fa-at"></i> Email: {{ user.email }}</li>
 				{% if user.id == app.user.id %}
+				<li><i class="fa fa-user fa-fix fa-at"></i> Email: {{ user.email }}</li>
 					<li><i class="fa fa-user fa-fix fa-pencil"></i> <a href='{{ path('user_change_password') }}'>Изменить пароль</a></li>
 					<li><i class="fa fa-user fa-fix fa-sliders"></i> <a href='{{ path('settings') }}'>Настройки</a></li>
 				{% endif %}

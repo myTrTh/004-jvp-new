@@ -88,7 +88,8 @@ class VoteController extends Controller
 			$user = $this->container['userManager']->getUser();
 			if (!is_object($user) && !($user instanceof User)) {
 				$session = new Session();
-				$session->set('page_return', 'vote_show');
+				$url = $request->getPathInfo();
+				$session->set('page_return', $url);
 				return $this->redirectToRoute('auth_login');
 			}
 

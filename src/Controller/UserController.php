@@ -45,7 +45,9 @@ class UserController extends Controller
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User)) {
 			$session = new Session();
-			$session->set('page_return', 'profile');
+			$request = Request::createFromGlobals();
+			$url = $request->getPathInfo();
+			$session->set('page_return', $url);
 			return $this->redirectToRoute('auth_login');
 		}
 
@@ -59,7 +61,9 @@ class UserController extends Controller
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User)) {
 			$session = new Session();
-			$session->set('page_return', 'settings');
+			$request = Request::createFromGlobals();
+			$url = $request->getPathInfo();
+			$session->set('page_return', $url);
 			return $this->redirectToRoute('auth_login');
 		}
 
@@ -118,7 +122,9 @@ class UserController extends Controller
 		$user = $this->container['userManager']->getUser();
 		if (!is_object($user) && !($user instanceof User)) {
 			$session = new Session();
-			$session->set('page_return', 'user_change_password');
+			$request = Request::createFromGlobals();
+			$url = $request->getPathInfo();
+			$session->set('page_return', $url);
 			return $this->redirectToRoute('auth_login');
 		}
 

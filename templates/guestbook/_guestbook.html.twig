@@ -74,9 +74,9 @@
 		{% endif %}
 			<div class="guestbook-head">
 				{% if message.author.username|length > 20 %}
-					<div class="guestbook-head-user-normal"><span class='username'>{{ message.author.username }}</span>
+					<div class="guestbook-head-user-normal"><a href="{{ path('user_profile', {'id': message.author.id}) }}"><span class='username'>{{ message.author.username }}</span></a>
 				{% else %}
-					<div class="guestbook-head-user"><span class='username'>{{ message.author.username }}</span>	
+					<div class="guestbook-head-user"><a href="{{ path('user_profile', {'id': message.author.id}) }}"><span class='username'>{{ message.author.username }}</span></a>
 				{% endif %}
 				<div class="guestbook-post-count-hidden">Постов: {{ message.author.messages|length }}</div>
 				</div>

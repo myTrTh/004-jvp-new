@@ -60,7 +60,7 @@ class AuthController extends Controller
 				$session = new Session();
 
 				if ($session->get('page_return') !== null) {
-					return $this->redirectToRoute($session->get('page_return'));
+					return $this->redirectUrl($session->get('page_return'));
 				} else {
 					return $this->redirectToRoute('app_index');
 				}
