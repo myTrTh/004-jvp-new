@@ -1,10 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Турнир {% endblock %}
-{% block header %} Турнир {% endblock %}
+{% block title %} {{ tournament.title }} {% endblock %}
+{% block header %}
+	{% if tournament.image %}
+		<img src='{{ app.path }}/images/tournaments/logo/{{ tournament.image }}'>
+	{% else %}
+		<img src='{{ app.path }}/images/interface/default_logo.png'>
+	{% endif %}
+	<a href="{{ path('admin_tournament_show', {'id': tournament.id }) }}"><h2>{{ tournament.title }}</h2></a>
+{% endblock %}
 {% block body %}
 
-	<a href="{{ path('tournaments_list') }}">Назад к </a>
+	<a href="{{ path('tournaments_list') }}">Назад к турнирам</a>
 	<br><br>
 
 {% endblock %}

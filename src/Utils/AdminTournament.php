@@ -25,6 +25,10 @@ class AdminTournament extends Manager
 		if ($error = $this->ifDublicate($name))
 			return $error;
 
+		$user = $this->container['userManager']->getUser();
+		if (!is_object($user) && !($user instanceof User))
+			return 'Вы не авторизированы';
+
 		// Tournament status
 		// 1 tournament request
 		// 2 tournament active

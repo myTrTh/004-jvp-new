@@ -35,6 +35,7 @@
 		{% endif %}	
 		</div>
 	</div><br>
+	{% if logo is not empty %}
 	<h6>ВЫБЕРИТЕ ЛОГОТИП</h6>
 	<form method='post' action='{{ path('admin_tournament_logo', {'id': tournament.id }) }}'>
 		{% for image in logo %}
@@ -45,6 +46,7 @@
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'><br>
 		<input type='submit' name='submit_tournament_logo' value='Установить'>
 	</form>		
+	{% endif %}
 
 	{% endif %}
 

@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} ERROR {{ errno }} {% endblock %}
-{% block header %} ERROR {{ errno }} {% endblock %}
+{% block header %}
+	{% if error %}
+		{{ error }}
+	{% else %}
+	ERROR {{ errno }}
+	{% endif %}
+
+{% endblock %}
 {% block body %}
+	{% if error %}
+		{{ error }}
+	{% else %}
 	ERROR {{ errno }}
 	<br>
 	Страница не найдена
+	{% endif %}
 {% endblock %}

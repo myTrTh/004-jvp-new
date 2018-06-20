@@ -29,6 +29,11 @@ class TournamentController extends Controller
 		
 		$tournament = Tournament::where('id', $id)->where('status', '!=', 3)->first();
 
+		if (!is_object($tournament) && !($tournament instanceOf Tournament))
+			return $this->render('error/page404.html.twig', [
+				'error' => 'Турнир не найден',
+			]);
+
 		return $this->render('tournament/show.html.twig', [
 			'tournament' => $tournament,
 		]);		
