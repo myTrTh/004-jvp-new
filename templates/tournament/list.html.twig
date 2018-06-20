@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Турниры {% endblock %}
+{% block header %} Турниры {% endblock %}
+{% block body %}
+
+	{% for tournament in tournaments %}
+		<div class='tournaments-list'>
+			<div>
+				{% if tournament.image %}
+					<img src='{{ app.path }}/images/tournaments/logo/{{ tournament.image }}'>
+				{% else %}
+					<img src='{{ app.path }}/images/interface/default_logo.png'>
+				{% endif %}
+			</div>
+			<div><a href="{{ path('tournament_show', {'id': tournament.id }) }}"><h2>{{ tournament.title }}</h2></a></div>
+		</div>
+	{% endfor %}
+
+	{# page navigation #}
+	{% set page_name = 'tournaments' %}
+	{% include 'pagenavigation.html.twig' %}
+
+{% endblock %}

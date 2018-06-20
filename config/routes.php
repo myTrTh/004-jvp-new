@@ -6,7 +6,7 @@ use Symfony\Component\Routing\RouteCollection;
 $routes = new RouteCollection();
 
 // app routes
-$routes->add('app_index', new Route('/', array('_controller' => 'App\Controller\AppController::index')));
+$routes->add('app_index', new Route('/{page}', array('_controller' => 'App\Controller\TournamentController::list', 'page' => 1), array('page' => '[0-9]+')));
 
 // error routes
 $routes->add('error', new Route('/error/{errno}', array('_controller' => 'App\Controller\ErrorController::error'), array('errno' => '403|404|500')));
@@ -78,5 +78,9 @@ $routes->add('vote_edit', new Route('/vote/edit/{id}', array('_controller' => 'A
 $routes->add('vote_delete', new Route('/vote/delete/{id}', array('_controller' => 'App\Controller\VoteController::delete'), array('id' => '[0-9]+')));
 $routes->add('ajax_vote_show', new Route('ajax/vote/show', array('_controller' => 'App\Controller\VoteController::ajax_show')));
 $routes->add('ajax_vote_send', new Route('ajax/vote/send', array('_controller' => 'App\Controller\VoteController::ajax_send')));
+
+// tournaments
+$routes->add('tournaments_list', new Route('/tournaments/{page}', array('_controller' => 'App\Controller\TournamentController::list', 'page' => 1), array('page' => '[0-9]+')));
+$routes->add('tournament_show', new Route('/tournament/{id}', array('_controller' => 'App\Controller\TournamentController::show'), array('id' => '[0-9]+')));
 
 return $routes;

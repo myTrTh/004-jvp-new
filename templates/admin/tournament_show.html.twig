@@ -28,11 +28,21 @@
 		<input type='hidden' name='_csrf_token' value='{{ csrf_token() }}'>
 		<input type='submit' name='submit_tournament_name' value='Изменить'>		
 	</form>
-	
+	<br>
+	{% if tournament.status == 1 %}
+		<h6>Состояние турнира: сбор заявок на участние</h6>
+	{% elseif tournament.status == 2 %}
+		<h6>Состояние турнира: активный</h6>
+	{% endif %}
+
 	<br><a href=""><h6>ПРЕДОСТАВИТЬ ДОСТУП</h6></a>
 	<a href="{{ path('admin_tournament_logo', {'id': tournament.id }) }}"><h6>ДОБАВИТЬ ЛОГОТИП</h6></a>
 	<a href=""><h6>ДОБАВИТЬ КОМАНДЫ</h6></a>
-	<a href=""><h6>ЗАМЕНА ПОЛЬЗОВАТЕЛЕЙ</h6></a>
+	{% if tournament.status == 1 %}
+		<a href=""><h6>ПРОСМОТР ЗАЯВОК</h6></a>
+	{% elseif tournament.status == 2 %}
+		<a href=""><h6>ЗАМЕНА ПОЛЬЗОВАТЕЛЕЙ</h6></a>
+	{% endif %}
 
 	<br><hr><br>
 	<form method='post'>
